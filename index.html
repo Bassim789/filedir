@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tree file</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <meta name="theme-color" content="#ffffff" id="meta_theme_color">
+  <script src="web/module/load.js"></script>
+  <script>
+    loader = new Loader({version: 1})
+    loader.load('web/', ['main.css'])
+    loader.load('web/lib/', [
+      'jquery.min.js',
+      'mustache.min.js'
+    ])
+    loader.load('web/module/', ['utils.js', 'Url_params.js'])
+    loader.load('web/module/dark_mode/dark_mode', ['.css', '_slider.css', '.js', '.html.js'])
+    loader.load('web/module/tree_file/tree_file', ['.html.js', '.js', '.css'])
+  </script>
+</head>
+<body></body>
+<script>
+  loader.load('', [
+    'tree_file_info.js',
+    'directories_data.js',
+    'files_data.js',
+    'web/app.js'
+  ])
+</script>
+</html>

@@ -1,0 +1,458 @@
+
+#tree_file{
+  display: inline-block;
+  max-width: calc(100% - 20px);
+  margin: 20px;
+  margin-top: 50px;
+}
+
+.inner_path_part{
+  cursor: pointer;
+}
+.inner_path_part:hover{
+  text-decoration: underline;
+}
+
+.database_box{
+  display: inline-block;
+  float: left;
+  width: auto;
+  max-width: calc(100% - 20px);
+  min-height: 100px;
+  margin: 5px;
+  border: 1px solid #999;
+  border-radius: 20px;
+  padding: 10px;
+  padding-bottom: 0px;
+  /*box-shadow: 0px 2px rgba(150,150,150,0.2);*/
+}
+.database_box .database_name{
+  display: inline-block; 
+  float: left;
+  margin: 5px; 
+  font-size: 20px; 
+  font-weight: bold;
+}
+.clickable:hover{
+  text-decoration: underline;
+  cursor: pointer;
+}
+.database_info{
+  display: inline-block; 
+  float: left;
+  margin: 5px;
+  margin-top: 10px;
+}
+.database_description_wrap{
+  max-width: 500px;
+}
+.database_description{
+  max-width: calc(100% - 20px);
+  margin: 5px; 
+  white-space: pre-wrap;
+  overflow: hidden;
+}
+
+
+.tables_listing{
+  display: inline-block;
+  float: left;
+  width: 100%;
+}
+.table_wrap{
+  display: inline-block;
+  float: left;
+  margin: 5px;
+  max-width: 100%;
+  min-height: 125px;
+  border-radius: 20px;
+  padding: 5px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  background: #eee;
+}
+.table_box{
+  display: inline-block;
+  width: calc(100% - 20px);
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.table_name{
+  display: inline-block;
+  float: left;
+  margin: 5px;
+  font-size: 18px;
+  font-weight: bold;
+}
+.table_info{
+  display: inline-block;
+  float: left;
+  margin: 5px;
+  margin-top: 7px;
+  margin-right: 20px;
+}
+.table_description_wrap{
+  width: 100%;
+  max-width: 500px;
+  float: left;
+}
+.table_description{
+  max-width: calc(100% - 20px);
+  margin: 5px; 
+  margin-bottom: 0; 
+  white-space: pre-wrap;
+  overflow: hidden;
+}
+
+.variables_listing_wrap{
+  margin: 0;
+  float: left;
+  display: inline-block;
+  max-width: 100%;
+}
+.variables_listing{
+  margin-top: 5px;
+}
+.variable_box{
+  position: relative;
+  display: inline-block;
+  max-width: 430px;
+  margin: 5px 3px;
+  padding: 5px;
+  padding-bottom: 10px;
+  vertical-align: top;
+  background: #fff;
+  border-radius: 20px;
+}
+.variable_table{
+  margin: auto;
+  border-collapse: collapse;
+}
+.variable_rows_section{
+  border-top: 10px solid transparent;
+}
+.variable_table th{
+  padding: 3px 15px;
+}
+.variable_table td {
+    padding: 0 5px;
+}
+.variable_table td:first-child{
+  text-align: right;
+}
+.variable_table td.variable_description{
+  text-align: center; 
+  font-style: italic; 
+  padding-bottom: 5px;
+  max-width: 260px;
+}
+.variable_description_content{
+  height: 40px;
+  overflow: auto;
+}
+
+
+.modalities_box_name{
+  text-align: center; 
+}
+.expression_box{
+  max-height: 50px; 
+  overflow: auto;
+  word-break: break-all;
+}
+.table_modalities td{
+  
+}
+.table_modalities .percent_hidden{
+  visibility: 0;
+}
+.table_modalities .modality_value_wrap{
+  text-align: right; 
+  max-width: 220px;
+}
+.table_modalities .modality_frequence_box_td{
+  width: 200px;
+}
+.table_modalities .modality_value{
+  text-align: right;
+  max-height: 20px;
+  max-width: 220px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  float: right;
+  word-break: break-all;
+}
+.table_modalities .modality_value:hover{
+  max-height: none;
+  width: auto;
+  white-space: normal;
+}
+.modality_frequence_box{
+  position: relative;
+  width: 200px;
+  float: right;
+}
+.modality_frequence_box .percent_value{
+  float: right;
+  text-align: right;
+  width: 60px;
+}
+.modality_frequence_box:hover {
+  background: rgba(150,150,150, 0.3);
+}
+.modality_frequence{
+  position: absolute; 
+  top: 0; 
+  right: 3px;
+  z-index: 2;
+}
+.modality_frequence .frequency{
+  float: right;
+}
+.modality_frequence_hidden{
+  margin-right: 3px;
+  visibility: hidden;
+  z-index: -2;
+}
+.percent_bar{
+  height: 17px;
+  background: rgba(24, 196, 8, 0.4);
+  display: inline-block;
+  float: left;
+  position: absolute;
+  top: 1px;
+  left: 0;
+}
+
+.percent_bar.percent_error_bar{
+  background: rgba(227, 95, 59, 0.4);
+}
+
+
+.readmore_btn,
+.readless_btn{
+  color: inherit;
+  text-decoration: none;
+  padding-left: 5px;
+  color: #999;
+  text-align: center;
+  display: block;
+}
+
+
+.table_file{
+  display: inline-block;
+}
+.table_file_info{
+  min-width: 300px;
+}
+.table_file_info td{
+  padding: 2px 5px;
+}
+.table_box .break{
+  word-break: break-all;
+  font-size: 12px;
+  max-width: 400px;
+  margin: 5px;
+  margin-bottom: 10px;
+}
+.table_file_link{
+  color: #999;
+}
+
+.table_file_last_modif{
+  float: left;
+  margin-left: 5px;
+  text-align: left;
+}
+
+
+.modality_hidden{
+  display: none;
+}
+
+.btn_show_more{
+  width: 100%; 
+  cursor: pointer;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: #999;
+}
+.show_less_modality{
+  display: none;
+  width: 100%; 
+  cursor: pointer;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: #999;
+}
+
+.variable_number_mean_section{
+  border-top: 10px solid transparent;
+}
+
+.btn_show_more:active,
+.show_less_modality:active{
+  /*background: rgba(150,150,150, 0.2);*/
+}
+
+.variable_type_number,
+.variable_type_text{
+  padding: 5px 10px;
+  border-radius: 20px;
+}
+.variable_type_number{
+  background: rgba(69, 177, 217, 0.4);
+}
+.variable_type_text{
+  background: rgba(227, 207, 79, 0.4); 
+}
+
+.database_close_btn,
+.table_close_btn{
+  display: inline-block;
+  float: right;
+  margin-right: 0px;
+  position: relative;
+  cursor: pointer;
+}
+.variable_close_btn{
+  display: inline-block;
+  float: right;
+  margin-top: 0px;
+  position: relative;
+  cursor: pointer;
+}
+
+.variable_order_num{
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+.variables_simple_listing_wrap{
+  padding-left: 10px;
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+}
+.table_wrap .variables_simple_listing_wrap .variables_simple_listing{
+  overflow-x: auto;
+  max-width: 100%;
+}
+.variables_simple_listing table td{
+  padding: 2px 10px;
+  cursor: pointer;
+}
+.variables_simple_listing table tr:nth-child(even){
+  background: #ddd;
+}
+
+.variables_simple_listing_description{
+  overflow: hidden; 
+  max-width: 400px; 
+  max-height: 20px; 
+  text-overflow: ellipsis; 
+  white-space: nowrap; 
+  word-break: break-all;
+}
+
+
+
+
+@media screen and (max-width: 880px) {
+  #catalog{
+    margin: 5px;
+    margin-top: 40px;
+    padding-bottom: 20px;
+    max-width: calc(100% - 10px);
+  }
+
+  .variables_listing_wrap{
+    margin: auto;
+  }
+  .table_wrap{
+    margin-left: 0;
+    max-width: calc(100% - 5px);
+    padding: 0;
+  }
+  .variable_box{
+    width: auto;
+    max-width: calc(100% - 10px);
+  }
+  .table_modalities .modality_frequence_box_td{
+    width: 120px;
+  }
+  .table_modalities .modality_value{
+    max-width: 120px;
+  }
+  .variable_table{
+    max-width: 100%;
+  }
+  .variable_table td.variable_description{
+    max-width: 100%;
+  }
+  .modality_frequence_box{
+    width: 170px;
+  }
+  .table_modalities .modality_value_wrap{
+    max-width: 110px;
+  }
+  .table_box{
+    padding-left: 0px;
+  }
+  /*.variables_simple_listing_wrap{
+    max-width: 100%;
+  }
+  .variables_simple_listing{
+    max-width: 100%;
+  }*/
+}
+
+@media screen and (max-width: 600px) {
+  #catalog{
+    margin: 0px;
+    margin-top: 40px;
+    max-width: 100%;
+  }
+  .database_box{
+    margin: 5px 1px;
+    padding: 0px;
+    max-width: calc(100% - 4px);
+    overflow: hidden;
+  }
+  .database_close_btn,
+  .table_close_btn{
+    margin-right: 10px;
+    margin-top: 5px;
+  }
+  .table_wrap{
+    margin: 5px 0px;
+    padding: 0px;
+    max-width: 100%
+  }
+  .table_box{
+    width: 100%;
+  }
+  .variable_box{
+    padding: 0px;
+    margin: 5px 0px;
+    padding-bottom: 10px;
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .database_description_wrap,
+  .table_description_wrap{
+    max-width: 100%;
+  }
+}
+
+

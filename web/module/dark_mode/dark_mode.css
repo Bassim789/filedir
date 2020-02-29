@@ -1,0 +1,61 @@
+html,
+body,
+.table_wrap,
+#selection_boxes,
+.variable_box,
+.chosen-container-single:not(.chosen-with-drop) .chosen-single,
+.chosen-container .chosen-drop,
+.percent_bar,
+#search_bar_input
+{
+  color: #666;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.chosen-container-single,
+.chosen-container-single .chosen-single{
+  color: #666;
+  background-image: none !important;
+}
+
+.variables_simple_listing table tr:nth-child(even),
+.close:before, .close:after{
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+html.dark,
+html.dark body{
+  color: #ccc;
+  background: #111;
+}
+html.dark .table_wrap,
+html.dark #selection_boxes{
+  color: #ccc;
+  background: #222;
+}
+html.dark .variable_box,
+html.dark .chosen-container-single .chosen-single,
+html.dark .chosen-container .chosen-drop,
+html.dark .chosen-container .chosen-results,
+html.dark .chosen-container .no-results,
+html.dark .chosen-container input,
+html.dark #search_bar_input,
+html.dark .variables_simple_listing table tr:nth-child(even)
+{
+  color: #ccc;
+  background: #333;
+}
+
+html.dark .percent_bar{
+  background: rgba(24, 196, 8, 0.8);
+}
+html.dark .percent_bar.percent_error_bar{
+  background: rgba(227, 95, 59, 0.4);
+}
+
+
+html.dark .close:before, html.dark .close:after{
+  background: #ccc;
+}
