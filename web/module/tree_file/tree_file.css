@@ -13,6 +13,25 @@
   text-decoration: underline;
 }
 
+.file_icon{
+  width: 50px;
+}
+
+.file_type_short_name{
+  font-size: 20px;
+}
+
+.variable_box.click_folder,
+.variable_box.click_filter_type{
+  cursor: pointer;
+}
+.variable_box.click_folder:hover,
+.variable_box.click_filter_type:hover{
+  -moz-box-shadow: 0 0 10px #aaa;
+  -webkit-box-shadow: 0 0 10px #aaa;
+  box-shadow: 0 0 10px #aaa;
+}
+
 .database_box{
   display: inline-block;
   float: left;

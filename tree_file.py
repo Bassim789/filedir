@@ -1,5 +1,7 @@
 import os
 import json
+from datetime import datetime
+start_time = datetime.now()
 
 def prepend_line(path, line):
   with open(path, 'r+') as file:
@@ -10,10 +12,21 @@ def prepend_line(path, line):
 def get_clean_path(path):
   return path[1:] if path.startswith('/') else path
 
-path_and_file = os.path.realpath(__file__)
-filename = os.path.basename(path_and_file)
-path = path_and_file.split(filename)[0]
+def get_size_clean(size_in_bytes):
+  if size_in_bytes > (1024*1024*1024):
+    return str(size_in_bytes / (1024*1024*1024)) + ' GB'
+  elif size_in_bytes > (1024*1024):
+    return str(size_in_bytes / (1024 * 1024)) + ' MB'
+  elif size_in_bytes > 1024:
+    return str(size_in_bytes / 1024) + ' KB'
+  else:
+    return str(size_in_bytes) + ' B'
 
+this_path_and_file  = os.path.realpath(__file__)
+this_filename = os.path.basename(this_path_and_file)
+this_path = this_path_and_file.split(this_filename)[0]
+
+path = '/Users/bassim/Documents/'
 folder_to_scan = path.split('/')[-2]
 root_path = '/'.join(path.split('/')[0:-2])
 
@@ -24,26 +37,29 @@ directories_dict = {folder_to_scan: {
   'directory': folder_to_scan,
   'is_main_folder': True,
   'root_path': root_path,
-  'nb_folder': 0,
   'nb_folder_recursive': 0,
-  'nb_file': 0,
-  'nb_file_recursive': 0
+  'nb_file_recursive': 0,
+  'size_recursive': 0,
+  'file_types': {}
 }}
 
 files_dict = {}
 
-for r, d, f in os.walk(path):
+for r, dirs, files in os.walk(path):
+
+  # d.endswith('node_modules') or
+  dirs[:] = [d for d in dirs if not d.endswith('.git')]
 
   root = r.split(root_path)[1].strip('/')
 
-  for directory in d:
+  for directory in dirs:
     directory_info = {
       'path': root, 
       'directory': directory,
-      'nb_folder': 0,
       'nb_folder_recursive': 0,
-      'nb_file': 0,
-      'nb_file_recursive': 0
+      'nb_file_recursive': 0,
+      'size_recursive': 0,
+      'file_types': {}
     }
     dir_path = root + '/' + directory
     key = get_clean_path(dir_path)
@@ -54,21 +70,53 @@ for r, d, f in os.walk(path):
       key = get_clean_path(key + '/' + directory_path)
       directories_dict[key]['nb_folder_recursive'] += 1
     
-  for file in f:
+  for file in files:
+
+    if file == '.DS_Store':
+      continue
+  
+    size = False
+    try:
+      size = os.path.getsize(root_path + '/' + root + '/' + file)
+    except Exception as e:
+      pass
+    
+    file_info = {
+      'path': root,
+      'file_name': file,
+      'size': size,
+      'size_clean': get_size_clean(size)
+    }
+
+    file_type = '__nothing__'
+    if len(file.split('.')) > 1 and file.split('.')[0] != '':
+      file_type = file.split('.').pop()
+
     key = ''
     for directory in root.split('/'):
       key = get_clean_path(key + '/' + directory)
       directories_dict[key]['nb_file_recursive'] += 1
+      directories_dict[key]['size_recursive'] += size
+
+      if not file_type in directories_dict[key]['file_types']:
+        directories_dict[key]['file_types'][file_type] = {
+          'nb_file_recursive': 0,
+          'size_recursive': 0
+        }
+
+      directories_dict[key]['file_types'][file_type]['nb_file_recursive'] += 1
+      directories_dict[key]['file_types'][file_type]['size_recursive'] += size
 
     file_key = key + '/' + file
 
-    file_info = {
-      'path': root,
-      'file_name': file,
-      'size': 0, 
-    }
-
     files_dict[file_key] = file_info
+
+
+for key in directories_dict:
+  directories_dict[key]['size_recursive_clean'] = get_size_clean(directories_dict[key]['size_recursive'])
+  for key2 in directories_dict[key]['file_types']:
+    directories_dict[key]['file_types'][key2]['size_recursive_clean'] = \
+      get_size_clean(directories_dict[key]['file_types'][key2]['size_recursive'])
 
 
 tree_file_info = {
@@ -76,18 +124,23 @@ tree_file_info = {
   'folder_to_scan': folder_to_scan
 }
 
-path_and_file = path + 'tree_file_info.js'
+path_and_file = this_path + 'tree_file_info.js'
 with open(path_and_file, 'w') as file:
   json.dump(tree_file_info, file, default=str)
 prepend_line(path_and_file, 'const tree_file_info = ')
 
 
-path_and_file = path + 'directories_data.js'
+path_and_file = this_path + 'directories_data.js'
 with open(path_and_file, 'w') as file:
   json.dump(directories_dict, file, default=str)
 prepend_line(path_and_file, 'const directories_data = ')
 
-path_and_file = path + 'files_data.js'
+path_and_file = this_path + 'files_data.js'
 with open(path_and_file, 'w') as file:
   json.dump(files_dict, file, default=str)
 prepend_line(path_and_file, 'const files_data = ')
+
+duration = datetime.now() - start_time
+print 'done in ' + str(duration)
+
+

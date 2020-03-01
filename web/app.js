@@ -1,4 +1,6 @@
 
+$('.loading').hide()
+
 //console.log(tree_file_data)
 
 const url_params = new Url_params()
@@ -14,4 +16,4 @@ dark_mode.init_actions()
 
 tree_file.append_to_body()
 
-console.log(files_data)
+//console.log(files_data)
