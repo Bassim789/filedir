@@ -7,6 +7,7 @@ class Tree_file{
     this.root_path = info.root_path
     this.folder_to_scan = info.folder_to_scan
     this.path = info.folder_to_scan
+    this.file_type_icons = info.file_type_icons
   }
   add_directories(directories){
     this.directories = directories
@@ -107,12 +108,6 @@ class Tree_file{
       }
     }
 
-    const files_icon = [
-      'js', 'html', 'py', 'md', 'css', 'txt', 
-      'xlsx', 'png', 'pdf', 'docx', 'csv', 'pptx',
-      'mp4', 'ppt', 'jpg', 'jpeg', 'php', 'mp3'
-    ]
-
     const current_files = []
     for(const [key, file] of Object.entries(this.files)){
       if(file.path === this.path){
@@ -123,7 +118,7 @@ class Tree_file{
         file.file_type_short_name = ''
         if(file.file_name.split('.').length > 1 && file.file_name.split('.')[0] !== ''){
           file.file_type_short_name = file.file_name.split('.').pop()
-          if(files_icon.includes(file.file_type_short_name)){
+          if(this.file_type_icons.includes(file.file_type_short_name)){
             file.is_icon = true
           }
         }
@@ -159,7 +154,7 @@ class Tree_file{
             is_icon: false
           }
          
-          if(files_icon.includes(file_type)){
+          if(this.file_type_icons.includes(file_type)){
             file_type_data.is_icon = true
           }
 
@@ -176,7 +171,7 @@ class Tree_file{
         is_icon: false
       }
      
-      if(files_icon.includes(this.file_type)){
+      if(this.file_type_icons.includes(this.file_type)){
         file_type_data.is_icon = true
       }
 

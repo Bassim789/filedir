@@ -126,9 +126,16 @@ for key in directories_dict:
       get_size_clean(directories_dict[key]['file_types'][key2]['size_recursive'])
 
 
+
+file_type_icons = []
+for file in os.listdir(this_path + 'web/media/img/file_icon'):
+  if file.endswith(".png"):
+    file_type_icons.append(file.split('.png')[0])
+
 main_data = {
   'root_path': root_path,
-  'folder_to_scan': folder_to_scan
+  'folder_to_scan': folder_to_scan,
+  'file_type_icons': file_type_icons
 }
 
 if not os.path.exists(this_path + 'data'):
