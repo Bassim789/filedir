@@ -1,4 +1,5 @@
 import os
+import sys
 import json
 from datetime import datetime
 start_time = datetime.now()
@@ -22,15 +23,21 @@ def get_size_clean(size_in_bytes):
   else:
     return str(size_in_bytes) + ' B'
 
+if len(sys.argv) < 2:
+  print "Error: no path given"
+  exit()
+
+path = sys.argv[1]
+if not path.endswith('/'): path += '/'
+
 this_path_and_file  = os.path.realpath(__file__)
 this_filename = os.path.basename(this_path_and_file)
 this_path = this_path_and_file.split(this_filename)[0]
 
-path = '/Users/bassim/Documents/'
 folder_to_scan = path.split('/')[-2]
 root_path = '/'.join(path.split('/')[0:-2])
 
-print 'SCAN ' + root_path + ' -> ' + folder_to_scan
+print 'SCAN ' + root_path + '/' + folder_to_scan
 
 directories_dict = {folder_to_scan: {
   'path': '', 
@@ -119,23 +126,22 @@ for key in directories_dict:
       get_size_clean(directories_dict[key]['file_types'][key2]['size_recursive'])
 
 
-tree_file_info = {
+main_data = {
   'root_path': root_path,
   'folder_to_scan': folder_to_scan
 }
 
-path_and_file = this_path + 'tree_file_info.js'
+path_and_file = this_path + 'data/main_data.js'
 with open(path_and_file, 'w') as file:
-  json.dump(tree_file_info, file, default=str)
-prepend_line(path_and_file, 'const tree_file_info = ')
+  json.dump(main_data, file, default=str)
+prepend_line(path_and_file, 'const main_data = ')
 
-
-path_and_file = this_path + 'directories_data.js'
+path_and_file = this_path + 'data/directories_data.js'
 with open(path_and_file, 'w') as file:
   json.dump(directories_dict, file, default=str)
 prepend_line(path_and_file, 'const directories_data = ')
 
-path_and_file = this_path + 'files_data.js'
+path_and_file = this_path + 'data/files_data.js'
 with open(path_and_file, 'w') as file:
   json.dump(files_dict, file, default=str)
 prepend_line(path_and_file, 'const files_data = ')
