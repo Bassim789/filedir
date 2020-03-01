@@ -1,7 +1,7 @@
 # tree_file
 Download the repo, and go to the repo.
 
-Here run this command where the path to scan has to set:
+Here run this command where the path to scan has to be set:
 
 python tree_file.py $path_to_scan
 
