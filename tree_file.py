@@ -1,3 +1,4 @@
+from __future__ import print_function
 import os
 import sys
 import json
@@ -15,16 +16,16 @@ def get_clean_path(path):
 
 def get_size_clean(size_in_bytes):
   if size_in_bytes > (1024*1024*1024):
-    return str(size_in_bytes / (1024*1024*1024)) + ' GB'
+    return str(round(size_in_bytes / (1024*1024*1024 + 0.0), 1)) + ' GB'
   elif size_in_bytes > (1024*1024):
-    return str(size_in_bytes / (1024 * 1024)) + ' MB'
+    return str(round(size_in_bytes / (1024 * 1024 + 0.0), 1)) + ' MB'
   elif size_in_bytes > 1024:
-    return str(size_in_bytes / 1024) + ' KB'
+    return str(round(size_in_bytes / (1024 + 0.0), 1)) + ' KB'
   else:
     return str(size_in_bytes) + ' B'
 
 if len(sys.argv) < 2:
-  print "Error: no path given"
+  print("Error: no path given")
   exit()
 
 path = sys.argv[1]
@@ -37,7 +38,7 @@ this_path = this_path_and_file.split(this_filename)[0]
 folder_to_scan = path.split('/')[-2]
 root_path = '/'.join(path.split('/')[0:-2])
 
-print 'SCAN ' + root_path + '/' + folder_to_scan
+print('SCAN ' + root_path + '/' + folder_to_scan)
 
 directories_dict = {folder_to_scan: {
   'path': '', 
@@ -157,6 +158,6 @@ with open(path_and_file, 'w') as file:
 prepend_line(path_and_file, 'const files_data = ')
 
 duration = datetime.now() - start_time
-print 'done in ' + str(duration)
+print('done in ' + str(duration))
 
 
