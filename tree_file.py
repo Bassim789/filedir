@@ -131,6 +131,9 @@ main_data = {
   'folder_to_scan': folder_to_scan
 }
 
+if not os.path.exists(this_path + 'data'):
+  os.makedirs(this_path + 'data')
+
 path_and_file = this_path + 'data/main_data.js'
 with open(path_and_file, 'w') as file:
   json.dump(main_data, file, default=str)
