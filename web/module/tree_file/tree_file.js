@@ -198,7 +198,7 @@ class Tree_file{
     const that = this
 
     $('body').on('click', '.click_folder', function() {
-      const dir_name = $(this).data('directory').trim()
+      const dir_name = $(this).data('directory').toString().trim()
       console.log(dir_name)
       that.path += '/' + dir_name
       let param_to_set = that.path
@@ -208,7 +208,7 @@ class Tree_file{
     })
 
     $('body').on('click', '.inner_path_part', function() {
-      const inner_path_part_value = $(this).data('value') 
+      const inner_path_part_value = $(this).data('value').toString()
       that.path = inner_path_part_value
       let param_to_set = inner_path_part_value
       if(param_to_set === that.folder_to_scan) param_to_set = ''
@@ -217,7 +217,7 @@ class Tree_file{
     })
 
     $('body').on('click', '.click_filter_type', function() {
-      const file_type = $(this).data('file_type')
+      const file_type = $(this).data('file_type').toString()
       if(file_type === that.file_type){
         that.file_type = ''
         url_params.set_param('file_type', '')
