@@ -31,6 +31,10 @@ if len(sys.argv) < 2:
 path = sys.argv[1]
 if not path.endswith('/'): path += '/'
 
+output_encoding = 'utf8'
+if len(sys.argv) == 3:
+  output_encoding = sys.argv[2]
+
 this_path_and_file  = os.path.realpath(__file__)
 this_filename = os.path.basename(this_path_and_file)
 this_path = this_path_and_file.split(this_filename)[0]
@@ -144,20 +148,19 @@ if not os.path.exists(this_path + 'data'):
 
 path_and_file = this_path + 'data/main_data.js'
 with open(path_and_file, 'w') as file:
-  json.dump(main_data, file, default=str)
+  json.dump(main_data, file, default=str, encoding=output_encoding)
 prepend_line(path_and_file, 'const main_data = ')
 
 path_and_file = this_path + 'data/directories_data.js'
 with open(path_and_file, 'w') as file:
-  json.dump(directories_dict, file, default=str)
+  json.dump(directories_dict, file, default=str, encoding=output_encoding)
 prepend_line(path_and_file, 'const directories_data = ')
 
 path_and_file = this_path + 'data/files_data.js'
 with open(path_and_file, 'w') as file:
-  json.dump(files_dict, file, default=str)
+  json.dump(files_dict, file, default=str, encoding=output_encoding)
 prepend_line(path_and_file, 'const files_data = ')
 
 duration = datetime.now() - start_time
 print('done in ' + str(duration))
-
 
