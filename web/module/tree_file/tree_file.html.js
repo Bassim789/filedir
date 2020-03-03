@@ -10,45 +10,50 @@ template.tree_file = `
 
   <div class="database_info" style="float: right;">
     {{#parent_directory}}
-      dossiers: {{nb_folder_recursive_clean}}<br>
-      fichiers: {{nb_file_recursive_clean}} <br>
-      taille: {{size_recursive_clean}} <br>
+      {{nb_folder_recursive_clean}}
+      <img src="web/media/img/folder_icon.png" class="little_icon"><br>
+      {{nb_file_recursive_clean}}
+      <img src="web/media/img/file_little_icon.png" class="little_icon"><br>
+      {{size_recursive_clean}}
     {{/parent_directory}}
-    types: {{nb_file_types}} 
   </div>
 
   <div class="tables_listing">
     <div class="table_wrap" style="max-height: 300px; overflow: auto;">
-      <div class="variables_listing_wrap">      
+      <div class="variables_listing_wrap">
+        <span class="nb_file_type">type: {{nb_file_types}}</span>
         <div class="variables_listing">
           {{#file_types}}
-          <div class="variable_box click_filter_type" data-file_type="{{file_type}}">
+          <div class="variable_box click_filter_type {{file_type}}" 
+                data-file_type="{{file_type}}">
+            <div class="variable_order_num">#{{order_num}}</div>
             <table class="variable_table">
               <tbody class="variable_main_info_section">
                 <tr>
                   <th colspan="2">
-
                     <!-- {{#is_icon}} -->
-                    <img src="web/media/img/file_icon/{{file_type}}.png" class="file_icon">
+                    <img src="web/media/img/file_icon/{{file_type}}.png" class="file_type_icon">
                     <!-- {{/is_icon}} -->
                     <!-- {{^is_icon}} -->
                     <span data-file_type="{{file_type}}">
                       {{file_type}}
                     </span>
-                    <!-- {{/is_icon}} -->
+                    <div style="padding-bottom: 15px; width: 100%;"></div>
 
-                    <br><br>
-                    
+                    <!-- {{/is_icon}} -->
                   </th>
                 </tr>
                 <tr>
                   <td style="text-align: center;">
                     <span style="text-align: center;">
+                      <!-- {{#is_icon}} -->
                       <span>
                         {{file_type}}
                       </span>
+                      <!-- {{/is_icon}} -->
                       <br>
-                      {{nb_file_recursive_clean}} fichiers <br>
+                      {{nb_file_recursive_clean}}
+                      <img src="web/media/img/file_little_icon.png" class="little_icon" style="height: 15px;"><br>
                       {{size_recursive_clean}}
                     </span>
                   </td>
@@ -65,10 +70,12 @@ template.tree_file = `
   <div class="tables_listing">
     <div class="table_wrap">
 
-      <div class="variables_listing_wrap">      
+      <div class="variables_listing_wrap">
+        <span class="nb_file_type">dossier: {{nb_folder}}</span>     
         <div class="variables_listing">
-          {{#current_directories}}
+        {{#current_directories}}
           <div class="variable_box click_folder" data-directory="{{directory}}">
+            <div class="variable_order_num">#{{order_num}}</div>
             <table class="variable_table">
               <tbody class="variable_main_info_section">
                 <tr>
@@ -99,7 +106,15 @@ template.tree_file = `
                           <!-- {{^hide_percent}} --> 
                           <spon class="percent_value">{{percent}}%</spon>
                           <!-- {{/hide_percent}} --> 
-                          <span class="frequency">{{nb_clean}}</span> 
+                          <span class="frequency">
+                            {{nb_clean}}
+                            {{#img_folder}}
+                              <img src="web/media/img/folder_icon.png" class="little_icon"><br>
+                            {{/img_folder}}
+                            {{#img_file}}
+                              <img src="web/media/img/file_little_icon.png" class="little_icon"><br>
+                            {{/img_file}}
+                          </span> 
                         </div>
                         <div class="modality_frequence_hidden">
                           <spon class="percent_value">{{percent}}%</spon>
@@ -115,9 +130,19 @@ template.tree_file = `
             </table>
           </div>
           {{/current_directories}}
-
+        </div>
+      </div>
+    </div>
+  </div>
+    
+  <div class="tables_listing">
+    <div class="table_wrap">
+      <div class="variables_listing_wrap">
+        <span class="nb_file_type">fichier: {{nb_file}}</span>     
+        <div class="variables_listing">
           {{#current_files}}
           <div class="variable_box">
+            <div class="variable_order_num">#{{order_num}}</div>
             <table class="variable_table">
               <tbody class="variable_main_info_section">
                 <tr>

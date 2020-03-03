@@ -38,6 +38,14 @@ class Tree_file{
       path = path.slice(1)
     return path
   }
+  // add_numerotation(object){
+  //   let count = 0
+  //   for(const [key, item] of Object.entries(object)){
+  //     count += 1
+  //     item.order_num = count
+  //   }
+  //   return object
+  // }
   update(){
     const current_dir = this.directories[this.path]
     const inner_path = this.clean_path([current_dir.path, current_dir.directory].join('/'))
@@ -51,9 +59,7 @@ class Tree_file{
       })
     }
 
-    const current_directories = []
-    
-
+    let current_directories = []
     let parent_directory
 
     if(this.file_type === '' || this.file_type === undefined){
@@ -64,15 +70,14 @@ class Tree_file{
       for(const [key, directory] of Object.entries(this.directories)){
         if(directory.path === this.path){
           directory.rows_info = [{
-            name: 'dossiers',
             percent: Math.round(directory.nb_folder_recursive / parent_directory.nb_folder_recursive * 100),
-            nb_clean: parseInt(directory.nb_folder_recursive).toLocaleString()
+            nb_clean: parseInt(directory.nb_folder_recursive).toLocaleString(),
+            img_folder: true
           }, {
-            name: 'fichiers',
             percent: Math.round(directory.nb_file_recursive / parent_directory.nb_file_recursive * 100),
-            nb_clean: parseInt(directory.nb_file_recursive).toLocaleString()
+            nb_clean: parseInt(directory.nb_file_recursive).toLocaleString(),
+            img_file: true
           }, {
-            name: 'taille',
             percent: Math.round(directory.size_recursive / parent_directory.size_recursive * 100),
             nb_clean: directory.size_recursive_clean
           }]
@@ -80,11 +85,7 @@ class Tree_file{
         }
       }
     } else {
-
       parent_directory = this.directories[this.path].file_types[this.file_type]
-
-      //console.log(parent_directory)
-
       parent_directory.nb_file_recursive_clean = parent_directory.nb_file_recursive.toLocaleString()
 
       for(const [key, directory] of Object.entries(this.directories)){
@@ -95,11 +96,12 @@ class Tree_file{
           const size_clean = directory.file_types[this.file_type].size_recursive_clean
           const size_parent = parent_directory.size_recursive
           directory.rows_info = [{
-            name: 'fichiers',
+            name: '',
             percent: Math.round(nb_file / nb_file_parent * 100),
-            nb_clean: parseInt(nb_file).toLocaleString()
+            nb_clean: parseInt(nb_file).toLocaleString(),
+            img_file: true
           }, {
-            name: 'taille',
+            name: '',
             percent: Math.round(size / size_parent * 100),
             nb_clean: size_clean
           }]
@@ -108,7 +110,7 @@ class Tree_file{
       }
     }
 
-    const current_files = []
+    let current_files = []
     for(const [key, file] of Object.entries(this.files)){
       if(file.path === this.path){
 
@@ -125,7 +127,7 @@ class Tree_file{
 
         file.rows_info = [
           {
-            name: 'taille',
+            name: '',
             percent: Math.round(file.size / parent_directory.size_recursive * 100),
             nb_clean: file.size_clean //parseInt(directory.nb_file_recursive).toLocaleString()
           }
@@ -178,10 +180,11 @@ class Tree_file{
       file_types.push(file_type_data)
     }
 
-    file_types.sort((a, b) => (a.nb_file_recursive < b.nb_file_recursive) ? 1 : -1)
-    //file_types = file_types.splice(0, 30)
-
-    //console.log(file_types)
+    file_types.sort((a, b) => (a.size_recursive < b.size_recursive) ? 1 : -1)
+   
+    // file_types = this.add_numerotation(file_types)
+    // current_directories = this.add_numerotation(current_directories)
+    // current_files = this.add_numerotation(current_files)
 
     template.render('#tree_file', 'tree_file', {
       root_path: this.root_path,
@@ -190,8 +193,14 @@ class Tree_file{
       file_types,
       current_directories,
       current_files,
-      nb_file_types: file_types.length
+      nb_file_types: file_types.length,
+      nb_folder: current_directories.length,
+      nb_file: current_files.length
     })
+
+    if(this.file_type !== '' && this.file_type !== undefined){
+      $('.variable_box.click_filter_type.' + this.file_type).addClass('selected')
+    }
   }
 
   actions(){
@@ -199,7 +208,6 @@ class Tree_file{
 
     $('body').on('click', '.click_folder', function() {
       const dir_name = $(this).data('directory').toString().trim()
-      console.log(dir_name)
       that.path += '/' + dir_name
       let param_to_set = that.path
       if(param_to_set === that.folder_to_scan) param_to_set = ''
@@ -221,6 +229,7 @@ class Tree_file{
       if(file_type === that.file_type){
         that.file_type = ''
         url_params.set_param('file_type', '')
+        $(this).removeClass('selected')
       } else {
         that.file_type = file_type
         url_params.set_param('file_type', file_type)

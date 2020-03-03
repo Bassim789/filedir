@@ -16,9 +16,21 @@
 .file_icon{
   width: 50px;
 }
+.file_type_icon{
+  height: 30px;
+}
 
 .file_type_short_name{
   font-size: 20px;
+}
+
+.little_icon{
+  height: 20px;
+  margin-bottom: -2px;
+}
+
+.nb_file_type{
+  padding-left: 10px;
 }
 
 .variable_box.click_folder,
@@ -26,7 +38,8 @@
   cursor: pointer;
 }
 .variable_box.click_folder:hover,
-.variable_box.click_filter_type:hover{
+.variable_box.click_filter_type:hover,
+.variable_box.selected{
   -moz-box-shadow: 0 0 10px #aaa;
   -webkit-box-shadow: 0 0 10px #aaa;
   box-shadow: 0 0 10px #aaa;
@@ -61,6 +74,8 @@
   float: left;
   margin: 5px;
   margin-top: 10px;
+  text-align: right;
+  font-size: 20px;
 }
 .database_description_wrap{
   max-width: 500px;
@@ -83,7 +98,6 @@
   float: left;
   margin: 5px;
   max-width: 100%;
-  min-height: 125px;
   border-radius: 20px;
   padding: 5px;
   -webkit-box-sizing: border-box;
@@ -192,7 +206,7 @@
   max-width: 220px;
 }
 .table_modalities .modality_frequence_box_td{
-  width: 200px;
+  width: 150px;
 }
 .table_modalities .modality_value{
   text-align: right;
@@ -211,7 +225,7 @@
 }
 .modality_frequence_box{
   position: relative;
-  width: 200px;
+  width: 150px;
   float: right;
 }
 .modality_frequence_box .percent_value{
@@ -350,8 +364,9 @@
 
 .variable_order_num{
   position: absolute;
-  top: 10px;
-  left: 10px;
+  top: -5px;
+  left: 0px;
+  display: none;
 }
 
 .variables_simple_listing_wrap{
