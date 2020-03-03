@@ -28,7 +28,7 @@ template.tree_file = `
   </div>
 
   <div class="tables_listing">
-    <div class="table_wrap" style="max-height: 300px; overflow: auto;">
+    <div class="table_wrap" style="max-height: 170px; overflow: auto;">
       <div class="variables_listing_wrap">
         <span class="nb_file_type">type: {{nb_file_types}}</span>
         <div class="variables_listing">
