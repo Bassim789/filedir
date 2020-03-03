@@ -123,7 +123,7 @@ for r, dirs, files in os.walk(path):
 
     files_dict[file_key] = file_info
 
-    if file == '.desc.txt':
+    if file == '_info.txt':
       with open (root_path + '/' + file_key, 'r') as f:
         description = f.read()
         directories_dict[key]['description'] = description
