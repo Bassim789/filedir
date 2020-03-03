@@ -12,7 +12,8 @@ template.tree_file = `
   {{#parent_directory_description}}
   <div class="separation"></div>
   <div class="database_description_wrap">
-    <div class="database_description">{{parent_directory_description}}</div>
+    <div class="database_description">{{parent_directory_description}}
+    </div>
   </div>
   {{/parent_directory_description}}
 </div>
@@ -112,9 +113,11 @@ template.tree_file = `
               <tbody class="variable_rows_section">
                 <!-- {{#rows_info}} -->
                   <tr class="table_modalities">
+                    <!--
                     <td class="modality_value_wrap">
                       <span class="modality_value">{{name}}</span>
                     </td>
+                    -->
                     <td>
                       <div class="modality_frequence_box">
                         <div class="modality_frequence">

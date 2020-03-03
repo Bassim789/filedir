@@ -247,7 +247,7 @@
 .modality_frequence_box{
   position: relative;
   width: 150px;
-  float: right;
+  margin: auto;
 }
 .modality_frequence_box .percent_value{
   float: right;
