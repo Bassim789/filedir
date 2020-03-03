@@ -46,6 +46,25 @@ class Tree_file{
   //   }
   //   return object
   // }
+  put_hidden_at_the_end(array, item_name){
+    const array_temp = array
+    array = []
+    const items_hidden = []
+    for(const [key, item] of Object.entries(array_temp)){
+      if(item[item_name].startsWith('.')){
+        if(items_hidden.length === 0){
+          item.first_hidden = true
+        }
+        items_hidden.push(item)
+      } else {
+        array.push(item)
+      }
+    }
+    if(items_hidden.length > 0){
+      items_hidden[items_hidden.length - 1].last_hidden = true
+    }
+    return [...array, ...items_hidden]
+  }
   update(){
     const current_dir = this.directories[this.path]
     const inner_path = this.clean_path([current_dir.path, current_dir.directory].join('/'))
@@ -186,6 +205,9 @@ class Tree_file{
     // current_directories = this.add_numerotation(current_directories)
     // current_files = this.add_numerotation(current_files)
 
+    current_directories = this.put_hidden_at_the_end(current_directories, 'directory')
+    current_files = this.put_hidden_at_the_end(current_files, 'file_name')
+
     template.render('#tree_file', 'tree_file', {
       root_path: this.root_path,
       inner_path_parts,
@@ -195,12 +217,20 @@ class Tree_file{
       current_files,
       nb_file_types: file_types.length,
       nb_folder: current_directories.length,
-      nb_file: current_files.length
+      nb_file: current_files.length,
+      parent_directory_description: parent_directory.description
     })
 
     if(this.file_type !== '' && this.file_type !== undefined){
       $('.variable_box.click_filter_type.' + this.file_type).addClass('selected')
     }
+
+    new Readmore('.database_description_wrap', {
+      collapsedHeight: 35,
+      speed: 300,
+      moreLink: '<a href="#" class="readmore_btn">Suite...</a>',
+      lessLink: '<a href="#" class="readless_btn">Réduire...</a>'
+    })
   }
 
   actions(){
@@ -235,6 +265,11 @@ class Tree_file{
         url_params.set_param('file_type', file_type)
       }
       that.update()
+    })
+
+    $('body').on('click', '.btn_show_hidden', function() {
+      $(this).hide()
+      $(this).parent().find('.hidden_box').show()
     })
 
     window.onpopstate = () => {

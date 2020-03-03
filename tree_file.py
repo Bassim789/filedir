@@ -59,10 +59,12 @@ files_dict = {}
 
 for r, dirs, files in os.walk(path):
 
-  # d.endswith('node_modules') or
-  dirs[:] = [d for d in dirs if not d.endswith('.git')]
+  #dirs[:] = [d for d in dirs if not d.endswith('.git')]
 
-  root = r.split(root_path)[1].strip('/')
+  if root_path.strip('/') == '':
+    root = ''
+  else:
+    root = r.split(root_path)[1].strip('/')
 
   for directory in dirs:
     directory_info = {
@@ -80,13 +82,10 @@ for r, dirs, files in os.walk(path):
     key = ''
     for directory_path in root.split('/'):
       key = get_clean_path(key + '/' + directory_path)
+      if key == '': continue
       directories_dict[key]['nb_folder_recursive'] += 1
     
   for file in files:
-
-    if file == '.DS_Store':
-      continue
-  
     size = False
     try:
       size = os.path.getsize(root_path + '/' + root + '/' + file)
@@ -107,6 +106,7 @@ for r, dirs, files in os.walk(path):
     key = ''
     for directory in root.split('/'):
       key = get_clean_path(key + '/' + directory)
+      if key == '': continue
       directories_dict[key]['nb_file_recursive'] += 1
       directories_dict[key]['size_recursive'] += size
 
@@ -122,6 +122,11 @@ for r, dirs, files in os.walk(path):
     file_key = key + '/' + file
 
     files_dict[file_key] = file_info
+
+    if file == '.folder_description.txt':
+      with open (root_path + '/' + file_key, 'r') as f:
+        description = f.read()
+        directories_dict[key]['description'] = description
 
 
 for key in directories_dict:

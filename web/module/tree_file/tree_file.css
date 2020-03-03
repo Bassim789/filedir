@@ -33,6 +33,26 @@
   padding-left: 10px;
 }
 
+.separation{
+  width: 100%;
+  display: inline-block;
+}
+
+.directory_description{
+  float: left;
+  white-space: pre
+}
+
+.btn_show_hidden{
+  cursor: pointer;
+}
+
+.variable_name{
+  display: inline-block;
+  max-width: 180px;
+  word-break: break-all;
+}
+
 .variable_box.click_folder,
 .variable_box.click_filter_type{
   cursor: pointer;
@@ -77,6 +97,7 @@
   text-align: right;
   font-size: 20px;
 }
+
 .database_description_wrap{
   max-width: 500px;
 }
@@ -448,7 +469,7 @@
   }*/
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 400px) {
   #catalog{
     margin: 0px;
     margin-top: 40px;
@@ -482,7 +503,7 @@
   }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 300px) {
   .database_description_wrap,
   .table_description_wrap{
     max-width: 100%;

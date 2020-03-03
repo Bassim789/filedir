@@ -2,11 +2,20 @@ template.tree_file = `
 
 <div class="database_box">
 
+ <div style="display: inline-block;">
   <div class="database_name">
     {{root_path}}/
     <br>
     {{#inner_path_parts}}<span class="inner_path_part" data-value="{{inner_path_part_value}}">{{inner_path_part}}/</span>{{/inner_path_parts}}
   </div>
+
+  {{#parent_directory_description}}
+  <div class="separation"></div>
+  <div class="database_description_wrap">
+    <div class="database_description">{{parent_directory_description}}</div>
+  </div>
+  {{/parent_directory_description}}
+</div>
 
   <div class="database_info" style="float: right;">
     {{#parent_directory}}
@@ -74,6 +83,10 @@ template.tree_file = `
         <span class="nb_file_type">dossier: {{nb_folder}}</span>     
         <div class="variables_listing">
         {{#current_directories}}
+          {{#first_hidden}}
+          <div class="btn_show_hidden">Voir les cachés</div>
+          <div class="hidden_box" data-type="folder" style="display: none;">
+          {{/first_hidden}}
           <div class="variable_box click_folder" data-directory="{{directory}}">
             <div class="variable_order_num">#{{order_num}}</div>
             <table class="variable_table">
@@ -85,8 +98,13 @@ template.tree_file = `
                     </span>
                   </th>
                 </tr>
+                {{#description}}
+                <tr><td class="variable_description" colspan="2">
+                  <div class="variable_description_content">{{description}}</div>
+                </td></tr>
+                {{/description}}
                 <tr>
-                  <td colspan="2" style="text-align: center; padding: 10px;">
+                  <td colspan="2" style="text-align: center; padding: 0px;">
                     <img src="web/media/img/folder_icon.png" class="file_icon">
                   </td>
                 </tr>
@@ -129,6 +147,9 @@ template.tree_file = `
               </tbody>
             </table>
           </div>
+          {{#last_hidden}}
+          </div>
+          {{/last_hidden}}
           {{/current_directories}}
         </div>
       </div>
@@ -141,6 +162,10 @@ template.tree_file = `
         <span class="nb_file_type">fichier: {{nb_file}}</span>     
         <div class="variables_listing">
           {{#current_files}}
+          {{#first_hidden}}
+          <div class="btn_show_hidden">Voir les cachés</div>
+          <div class="hidden_box" data-type="file" style="display: none;">
+          {{/first_hidden}}
           <div class="variable_box">
             <div class="variable_order_num">#{{order_num}}</div>
             <table class="variable_table">
@@ -150,16 +175,20 @@ template.tree_file = `
                     <span class="variable_name">{{file_name}}</span>
                   </th>
                 </tr>
+                <!-- {{#is_icon}} -->
                 <tr>
                   <td colspan="2" style="text-align: center; padding: 10px;">
-                    <!-- {{#is_icon}} -->
                     <img src="web/media/img/file_icon/{{file_type_short_name}}.png" class="file_icon">
-                    <!-- {{/is_icon}} -->
-                    <!-- {{^is_icon}} -->
-                    <span class="file_type_short_name">{{file_type_short_name}}</span>
-                    <!-- {{/is_icon}} -->
                   </td>
                 </tr>
+                <!-- {{/is_icon}} -->
+                <!-- {{^is_icon}} {{#file_type_short_name}} -->
+                <tr>
+                  <td colspan="2" style="text-align: center; padding: 10px;">
+                    <span class="file_type_short_name">{{file_type_short_name}}</span>
+                  </td>
+                </tr>
+                 <!-- {{/file_type_short_name}} {{/is_icon}} -->
                 <!-- {{#rows_info}} -->
                   <tr class="table_modalities">
                     <td class="modality_value_wrap">
@@ -189,6 +218,9 @@ template.tree_file = `
               </tbody>
             </table>
           </div>
+          {{#last_hidden}}
+          </div>
+          {{/last_hidden}}
           {{/current_files}}
         </div>
       </div>
