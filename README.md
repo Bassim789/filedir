@@ -25,7 +25,7 @@ Here you can see your files and folders.
 - Click on a file type to restrain the view to only this type of file, click again to deselect it.
 - Activate the dark mode by clicking on the top right button.
 
-## Description of folder
+## Folder description
 You can add a special file inside folders that will be used as a description for the folder.
 They have to be named like this
 ```
@@ -33,7 +33,7 @@ _info.txt
 ```
 
 ## Future development
-- Add description also for files.
+- Add file description with .info.txt files.
 - Support windows scanning (currently only mac an linux)
 - Change the way the data are loaded inside the browser to scale better (for now you can reach about half a million files).
 - Add test for the scanning and the visualiZation.
