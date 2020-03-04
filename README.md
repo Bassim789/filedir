@@ -30,11 +30,11 @@ They have to be named like this
 _info.txt
 ```
 
-## Future developent
+## Future development
 - Add description also for files.
 - Support windows scanning (currently only mac an linux)
 - Change the way the data are loaded inside the browser to scale better (for now you can reach about half a million files).
-- Add test for the scanning and the visualisation.
+- Add test for the scanning and the visualiZation.
 
 ## License
-This tool is on GPL3 licence.
+This tool is on GPL3 license.
