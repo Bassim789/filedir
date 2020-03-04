@@ -4,7 +4,7 @@ The data produced by the scan are portable and can be visualized in a browser.
 
 ## Scanning
 Download the repo and place it on your computer or a server you want to scan.
-It needs to have python 2 or 3 installed, most computer and server have it by default.
+It needs to be linux or mac and to have python 2 or 3 installed, most computer and server have it by default.
 Open a terminal and go to the repo.
 
 Then use the following command:
@@ -36,6 +36,7 @@ Currently in french only.
 ## Futur developent
 - Support English and some other languages.
 - Add description also for files.
+- Support windows scanning (currently only mac an linux)
 - Change the way the data are loaded inside the browser to scale better (for now you can reach about half a million files).
 - Add test for the scanning and the visualisation.
 
