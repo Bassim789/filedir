@@ -30,8 +30,7 @@ They have to be named like this
 _info.txt
 ```
 
-## Futur developent
-- Support English and some other languages.
+## Future developent
 - Add description also for files.
 - Support windows scanning (currently only mac an linux)
 - Change the way the data are loaded inside the browser to scale better (for now you can reach about half a million files).
