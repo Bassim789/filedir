@@ -8,9 +8,9 @@ It needs to have python 2 or 3 installed, most computer and server have it by de
 Open a terminal and go to the repo.
 
 Then use the following command:
-
+```
 python scan.py path/you/want/to/scan
-
+```
 If an error with encoding appear, you can try adding "latin1" as an argument at the end of the command.
 
 After the scan, three files are created inside a data folder, they contain the result of the scan.
@@ -24,8 +24,11 @@ Click on a file type to restrain the view to only this type of file, click again
 Activate the dark mode by clicking on the top right button.
 
 ## Description of folder
-You can add some _info.txt files inside folders. 
-The text inside it will be used as a description for the folder.
+You can add some a special file inside folders that will be used as a description for the folder.
+They have to be named like this
+```
+_info.txt
+```
 
 ## Language
 Currently in french only.
