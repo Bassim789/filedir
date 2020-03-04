@@ -26,7 +26,7 @@ Here you can see your files and folders.
 - Activate the dark mode by clicking on the top right button.
 
 ## Description of folder
-You can add some a special file inside folders that will be used as a description for the folder.
+You can add a special file inside folders that will be used as a description for the folder.
 They have to be named like this
 ```
 _info.txt
