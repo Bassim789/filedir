@@ -38,11 +38,6 @@
   display: inline-block;
 }
 
-.directory_description{
-  float: left;
-  white-space: pre
-}
-
 .btn_show_hidden{
   cursor: pointer;
 }
@@ -76,7 +71,6 @@
   border-radius: 20px;
   padding: 10px;
   padding-bottom: 0px;
-  /*box-shadow: 0px 2px rgba(150,150,150,0.2);*/
 }
 .database_box .database_name{
   display: inline-block; 
@@ -84,10 +78,6 @@
   margin: 5px; 
   font-size: 20px; 
   font-weight: bold;
-}
-.clickable:hover{
-  text-decoration: underline;
-  cursor: pointer;
 }
 .database_info{
   display: inline-block; 
@@ -350,11 +340,6 @@
   border-top: 10px solid transparent;
 }
 
-.btn_show_more:active,
-.show_less_modality:active{
-  /*background: rgba(150,150,150, 0.2);*/
-}
-
 .variable_type_number,
 .variable_type_text{
   padding: 5px 10px;
@@ -461,16 +446,10 @@
   .table_box{
     padding-left: 0px;
   }
-  /*.variables_simple_listing_wrap{
-    max-width: 100%;
-  }
-  .variables_simple_listing{
-    max-width: 100%;
-  }*/
 }
 
 @media screen and (max-width: 400px) {
-  #catalog{
+  #filedir{
     margin: 0px;
     margin-top: 40px;
     max-width: 100%;
@@ -503,7 +482,7 @@
   }
 }
 
-@media screen and (max-width: 300px) {
+@media screen and (max-width: 350px) {
   .database_description_wrap,
   .table_description_wrap{
     max-width: 100%;

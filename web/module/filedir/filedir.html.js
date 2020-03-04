@@ -81,11 +81,11 @@ template.filedir = `
     <div class="table_wrap">
 
       <div class="variables_listing_wrap">
-        <span class="nb_file_type">dossier: {{nb_folder}}</span>     
+        <span class="nb_file_type">{{nb_folder}} <img src="web/media/img/folder_icon.png" class="little_icon"></span>     
         <div class="variables_listing">
         {{#current_directories}}
           {{#first_hidden}}
-          <div class="btn_show_hidden">Voir les cachés</div>
+          <div class="btn_show_hidden">Show hidden</div>
           <div class="hidden_box" data-type="folder" style="display: none;">
           {{/first_hidden}}
           <div class="variable_box click_folder" data-directory="{{directory}}">
@@ -113,11 +113,6 @@ template.filedir = `
               <tbody class="variable_rows_section">
                 <!-- {{#rows_info}} -->
                   <tr class="table_modalities">
-                    <!--
-                    <td class="modality_value_wrap">
-                      <span class="modality_value">{{name}}</span>
-                    </td>
-                    -->
                     <td>
                       <div class="modality_frequence_box">
                         <div class="modality_frequence">
@@ -162,11 +157,11 @@ template.filedir = `
   <div class="tables_listing">
     <div class="table_wrap">
       <div class="variables_listing_wrap">
-        <span class="nb_file_type">fichier: {{nb_file}}</span>     
+        <span class="nb_file_type">{{nb_file}} <img src="web/media/img/file_little_icon.png" class="little_icon"></span>     
         <div class="variables_listing">
           {{#current_files}}
           {{#first_hidden}}
-          <div class="btn_show_hidden">Voir les cachés</div>
+          <div class="btn_show_hidden">Show hidden</div>
           <div class="hidden_box" data-type="file" style="display: none;">
           {{/first_hidden}}
           <div class="variable_box">

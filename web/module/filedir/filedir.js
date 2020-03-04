@@ -38,14 +38,6 @@ class Filedir{
       path = path.slice(1)
     return path
   }
-  // add_numerotation(object){
-  //   let count = 0
-  //   for(const [key, item] of Object.entries(object)){
-  //     count += 1
-  //     item.order_num = count
-  //   }
-  //   return object
-  // }
   put_hidden_at_the_end(array, item_name){
     const array_temp = array
     array = []
@@ -148,7 +140,7 @@ class Filedir{
           {
             name: '',
             percent: Math.round(file.size / parent_directory.size_recursive * 100),
-            nb_clean: file.size_clean //parseInt(directory.nb_file_recursive).toLocaleString()
+            nb_clean: file.size_clean
           }
         ]
 
@@ -201,10 +193,6 @@ class Filedir{
 
     file_types.sort((a, b) => (a.size_recursive < b.size_recursive) ? 1 : -1)
    
-    // file_types = this.add_numerotation(file_types)
-    // current_directories = this.add_numerotation(current_directories)
-    // current_files = this.add_numerotation(current_files)
-
     current_directories = this.put_hidden_at_the_end(current_directories, 'directory')
     current_files = this.put_hidden_at_the_end(current_files, 'file_name')
 
@@ -228,8 +216,8 @@ class Filedir{
     new Readmore('.database_description_wrap', {
       collapsedHeight: 35,
       speed: 300,
-      moreLink: '<a href="#" class="readmore_btn">Suite...</a>',
-      lessLink: '<a href="#" class="readless_btn">Réduire...</a>'
+      moreLink: '<a href="#" class="readmore_btn">More...</a>',
+      lessLink: '<a href="#" class="readless_btn">Less...</a>'
     })
   }
 
