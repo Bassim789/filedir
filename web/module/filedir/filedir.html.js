@@ -1,4 +1,4 @@
-template.tree_file = `
+template.filedir = `
 
 <div class="database_box">
 

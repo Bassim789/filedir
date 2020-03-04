@@ -1,9 +1,9 @@
-class Tree_file{
+class Filedir{
   constructor(){
     this.file_type = ''
   }
   add_info(info){
-    this.tree_file_info = info
+    this.filedir_info = info
     this.root_path = info.root_path
     this.folder_to_scan = info.folder_to_scan
     this.path = info.folder_to_scan
@@ -16,7 +16,7 @@ class Tree_file{
     this.files = files
   }
   append_to_body(){
-    $('body').append('<div id="tree_file"></div>')
+    $('body').append('<div id="filedir"></div>')
     this.init_path_param()
     this.init_file_type_param()
     this.update()
@@ -208,7 +208,7 @@ class Tree_file{
     current_directories = this.put_hidden_at_the_end(current_directories, 'directory')
     current_files = this.put_hidden_at_the_end(current_files, 'file_name')
 
-    template.render('#tree_file', 'tree_file', {
+    template.render('#filedir', 'filedir', {
       root_path: this.root_path,
       inner_path_parts,
       parent_directory: parent_directory,
