@@ -37,6 +37,7 @@ Currently in french only.
 Support English and some other languages.
 Add description also for files.
 Change the way the data are loaded inside the browser to scale better (for now you can reach about half a million files).
+Add test for the scanning and the visualisation.
 
 ## License
 This tool is on GPL3 licence.
