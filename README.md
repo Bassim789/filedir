@@ -30,9 +30,6 @@ They have to be named like this
 _info.txt
 ```
 
-## Language
-Currently in french only.
-
 ## Futur developent
 - Support English and some other languages.
 - Add description also for files.
