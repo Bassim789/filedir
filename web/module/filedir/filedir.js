@@ -57,6 +57,17 @@ class Filedir{
     }
     return [...array, ...items_hidden]
   }
+  get_size_clean(size_in_bytes){
+    if(size_in_bytes > (1024*1024*1024)){
+      return Math.round(size_in_bytes / (1024*1024*1024) * 10) / 10 + ' GB'
+    } else if(size_in_bytes > (1024*1024)){
+      return Math.round(size_in_bytes / (1024 * 1024) * 10) / 10 + ' MB'
+    } else if(size_in_bytes > 1024){
+      return Math.round(size_in_bytes / 1024 * 10) / 10 + ' KB'
+    } else{
+      return size_in_bytes + ' B'
+    }
+  }
   update(){
     const current_dir = this.directories[this.path]
     const inner_path = this.clean_path([current_dir.path, current_dir.directory].join('/'))
@@ -75,37 +86,38 @@ class Filedir{
 
     if(this.file_type === '' || this.file_type === undefined){
       parent_directory = this.directories[this.path]
-      parent_directory.nb_folder_recursive_clean = parent_directory.nb_folder_recursive.toLocaleString()
-      parent_directory.nb_file_recursive_clean = parent_directory.nb_file_recursive.toLocaleString()
+      parent_directory.nb_folder_clean = parent_directory.nb_folder.toLocaleString()
+      parent_directory.nb_file_clean = parent_directory.nb_file.toLocaleString()
+      parent_directory.size_clean = this.get_size_clean(parent_directory.size)
 
       for(const [key, directory] of Object.entries(this.directories)){
         if(directory.path === this.path){
           directory.rows_info = [{
-            percent: Math.round(directory.nb_folder_recursive / parent_directory.nb_folder_recursive * 100),
-            nb_clean: parseInt(directory.nb_folder_recursive).toLocaleString(),
+            percent: Math.round(directory.nb_folder / parent_directory.nb_folder * 100),
+            nb_clean: parseInt(directory.nb_folder).toLocaleString(),
             img_folder: true
           }, {
-            percent: Math.round(directory.nb_file_recursive / parent_directory.nb_file_recursive * 100),
-            nb_clean: parseInt(directory.nb_file_recursive).toLocaleString(),
+            percent: Math.round(directory.nb_file / parent_directory.nb_file * 100),
+            nb_clean: parseInt(directory.nb_file).toLocaleString(),
             img_file: true
           }, {
-            percent: Math.round(directory.size_recursive / parent_directory.size_recursive * 100),
-            nb_clean: directory.size_recursive_clean
+            percent: Math.round(directory.size / parent_directory.size * 100),
+            nb_clean: this.get_size_clean(directory.size)
           }]
           current_directories.push(directory)
         }
       }
     } else {
       parent_directory = this.directories[this.path].file_types[this.file_type]
-      parent_directory.nb_file_recursive_clean = parent_directory.nb_file_recursive.toLocaleString()
+      parent_directory.nb_file_clean = parent_directory.nb_file.toLocaleString()
 
       for(const [key, directory] of Object.entries(this.directories)){
         if(directory.path === this.path && directory.file_types[this.file_type] !== undefined){
-          const nb_file = directory.file_types[this.file_type].nb_file_recursive
-          const nb_file_parent = parent_directory.nb_file_recursive
-          const size = directory.file_types[this.file_type].size_recursive
-          const size_clean = directory.file_types[this.file_type].size_recursive_clean
-          const size_parent = parent_directory.size_recursive
+          const nb_file = directory.file_types[this.file_type].nb_file
+          const nb_file_parent = parent_directory.nb_file
+          const size = directory.file_types[this.file_type].size
+          const size_clean = this.get_size_clean(directory.file_types[this.file_type].size)
+          const size_parent = parent_directory.size
           directory.rows_info = [{
             name: '',
             percent: Math.round(nb_file / nb_file_parent * 100),
@@ -114,7 +126,7 @@ class Filedir{
           }, {
             name: '',
             percent: Math.round(size / size_parent * 100),
-            nb_clean: size_clean
+            nb_clean: this.get_size_clean(size)
           }]
           current_directories.push(directory)
         }
@@ -139,10 +151,17 @@ class Filedir{
         file.rows_info = [
           {
             name: '',
-            percent: Math.round(file.size / parent_directory.size_recursive * 100),
-            nb_clean: file.size_clean
+            percent: Math.round(file.size / parent_directory.size * 100),
+            nb_clean: this.get_size_clean(file.size)
           }
         ]
+        
+        // if more than 3 days ago get date, else get time ago
+        if(Date.now() - file.last_modif * 1000 > 3 * 24 * 3600 * 1000){
+          file.last_modif_clean = get_datetime(file.last_modif)
+        } else {
+          file.last_modif_clean = get_time_ago(file.last_modif)
+        }
 
         current_files.push(file)
       }
@@ -160,10 +179,10 @@ class Filedir{
         for(const [file_type, data] of Object.entries(parent_directory.file_types)){
           const file_type_data = {
             file_type, 
-            nb_file_recursive: data.nb_file_recursive,
-            size_recursive: data.size_recursive,
-            nb_file_recursive_clean: data.nb_file_recursive.toLocaleString(),
-            size_recursive_clean: data.size_recursive_clean,
+            nb_file: data.nb_file,
+            size: data.size,
+            nb_file_clean: data.nb_file.toLocaleString(),
+            size_clean: this.get_size_clean(data.size),
             is_icon: false
           }
          
@@ -177,10 +196,10 @@ class Filedir{
     } else {
       const file_type_data = {
         file_type: this.file_type, 
-        nb_file_recursive: parent_directory.nb_file_recursive,
-        size_recursive: parent_directory.size_recursive,
-        nb_file_recursive_clean: parent_directory.nb_file_recursive.toLocaleString(),
-        size_recursive_clean: parent_directory.size_recursive_clean,
+        nb_file: parent_directory.nb_file,
+        size: parent_directory.size,
+        nb_file_clean: parent_directory.nb_file.toLocaleString(),
+        size_clean: this.get_size_clean(parent_directory.size),
         is_icon: false
       }
      
@@ -191,7 +210,7 @@ class Filedir{
       file_types.push(file_type_data)
     }
 
-    file_types.sort((a, b) => (a.size_recursive < b.size_recursive) ? 1 : -1)
+    file_types.sort((a, b) => (a.size < b.size) ? 1 : -1)
    
     current_directories = this.put_hidden_at_the_end(current_directories, 'directory')
     current_files = this.put_hidden_at_the_end(current_files, 'file_name')

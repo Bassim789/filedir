@@ -20,11 +20,11 @@ template.filedir = `
 
   <div class="database_info" style="float: right;">
     {{#parent_directory}}
-      {{nb_folder_recursive_clean}}
+      {{nb_folder_clean}}
       <img src="web/media/img/folder_icon.png" class="little_icon"><br>
-      {{nb_file_recursive_clean}}
+      {{nb_file_clean}}
       <img src="web/media/img/file_little_icon.png" class="little_icon"><br>
-      {{size_recursive_clean}}
+      {{size_clean}}
     {{/parent_directory}}
   </div>
 
@@ -62,9 +62,9 @@ template.filedir = `
                       </span>
                       <!-- {{/is_icon}} -->
                       <br>
-                      {{nb_file_recursive_clean}}
+                      {{nb_file_clean}}
                       <img src="web/media/img/file_little_icon.png" class="little_icon" style="height: 15px;"><br>
-                      {{size_recursive_clean}}
+                      {{size_clean}}
                     </span>
                   </td>
                 </tr>
@@ -213,6 +213,11 @@ template.filedir = `
                   
                   </tr>
                 <!-- {{/rows_info}} -->
+                <tr>
+                  <td colspan="2" style="text-align: center;">
+                    {{last_modif_clean}}
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>

@@ -23,7 +23,8 @@
     loader.load('web/lib/', [
       'jquery.min.js',
       'mustache.min.js',
-      'readmore/readmore.min.js'
+      'readmore/readmore.min.js',
+      'timer/Timer.js'
     ])
     loader.load('web/module/', ['utils.js', 'Url_params.js'])
     loader.load('web/module/dark_mode/dark_mode', ['.css', '_slider.css', '.js', '.html.js'])
@@ -35,10 +36,14 @@
 </body>
 <script>
   loader.load('data/', [
-    'main_data.js',
-    'directories_data.js',
-    'files_data.js'
+    'main_data.json.js',
+    'directories_data.json.js',
+    'files_data.json.js'
   ])
   loader.load('web/', ['app.js'])
+
+  if (window.document.documentMode) {
+    document.body.innerHTML = 'Not working in Internet Exporer. Please use another browser like Chrome or Firefox.'
+  }
 </script>
 </html>

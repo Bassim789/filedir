@@ -3,7 +3,6 @@ import os
 import sys
 import json
 from datetime import datetime
-start_time = datetime.now()
 
 def prepend_line(path, line):
   with open(path, 'r+') as file:
@@ -14,15 +13,7 @@ def prepend_line(path, line):
 def get_clean_path(path):
   return path[1:] if path.startswith('/') else path
 
-def get_size_clean(size_in_bytes):
-  if size_in_bytes > (1024*1024*1024):
-    return str(round(size_in_bytes / (1024*1024*1024 + 0.0), 1)) + ' GB'
-  elif size_in_bytes > (1024*1024):
-    return str(round(size_in_bytes / (1024 * 1024 + 0.0), 1)) + ' MB'
-  elif size_in_bytes > 1024:
-    return str(round(size_in_bytes / (1024 + 0.0), 1)) + ' KB'
-  else:
-    return str(size_in_bytes) + ' B'
+start_time = datetime.now()
 
 if len(sys.argv) < 2:
   print("Error: no path given")
@@ -47,19 +38,16 @@ print('SCAN ' + root_path + '/' + folder_to_scan)
 directories_dict = {folder_to_scan: {
   'path': '', 
   'directory': folder_to_scan,
-  'is_main_folder': True,
   'root_path': root_path,
-  'nb_folder_recursive': 0,
-  'nb_file_recursive': 0,
-  'size_recursive': 0,
+  'nb_folder': 0,
+  'nb_file': 0,
+  'size': 0,
   'file_types': {}
 }}
 
 files_dict = {}
 
 for r, dirs, files in os.walk(path):
-
-  #dirs[:] = [d for d in dirs if not d.endswith('.git')]
 
   if root_path.strip('/') == '':
     root = ''
@@ -70,9 +58,9 @@ for r, dirs, files in os.walk(path):
     directory_info = {
       'path': root, 
       'directory': directory,
-      'nb_folder_recursive': 0,
-      'nb_file_recursive': 0,
-      'size_recursive': 0,
+      'nb_folder': 0,
+      'nb_file': 0,
+      'size': 0,
       'file_types': {}
     }
     dir_path = root + '/' + directory
@@ -83,12 +71,16 @@ for r, dirs, files in os.walk(path):
     for directory_path in root.split('/'):
       key = get_clean_path(key + '/' + directory_path)
       if key == '': continue
-      directories_dict[key]['nb_folder_recursive'] += 1
+      directories_dict[key]['nb_folder'] += 1
     
   for file in files:
     size = False
+    last_modif = False
+    complete_path = root_path + '/' + root + '/' + file
+
     try:
-      size = os.path.getsize(root_path + '/' + root + '/' + file)
+      size = os.path.getsize(complete_path)
+      last_modif = round(os.path.getmtime(complete_path))
     except Exception as e:
       pass
     
@@ -96,7 +88,7 @@ for r, dirs, files in os.walk(path):
       'path': root,
       'file_name': file,
       'size': size,
-      'size_clean': get_size_clean(size)
+      'last_modif': last_modif
     }
 
     file_type = '__nothing__'
@@ -107,17 +99,17 @@ for r, dirs, files in os.walk(path):
     for directory in root.split('/'):
       key = get_clean_path(key + '/' + directory)
       if key == '': continue
-      directories_dict[key]['nb_file_recursive'] += 1
-      directories_dict[key]['size_recursive'] += size
+      directories_dict[key]['nb_file'] += 1
+      directories_dict[key]['size'] += size
 
       if not file_type in directories_dict[key]['file_types']:
         directories_dict[key]['file_types'][file_type] = {
-          'nb_file_recursive': 0,
-          'size_recursive': 0
+          'nb_file': 0,
+          'size': 0
         }
 
-      directories_dict[key]['file_types'][file_type]['nb_file_recursive'] += 1
-      directories_dict[key]['file_types'][file_type]['size_recursive'] += size
+      directories_dict[key]['file_types'][file_type]['nb_file'] += 1
+      directories_dict[key]['file_types'][file_type]['size'] += size
 
     file_key = key + '/' + file
 
@@ -127,15 +119,6 @@ for r, dirs, files in os.walk(path):
       with open (root_path + '/' + file_key, 'r') as f:
         description = f.read()
         directories_dict[key]['description'] = description
-
-
-for key in directories_dict:
-  directories_dict[key]['size_recursive_clean'] = get_size_clean(directories_dict[key]['size_recursive'])
-  for key2 in directories_dict[key]['file_types']:
-    directories_dict[key]['file_types'][key2]['size_recursive_clean'] = \
-      get_size_clean(directories_dict[key]['file_types'][key2]['size_recursive'])
-
-
 
 file_type_icons = []
 for file in os.listdir(this_path + 'web/media/img/file_icon'):
@@ -151,21 +134,20 @@ main_data = {
 if not os.path.exists(this_path + 'data'):
   os.makedirs(this_path + 'data')
 
-path_and_file = this_path + 'data/main_data.js'
+path_and_file = this_path + 'data/main_data.json.js'
 with open(path_and_file, 'w') as file:
   json.dump(main_data, file, default=str, encoding=output_encoding)
 prepend_line(path_and_file, 'const main_data = ')
 
-path_and_file = this_path + 'data/directories_data.js'
+path_and_file = this_path + 'data/directories_data.json.js'
 with open(path_and_file, 'w') as file:
   json.dump(directories_dict, file, default=str, encoding=output_encoding)
 prepend_line(path_and_file, 'const directories_data = ')
 
-path_and_file = this_path + 'data/files_data.js'
+path_and_file = this_path + 'data/files_data.json.js'
 with open(path_and_file, 'w') as file:
   json.dump(files_dict, file, default=str, encoding=output_encoding)
 prepend_line(path_and_file, 'const files_data = ')
 
 duration = datetime.now() - start_time
 print('done in ' + str(duration))
-

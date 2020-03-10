@@ -12,12 +12,13 @@ function log(value){
   console.log(JSON.parse(JSON.stringify(value)))
 }
 
-function date_time_readable(timestamp){
-  datetime = new Date(timestamp * 1000).toLocaleDateString( 'fr', {
+function get_datetime(timestamp){
+  return new Date(timestamp * 1000).toLocaleDateString('en', {
     year: 'numeric', 
-    month: 'numeric', 
+    month: 'long', 
     day: 'numeric'
   })
-  duration = Timer.timestamp_to_time_ago(timestamp)
-  return datetime + ' (il y a ' + duration + ')'
+}
+function get_time_ago(timestamp){
+  return Timer.timestamp_to_time_ago(timestamp) + ' ago'
 }
