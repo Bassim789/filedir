@@ -269,6 +269,7 @@
   position: absolute;
   top: 1px;
   left: 0;
+  max-width: 100%;
 }
 
 .percent_bar.percent_error_bar{
