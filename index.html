@@ -41,9 +41,19 @@
     'files_data.json.js'
   ])
   loader.load('web/', ['app.js'])
-
-  if (window.document.documentMode) {
-    document.body.innerHTML = 'Not working in Internet Exporer. Please use another browser like Chrome or Firefox.'
+</script>
+<script>
+  function is_es6(){
+    "use strict"
+    try{
+      eval("var foo = (x)=>x+1")
+      eval("class foo{ constructor(){} }")
+      eval("window.localStorage")
+	} catch(e){ return false }
+    return true
+  }
+  if (!is_es6()){
+    document.body.innerHTML = 'Not working in this browser. Please use another browser like Chrome or Firefox.'
   }
 </script>
 </html>
