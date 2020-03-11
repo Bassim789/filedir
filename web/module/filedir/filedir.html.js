@@ -2,30 +2,36 @@ template.filedir = `
 
 <div class="database_box">
 
- <div style="display: inline-block;">
-  <div class="database_name">
-    {{root_path}}/
-    <br>
-    {{#inner_path_parts}}<span class="inner_path_part" data-value="{{inner_path_part_value}}">{{inner_path_part}}/</span>{{/inner_path_parts}}
-  </div>
+  <div class="tables_listing">
+    <div class="table_wrap" style="width: 100%; background: none;">
+	
+	 <div style="display: inline-block;">
+	  <div class="database_name">
+		{{root_path}}/
+		<br>
+		{{#inner_path_parts}}<span class="inner_path_part" data-value="{{inner_path_part_value}}">{{inner_path_part}}/</span>{{/inner_path_parts}}
+	  </div>
 
-  {{#parent_directory_description}}
-  <div class="separation"></div>
-  <div class="database_description_wrap">
-    <div class="database_description">{{parent_directory_description}}
+	  {{#parent_directory_description}}
+	  <div class="separation"></div>
+	  <div class="database_description_wrap">
+		<div class="database_description">{{parent_directory_description}}
+		</div>
+	  </div>
+	  {{/parent_directory_description}}
+	</div>
+
+	  <div class="database_info" style="float: right;">
+		{{#parent_directory}}
+		  {{nb_folder_clean}}
+		  <img src="web/media/img/folder_icon.png" class="little_icon"><br>
+		  {{nb_file_clean}}
+		  <img src="web/media/img/file_little_icon.png" class="little_icon"><br>
+		  {{size_clean}}
+		{{/parent_directory}}
+	  </div>
+	  
     </div>
-  </div>
-  {{/parent_directory_description}}
-</div>
-
-  <div class="database_info" style="float: right;">
-    {{#parent_directory}}
-      {{nb_folder_clean}}
-      <img src="web/media/img/folder_icon.png" class="little_icon"><br>
-      {{nb_file_clean}}
-      <img src="web/media/img/file_little_icon.png" class="little_icon"><br>
-      {{size_clean}}
-    {{/parent_directory}}
   </div>
 
   <div class="tables_listing">
