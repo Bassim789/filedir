@@ -8,6 +8,8 @@ class Filedir{
     this.folder_to_scan = info.folder_to_scan
     this.path = info.folder_to_scan
     this.file_type_icons = info.file_type_icons
+    this.scan_info = get_time_ago(info.scan_timestamp)
+    this.scan_duration = info.scan_duration
   }
   add_directories(directories){
     this.directories = directories
@@ -225,7 +227,9 @@ class Filedir{
       nb_file_types: file_types.length,
       nb_folder: current_directories.length,
       nb_file: current_files.length,
-      parent_directory_description: parent_directory.description
+      parent_directory_description: parent_directory.description,
+      scan_info: this.scan_info,
+      scan_duration: this.scan_duration
     })
 
     if(this.file_type !== '' && this.file_type !== undefined){

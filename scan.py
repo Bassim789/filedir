@@ -2,7 +2,7 @@ from __future__ import print_function
 import os
 import sys
 import json
-from datetime import datetime
+from time import time
 
 def prepend_line(path, line):
   with open(path, 'r+') as file:
@@ -13,7 +13,17 @@ def prepend_line(path, line):
 def get_clean_path(path):
   return path[1:] if path.startswith('/') else path
 
-start_time = datetime.now()
+def new_directory(path, directory):
+  return {
+    'path': path, 
+    'directory': directory,
+    'nb_folder': 0,
+    'nb_file': 0,
+    'size': 0,
+    'file_types': {}
+  }
+
+start_time = time()
 
 if len(sys.argv) < 2:
   print("Error: no path given")
@@ -35,15 +45,8 @@ root_path = '/'.join(path.split('/')[0:-2])
 
 print('SCAN ' + root_path + '/' + folder_to_scan)
 
-directories_dict = {folder_to_scan: {
-  'path': '', 
-  'directory': folder_to_scan,
-  'root_path': root_path,
-  'nb_folder': 0,
-  'nb_file': 0,
-  'size': 0,
-  'file_types': {}
-}}
+directories_dict = {}
+directories_dict[folder_to_scan] = new_directory('', folder_to_scan)
 
 files_dict = {}
 
@@ -55,17 +58,9 @@ for r, dirs, files in os.walk(path):
     root = r.split(root_path)[1].strip('/')
 
   for directory in dirs:
-    directory_info = {
-      'path': root, 
-      'directory': directory,
-      'nb_folder': 0,
-      'nb_file': 0,
-      'size': 0,
-      'file_types': {}
-    }
     dir_path = root + '/' + directory
     key = get_clean_path(dir_path)
-    directories_dict[key] = directory_info
+    directories_dict[key] = new_directory(root, directory)
 
     key = ''
     for directory_path in root.split('/'):
@@ -125,19 +120,8 @@ for file in os.listdir(this_path + 'web/media/img/file_icon'):
   if file.endswith(".png"):
     file_type_icons.append(file.split('.png')[0])
 
-main_data = {
-  'root_path': root_path,
-  'folder_to_scan': folder_to_scan,
-  'file_type_icons': file_type_icons
-}
-
 if not os.path.exists(this_path + 'data'):
   os.makedirs(this_path + 'data')
-
-path_and_file = this_path + 'data/main_data.json.js'
-with open(path_and_file, 'w') as file:
-  json.dump(main_data, file, default=str, encoding=output_encoding)
-prepend_line(path_and_file, 'const main_data = ')
 
 path_and_file = this_path + 'data/directories_data.json.js'
 with open(path_and_file, 'w') as file:
@@ -149,5 +133,19 @@ with open(path_and_file, 'w') as file:
   json.dump(files_dict, file, default=str, encoding=output_encoding)
 prepend_line(path_and_file, 'const files_data = ')
 
-duration = datetime.now() - start_time
-print('done in ' + str(duration))
+duration = round(time() - start_time, 1)
+
+main_data = {
+  'root_path': root_path,
+  'folder_to_scan': folder_to_scan,
+  'file_type_icons': file_type_icons,
+  'scan_timestamp': round(time()),
+  'scan_duration': duration
+}
+
+path_and_file = this_path + 'data/main_data.json.js'
+with open(path_and_file, 'w') as file:
+  json.dump(main_data, file, default=str, encoding=output_encoding)
+prepend_line(path_and_file, 'const main_data = ')
+
+print('done in ' + str(duration) + ' seconds')

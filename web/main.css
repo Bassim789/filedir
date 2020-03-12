@@ -6,6 +6,11 @@ html, body{
   font-family: Helvetica Neue, Helvetica, Arial;
 }
 
+a{
+  cursor: pointer;
+  color: inherit;
+}
+
 .close {
   position: absolute;
   right: 0;
