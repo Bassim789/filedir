@@ -32,7 +32,7 @@ _info.txt
 
 ## Future development
 - Add file description with .info.txt files.
-- Support windows scanning (currently only mac an linux)
+- Support windows scanning (currently only mac and linux)
 - Change the way the data are loaded inside the browser to scale better (for now you can reach about half a million files).
 - Add test for the scanning and the visualization.
 
