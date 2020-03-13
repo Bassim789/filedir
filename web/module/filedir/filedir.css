@@ -14,6 +14,10 @@
   text-align: center;
 }
 
+.name{
+  word-break: break-all;
+}
+
 .inner_path_part{
   cursor: pointer;
 }
@@ -48,6 +52,11 @@
 
 .btn_show_hidden{
   cursor: pointer;
+  text-align: center;
+  display: grid;
+}
+.btn_show_hidden > p{
+  margin: auto;
 }
 
 .variable_name{
@@ -70,8 +79,7 @@
 
 .database_box{
   display: inline-block;
-  width: auto;
-  max-width: calc(100% - 20px);
+  width: calc(100% - 20px);
   min-height: 100px;
   margin: 5px auto;
   border: 1px solid #999;
@@ -115,7 +123,7 @@
   flex-direction: column; 
   float: left;
   margin: 5px;
-  max-width: 100%;
+  width: 100%;
   border-radius: 20px;
   padding: 5px;
   -webkit-box-sizing: border-box;
@@ -161,15 +169,20 @@
   margin: 0;
   float: left;
   display: inline-block;
+  width: 100%;
   max-width: 100%;
 }
 .variables_listing{
   margin-top: 5px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+}
+.variables_listing.file_type{
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  overflow: hidden;
 }
 .variable_box{
   position: relative;
-  display: inline-block;
-  max-width: 430px;
   margin: 5px 3px;
   padding: 5px;
   padding-bottom: 10px;
@@ -181,8 +194,10 @@
 .variable_table{
   margin: auto;
   border-collapse: collapse;
+  height: 100%;
 }
 .variable_rows_section{
+  vertical-align: bottom;
   border-top: 10px solid transparent;
 }
 .variable_table th{

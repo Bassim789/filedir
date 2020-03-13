@@ -280,7 +280,8 @@ class Filedir{
 
     $('body').on('click', '.btn_show_hidden', function() {
       $(this).hide()
-      $(this).parent().find('.hidden_box').show()
+      const boxes = $(this).parent().find('.hidden_box').html()
+      $(this).parent().append(boxes)
     })
 
     window.onpopstate = () => {

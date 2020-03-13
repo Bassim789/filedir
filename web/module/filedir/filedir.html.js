@@ -40,7 +40,7 @@ template.filedir = `
     <div class="table_wrap" style="max-height: 170px; overflow: auto;">
       <div class="variables_listing_wrap">
         <span class="nb_file_type">type: {{nb_file_types}}</span>
-        <div class="variables_listing">
+        <div class="variables_listing file_type">
           {{#file_types}}
           <div class="variable_box click_filter_type {{file_type}}" 
                 data-file_type="{{file_type}}">
@@ -53,7 +53,7 @@ template.filedir = `
                     <img src="web/media/img/file_icon/{{file_type}}.png" class="file_type_icon">
                     <!-- {{/is_icon}} -->
                     <!-- {{^is_icon}} -->
-                    <span data-file_type="{{file_type}}">
+                    <span data-file_type="{{file_type}}" class="name">
                       {{file_type}}
                     </span>
                     <div style="padding-bottom: 15px; width: 100%;"></div>
@@ -93,7 +93,7 @@ template.filedir = `
         <div class="variables_listing">
         {{#current_directories}}
           {{#first_hidden}}
-          <div class="btn_show_hidden">Show hidden</div>
+          <div class="btn_show_hidden"><p>Show hidden</p></div>
           <div class="hidden_box" data-type="folder" style="display: none;">
           {{/first_hidden}}
           <div class="variable_box click_folder" data-directory="{{directory}}">
@@ -101,7 +101,7 @@ template.filedir = `
             <table class="variable_table">
               <tbody class="variable_main_info_section">
                 <tr>
-                  <th colspan="2">
+                  <th valign="top" colspan="2">
                     <span class="variable_name" data-directory="{{directory}}">
                       {{directory}}
                     </span>
@@ -113,7 +113,7 @@ template.filedir = `
                 </td></tr>
                 {{/description}}
                 <tr>
-                  <td colspan="2" style="text-align: center; padding: 0px;">
+                  <td valign="bottom" colspan="2" style="text-align: center; padding: 0px;">
                     <img src="web/media/img/folder_icon.png" class="file_icon">
                   </td>
                 </tr>
@@ -121,7 +121,7 @@ template.filedir = `
               <tbody class="variable_rows_section">
                 <!-- {{#rows_info}} -->
                   <tr class="table_modalities">
-                    <td>
+                    <td valign="bottom">
                       <div class="modality_frequence_box">
                         <div class="modality_frequence">
                           <!-- {{#hide_percent}} --> 
@@ -169,7 +169,7 @@ template.filedir = `
         <div class="variables_listing">
           {{#current_files}}
           {{#first_hidden}}
-          <div class="btn_show_hidden">Show hidden</div>
+          <div class="btn_show_hidden"><p>Show hidden</p></div>
           <div class="hidden_box" data-type="file" style="display: none;">
           {{/first_hidden}}
           <div class="variable_box">
@@ -177,13 +177,13 @@ template.filedir = `
             <table class="variable_table">
               <tbody class="variable_main_info_section">
                 <tr>
-                  <th colspan="2">
+                  <th valign="top" colspan="2">
                     <span class="variable_name">{{file_name}}</span>
                   </th>
                 </tr>
                 <!-- {{#is_icon}} -->
                 <tr>
-                  <td colspan="2" style="text-align: center; padding: 10px;">
+                  <td valign="bottom" colspan="2" style="text-align: center; padding: 10px;">
                     <img src="web/media/img/file_icon/{{file_type_short_name}}.png" class="file_icon">
                   </td>
                 </tr>
@@ -200,7 +200,7 @@ template.filedir = `
                     <td class="modality_value_wrap">
                       <span class="modality_value">{{name}}</span>
                     </td>
-                    <td>
+                    <td valign="bottom">
                       <div class="modality_frequence_box">
                         <div class="modality_frequence">
                           <!-- {{#hide_percent}} --> 
@@ -222,7 +222,7 @@ template.filedir = `
                   </tr>
                 <!-- {{/rows_info}} -->
                 <tr>
-                  <td colspan="2" style="text-align: center;">
+                  <td valign="bottom" colspan="2" style="text-align: center;">
                     {{last_modif_clean}}
                   </td>
                 </tr>
