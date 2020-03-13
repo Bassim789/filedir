@@ -7,7 +7,7 @@ template.filedir = `
 
        <div style="display: inline-block;">
         <div class="database_name">
-          {{root_path}}/
+          {{root_path}}
           <br>
           {{#inner_path_parts}}<span class="inner_path_part" data-value="{{inner_path_part_value}}">{{inner_path_part}}/</span>{{/inner_path_parts}}
           <vr>

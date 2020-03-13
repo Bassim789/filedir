@@ -103,7 +103,7 @@ class Filedir{
             nb_clean: parseInt(directory.nb_file).toLocaleString(),
             img_file: true
           }, {
-            percent: Math.round(directory.size / parent_directory.size * 100),
+            percent: Math.round(directory.size / Math.max(parent_directory.size, 1) * 100),
             nb_clean: this.get_size_clean(directory.size)
           }]
           current_directories.push(directory)
@@ -153,7 +153,7 @@ class Filedir{
         file.rows_info = [
           {
             name: '',
-            percent: Math.round(file.size / parent_directory.size * 100),
+            percent: Math.round(file.size / Math.max(parent_directory.size, 1) * 100),
             nb_clean: this.get_size_clean(file.size)
           }
         ]

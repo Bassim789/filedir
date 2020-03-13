@@ -4,14 +4,30 @@ import sys
 import json
 from time import time
 
-def prepend_line(path, line):
-  with open(path, 'r+') as file:
-    content = file.read()
-    file.seek(0, 0)
-    file.write(line.rstrip('\r\n') + '\n' + content)
+class Data_exporter():
+  def __init__(self, path, output_encoding):
+    self.path = path
+    self.output_encoding = output_encoding
+
+  def prepend_line(self, path, line):
+    with open(path, 'r+') as file:
+      content = file.read()
+      file.seek(0, 0)
+      file.write(line.rstrip('\r\n') + '\n' + content)
+
+  def export(self, file_name, data, var_name):
+    with open(self.path + file_name, 'w') as file:
+      json.dump(data, file, default=str, encoding=self.output_encoding)
+    self.prepend_line(self.path + file_name, 'const ' + var_name + ' = ')
+
 
 def get_clean_path(path):
   return path[1:] if path.startswith('/') else path
+
+def get_this_path():
+  this_path_and_file = os.path.realpath(__file__)
+  this_filename = os.path.basename(this_path_and_file)
+  return this_path_and_file.split(this_filename)[0]
 
 def new_directory(path, directory):
   return {
@@ -23,39 +39,39 @@ def new_directory(path, directory):
     'file_types': {}
   }
 
+
 start_time = time()
+this_path = get_this_path()
 
-if len(sys.argv) < 2:
-  print("Error: no path given")
-  exit()
-
-path = sys.argv[1]
-if not path.endswith('/'): path += '/'
+if len(sys.argv) >= 2:
+  path = sys.argv[1]
+  if not path.endswith('/'): path += '/'
+else:
+  path = this_path
 
 output_encoding = 'utf8'
 if len(sys.argv) == 3:
   output_encoding = sys.argv[2]
 
-this_path_and_file  = os.path.realpath(__file__)
-this_filename = os.path.basename(this_path_and_file)
-this_path = this_path_and_file.split(this_filename)[0]
-
 folder_to_scan = path.split('/')[-2]
-root_path = '/'.join(path.split('/')[0:-2])
+root_path = '/'.join(path.split('/')[0:-2]) + '/'
 
-print('SCAN ' + root_path + '/' + folder_to_scan)
+if folder_to_scan == '':
+  print('Cannot scan the root directory, you have to choose a directory.')
+  exit()
 
-directories_dict = {}
-directories_dict[folder_to_scan] = new_directory('', folder_to_scan)
+if not os.path.exists(root_path + folder_to_scan):
+  print('Cannot find path: ' + root_path + folder_to_scan)
+  exit()
+
+print('SCAN ' + root_path + folder_to_scan)
 
 files_dict = {}
+directories_dict = {folder_to_scan: new_directory('', folder_to_scan)}
 
-for r, dirs, files in os.walk(path):
+for iter_path, dirs, files in os.walk(path):
 
-  if root_path.strip('/') == '':
-    root = ''
-  else:
-    root = r.split(root_path)[1].strip('/')
+  root = iter_path[len(root_path):].strip('/')
 
   for directory in dirs:
     dir_path = root + '/' + directory
@@ -71,7 +87,7 @@ for r, dirs, files in os.walk(path):
   for file in files:
     size = False
     last_modif = False
-    complete_path = root_path + '/' + root + '/' + file
+    complete_path = root_path + root + '/' + file
 
     try:
       size = os.path.getsize(complete_path)
@@ -111,9 +127,12 @@ for r, dirs, files in os.walk(path):
     files_dict[file_key] = file_info
 
     if file == '_info.txt':
-      with open (root_path + '/' + file_key, 'r') as f:
+      with open (root_path + file_key, 'r') as f:
         description = f.read()
         directories_dict[key]['description'] = description
+
+
+# Save data
 
 file_type_icons = []
 for file in os.listdir(this_path + 'web/media/img/file_icon'):
@@ -123,15 +142,9 @@ for file in os.listdir(this_path + 'web/media/img/file_icon'):
 if not os.path.exists(this_path + 'data'):
   os.makedirs(this_path + 'data')
 
-path_and_file = this_path + 'data/directories_data.json.js'
-with open(path_and_file, 'w') as file:
-  json.dump(directories_dict, file, default=str, encoding=output_encoding)
-prepend_line(path_and_file, 'const directories_data = ')
-
-path_and_file = this_path + 'data/files_data.json.js'
-with open(path_and_file, 'w') as file:
-  json.dump(files_dict, file, default=str, encoding=output_encoding)
-prepend_line(path_and_file, 'const files_data = ')
+data_exporter = Data_exporter(this_path + 'data/', output_encoding)
+data_exporter.export('directories_data.json.js', directories_dict, 'directories_data')
+data_exporter.export('files_data.json.js', files_dict, 'files_data')
 
 duration = round(time() - start_time, 1)
 
@@ -143,9 +156,6 @@ main_data = {
   'scan_duration': duration
 }
 
-path_and_file = this_path + 'data/main_data.json.js'
-with open(path_and_file, 'w') as file:
-  json.dump(main_data, file, default=str, encoding=output_encoding)
-prepend_line(path_and_file, 'const main_data = ')
+data_exporter.export('main_data.json.js', main_data, 'main_data')
 
 print('done in ' + str(duration) + ' seconds')
