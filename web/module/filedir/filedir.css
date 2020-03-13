@@ -173,7 +173,7 @@
 .variables_listing{
   margin-top: 5px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
 }
 .variables_listing.file_type{
   grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
