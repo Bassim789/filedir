@@ -70,6 +70,9 @@ class Filedir{
       return size_in_bytes + ' B'
     }
   }
+  has_file_type(file){
+    return file.split('.').length > 1 && file.split('.')[0] !== ''
+  }
   update(){
     const current_dir = this.directories[this.path]
     const inner_path = this.clean_path([current_dir.path, current_dir.directory].join('/'))
@@ -139,11 +142,19 @@ class Filedir{
     for(const [key, file] of Object.entries(this.files)){
       if(file.path === this.path){
 
-        if(this.file_type !== '' && this.file_type !== undefined
-            && !file.file_name.endsWith('.' + this.file_type)) continue
+        // filter file type selected
+        if(this.file_type !== '' && this.file_type !== undefined){
+          // file is not file type selected nor file_type is blanck
+          if(!(
+            file.file_name.endsWith('.' + this.file_type) ||
+            this.file_type === '__nothing__' && !this.has_file_type(file.file_name)
+          )){
+            continue
+          }
+        }
 
         file.file_type_short_name = ''
-        if(file.file_name.split('.').length > 1 && file.file_name.split('.')[0] !== ''){
+        if(this.has_file_type(file.file_name)){
           file.file_type_short_name = file.file_name.split('.').pop()
           if(this.file_type_icons.includes(file.file_type_short_name)){
             file.is_icon = true
@@ -180,7 +191,8 @@ class Filedir{
 
         for(const [file_type, data] of Object.entries(parent_directory.file_types)){
           const file_type_data = {
-            file_type, 
+            file_type,
+            file_type_clean: file_type,
             nb_file: data.nb_file,
             size: data.size,
             nb_file_clean: data.nb_file.toLocaleString(),
@@ -192,12 +204,15 @@ class Filedir{
             file_type_data.is_icon = true
           }
 
+          if(file_type_data.file_type === '__nothing__') file_type_data.file_type_clean = ''
+
           file_types.push(file_type_data)
         }
       }
     } else {
       const file_type_data = {
         file_type: this.file_type, 
+        file_type_clean: this.file_type,
         nb_file: parent_directory.nb_file,
         size: parent_directory.size,
         nb_file_clean: parent_directory.nb_file.toLocaleString(),
@@ -209,6 +224,8 @@ class Filedir{
         file_type_data.is_icon = true
       }
 
+      if(file_type_data.file_type === '__nothing__') file_type_data.file_type_clean = ''
+    
       file_types.push(file_type_data)
     }
 

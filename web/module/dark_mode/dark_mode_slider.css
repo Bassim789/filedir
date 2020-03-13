@@ -1,7 +1,7 @@
 .btn_dark_mode{
-  position: fixed;
-  top: 5px;
-  right: 5px;
+  position: absolute;
+  bottom: 10px;
+  right: 15px;
   z-index: 5;
 }
 .switch {
@@ -22,7 +22,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #111;
+  background-color: #333;
   -webkit-transition: .4s;
   transition: .4s;
 }
@@ -33,21 +33,21 @@
   width: 26px;
   left: 4px;
   bottom: 4px;
-  background-color: #eee;
+  background-color: #ccc;
   -webkit-transition: .4s;
   transition: .4s;
 }
 input:checked + .slider {
-  background-color: #eee;
+  background-color: #ccc;
 }
 input:focus + .slider {
-  box-shadow: 0 0 1px #eee;
+  box-shadow: 0 0 1px #ccc;
 }
 input:checked + .slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
-  background-color: #111;
+  background-color: #333;
 }
 /* Rounded sliders */
 .slider.round {
