@@ -8,8 +8,8 @@
 #filedir{
   display: inline-block;
   max-width: calc(100% - 20px);
-  margin: 20px;
-  margin-top: 50px;
+  margin: 10px;
+  margin-top: 40px;
 }
 
 .inner_path_part{
