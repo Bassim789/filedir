@@ -12,5 +12,3 @@ dark_mode.append_to_body()
 dark_mode.init_actions()
 
 $('.loading').hide()
-
-console.log(directories_data['Documents'])

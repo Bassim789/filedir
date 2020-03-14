@@ -73,9 +73,7 @@ class Filedir{
   has_file_type(file){
     return file.split('.').length > 1 && file.split('.')[0] !== ''
   }
-  update(){
-    const current_dir = this.directories[this.path]
-    const inner_path = this.clean_path([current_dir.path, current_dir.directory].join('/'))
+  get_inner_path_parts(inner_path){
     const inner_path_parts = []
     let inner_path_part_value = ''
     for(const item of inner_path.split('/')){
@@ -85,16 +83,24 @@ class Filedir{
         inner_path_part_value: this.clean_path(inner_path_part_value)
       })
     }
-
-    let current_directories = []
+    return inner_path_parts
+  }
+  get_parent_directory(){
     let parent_directory
-
     if(this.file_type === '' || this.file_type === undefined){
       parent_directory = this.directories[this.path]
       parent_directory.nb_folder_clean = parent_directory.nb_folder.toLocaleString()
       parent_directory.nb_file_clean = parent_directory.nb_file.toLocaleString()
       parent_directory.size_clean = this.get_size_clean(parent_directory.size)
-
+    } else {
+      parent_directory = this.directories[this.path].file_types[this.file_type]
+      parent_directory.nb_file_clean = parent_directory.nb_file.toLocaleString()
+    }
+    return parent_directory
+  }
+  get_current_directories(parent_directory){
+    const current_directories = []
+    if(this.file_type === '' || this.file_type === undefined){
       for(const [key, directory] of Object.entries(this.directories)){
         if(directory.path === this.path){
           directory.rows_info = [{
@@ -113,9 +119,6 @@ class Filedir{
         }
       }
     } else {
-      parent_directory = this.directories[this.path].file_types[this.file_type]
-      parent_directory.nb_file_clean = parent_directory.nb_file.toLocaleString()
-
       for(const [key, directory] of Object.entries(this.directories)){
         if(directory.path === this.path && directory.file_types[this.file_type] !== undefined){
           const nb_file = directory.file_types[this.file_type].nb_file
@@ -137,7 +140,10 @@ class Filedir{
         }
       }
     }
-
+    current_directories.sort((a, b) => (a.directory > b.directory) ? 1 : -1)
+    return current_directories
+  }
+  get_current_files(parent_directory){
     let current_files = []
     for(const [key, file] of Object.entries(this.files)){
       if(file.path === this.path){
@@ -179,10 +185,11 @@ class Filedir{
         current_files.push(file)
       }
     }
-
-    current_directories.sort((a, b) => (a.directory > b.directory) ? 1 : -1)
     current_files.sort((a, b) => (a.file_name > b.file_name) ? 1 : -1)
-
+    current_files = this.put_hidden_at_the_end(current_files, 'file_name')
+    return current_files
+  }
+  get_file_types(parent_directory){
     let file_types = []
 
     if(this.file_type === '' || this.file_type === undefined){
@@ -230,9 +237,16 @@ class Filedir{
     }
 
     file_types.sort((a, b) => (a.size < b.size) ? 1 : -1)
-   
-    current_directories = this.put_hidden_at_the_end(current_directories, 'directory')
-    current_files = this.put_hidden_at_the_end(current_files, 'file_name')
+    return file_types
+  }
+  update(){
+    const current_dir = this.directories[this.path]
+    const inner_path = this.clean_path([current_dir.path, current_dir.directory].join('/'))
+    const inner_path_parts = this.get_inner_path_parts(inner_path)
+    const parent_directory = this.get_parent_directory()
+    const current_directories = this.get_current_directories(parent_directory)
+    const current_files = this.get_current_files(parent_directory)
+    const file_types = this.get_file_types(parent_directory)
 
     template.render('#filedir', 'filedir', {
       root_path: this.root_path,
