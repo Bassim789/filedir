@@ -226,6 +226,6 @@ template.filedir = `
 <div id="scan_info">
   Scanned {{scan_info}} during {{scan_duration}} seconds
   <br>
-  <i>by <a href="https://github.com/Bassim789/filedir" target="_blanck">Filedir</a><i>
+  <i>by <a href="https://github.com/bassim-matar/filedir" target="_blanck">Filedir</a><i>
 </div>
 `;
