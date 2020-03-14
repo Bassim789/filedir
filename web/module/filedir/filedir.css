@@ -223,6 +223,7 @@
   max-width: 260px;
   max-height: 50px;
   overflow: auto;
+  margin: auto;
 }
 
 .modalities_box_name{
