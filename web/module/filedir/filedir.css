@@ -424,7 +424,7 @@
   padding: 2px 5px;
 }
 .table_last_file_modif td{
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #999;
   cursor: pointer;
 }
 .table_last_file_modif tr:hover td{
