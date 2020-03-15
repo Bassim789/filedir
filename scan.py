@@ -139,13 +139,6 @@ for file in os.listdir(this_path + 'web/media/img/file_icon'):
   if file.endswith(".png"):
     file_type_icons.append(file.split('.png')[0])
 
-if not os.path.exists(this_path + 'data'):
-  os.makedirs(this_path + 'data')
-
-data_exporter = Data_exporter(this_path + 'data/', output_encoding)
-data_exporter.export('directories_data.json.js', directories_dict, 'directories_data')
-data_exporter.export('files_data.json.js', files_dict.values(), 'files_data')
-
 duration = round(time() - start_time, 1)
 
 main_data = {
@@ -156,6 +149,13 @@ main_data = {
   'scan_duration': duration
 }
 
-data_exporter.export('main_data.json.js', main_data, 'main_data')
+data = {
+  'main_data': main_data,
+  'directories_data': directories_dict,
+  'files_data': files_dict.values()
+}
+
+data_exporter = Data_exporter(this_path, output_encoding)
+data_exporter.export('data.json.js', data, 'data')
 
 print('done in ' + str(duration) + ' seconds')
