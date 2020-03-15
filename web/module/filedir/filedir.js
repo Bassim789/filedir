@@ -118,7 +118,7 @@ class Filedir{
     return parent_directory
   }
   get_current_directories(parent_directory){
-    const current_directories = []
+    let current_directories = []
     if(this.file_type){
       for(const [key, directory] of Object.entries(this.directories)){
         if(directory.path === this.path && directory.file_types[this.file_type] !== undefined){
@@ -157,6 +157,7 @@ class Filedir{
       }
     }
     current_directories.sort((a, b) => (a.directory > b.directory) ? 1 : -1)
+    current_directories = this.put_hidden_at_the_end(current_directories, 'directory')
     return current_directories
   }
   get_current_files(parent_directory){
@@ -235,6 +236,7 @@ class Filedir{
       if(!file.path.startsWith(this.path)) continue
       if(file.path.includes('/.')) continue
       if(this.file_type && this.file_type !== file.extension) continue
+      if(file.file_name.startsWith('.')) continue
       last_modified_files.push(file)
       if(last_modified_files.length === this.nb_file_last_modif_max) break
     }
