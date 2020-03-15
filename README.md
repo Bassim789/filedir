@@ -13,7 +13,7 @@ python scan.py path/you/want/to/scan
 ```
 If an error with encoding appear, you can try adding "latin1" as an argument at the end of the command.
 
-After the scan, three files are created inside a data folder, they contain the result of the scan.
+After the scan, the file data.json.js is created inside the repo, it contains the result of the scan.
 
 ## Visualization
 If necessary, move or copie the repo on a location where you can see html files.
