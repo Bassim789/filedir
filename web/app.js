@@ -1,4 +1,6 @@
 
+console.log('data', data)
+
 const url_params = new Url_params()
 const dark_mode = new Dark_mode()
 const filedir = new Filedir()

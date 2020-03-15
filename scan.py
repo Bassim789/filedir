@@ -17,7 +17,10 @@ class Data_exporter():
 
   def export(self, file_name, data, var_name):
     with open(self.path + file_name, 'w') as file:
-      json.dump(data, file, default=str, encoding=self.output_encoding)
+      if (sys.version_info > (3, 0)):
+        json.dump(data, file, default=str)
+      else:
+        json.dump(data, file, default=str, encoding=self.output_encoding)
     self.prepend_line(self.path + file_name, 'const ' + var_name + ' = ')
 
 
@@ -152,7 +155,7 @@ main_data = {
 data = {
   'main_data': main_data,
   'directories_data': directories_dict,
-  'files_data': files_dict.values()
+  'files_data': [file for file in files_dict.values()]
 }
 
 data_exporter = Data_exporter(this_path, output_encoding)
