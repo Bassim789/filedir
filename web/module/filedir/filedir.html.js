@@ -166,17 +166,17 @@ template.filedir = `
                 <!-- {{#is_icon}} -->
                 <tr>
                   <td valign="bottom" colspan="2" style="text-align: center; padding: 5px;">
-                    <img src="web/media/img/file_icon/{{file_type_short_name}}.png" class="file_icon">
+                    <img src="web/media/img/file_icon/{{extension}}.png" class="file_icon">
                   </td>
                 </tr>
                 <!-- {{/is_icon}} -->
-                <!-- {{^is_icon}} {{#file_type_short_name}} -->
+                <!-- {{^is_icon}} {{#extension}} -->
                 <tr>
                   <td colspan="2" style="text-align: center; padding: 5px;">
-                    <span class="file_type_short_name">{{file_type_short_name}}</span>
+                    <span class="extension">{{extension_clean}}</span>
                   </td>
                 </tr>
-                 <!-- {{/file_type_short_name}} {{/is_icon}} -->
+                 <!-- {{/extension}} {{/is_icon}} -->
                 <!-- {{#rows_info}} -->
                   <tr class="table_modalities">
                     <td class="modality_value_wrap">
@@ -220,12 +220,35 @@ template.filedir = `
     </div>
   </div>
 
-</div>
+  <div class="tables_listing">
+    <div class="table_wrap" style="width: auto; margin-left: auto; margin-right: auto;">
+      <div class="variables_listing_wrap" style="width: auto;">
+        <div class="variables_listing" style="max-height: 300px; overflow: auto;">
+          <table class="table_last_file_modif">
+            <tr>
+              <th>path</th>
+              <th>file</th>
+              <th>type</th>
+              <th>last modification</th>
+            </tr>
+            <!-- {{#last_modified_files}} -->
+            <tr class="last_file_modif_row" data-path="{{path_from_current_directory}}">
+              <td class="last_file_modif_td_path">{{path_from_current_directory}}</td>
+              <td>{{file_name}}</td>
+              <!-- {{#is_icon}} -->
+              <td><img src="web/media/img/file_icon/{{extension}}.png" class="little_icon"></td>
+              <!-- {{/is_icon}} -->
+              <!-- {{^is_icon}} -->
+              <td>{{extension_clean}}</td>
+              <!-- {{/is_icon}} -->
+              <td>{{last_modif_ago_clean}}</td>
+            </tr>
+            <!-- {{/last_modified_files}} -->
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 
-
-<div id="scan_info">
-  Scanned {{scan_info}} during {{scan_duration}} seconds
-  <br>
-  <i>by <a href="https://github.com/bassim-matar/filedir" target="_blanck">Filedir</a><i>
 </div>
 `;

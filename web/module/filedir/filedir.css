@@ -1,15 +1,4 @@
 
-#scan_info{
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: inline-block;
-  width: 100%;
-  text-align: center;
-  padding-bottom: 10px;
-}
-
 #filedir{
   display: inline-block;
   width: 100%;
@@ -39,7 +28,7 @@
   height: 30px;
 }
 
-.file_type_short_name{
+.extension{
   font-size: 20px;
 }
 
@@ -195,7 +184,6 @@
 
 .variable_name{
   display: inline-block;
-  max-width: 180px;
   word-break: break-all;
   font-weight: bold;
 }
@@ -429,6 +417,18 @@
   text-overflow: ellipsis; 
   white-space: nowrap; 
   word-break: break-all;
+}
+
+.table_last_file_modif th, 
+.table_last_file_modif td{
+  padding: 2px 5px;
+}
+.table_last_file_modif td{
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+}
+.table_last_file_modif tr:hover td{
+  background: rgba(150,150,150, 0.3);
 }
 
 

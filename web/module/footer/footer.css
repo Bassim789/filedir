@@ -1,0 +1,10 @@
+#scan_info{
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  padding-bottom: 10px;
+}

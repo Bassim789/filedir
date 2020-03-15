@@ -1,41 +1,59 @@
 class Filedir{
   constructor(){
-    this.file_type = ''
+    this.file_type = false
+    this.nb_file_last_modif_max = 100
+    this.time_ago_limit = 3 * 24 * 3600 // 3 days
+    this.date_now = Date.now() / 1000
   }
-  add_info(info){
-    this.filedir_info = info
-    this.root_path = info.root_path
-    this.folder_to_scan = info.folder_to_scan
-    this.path = info.folder_to_scan
-    this.file_type_icons = info.file_type_icons
-    this.scan_info = get_time_ago(info.scan_timestamp)
-    this.scan_duration = info.scan_duration
+  add_data(data){
+    this.root_path = data.root_path
+    this.folder_to_scan = data.folder_to_scan
+    this.path = data.folder_to_scan
+    this.file_type_icons = data.file_type_icons
   }
   add_directories(directories){
+    for(const [key, directory] of Object.entries(directories)){
+      directory.nb_folder_clean = parseInt(directory.nb_folder).toLocaleString()
+      directory.nb_file_clean = parseInt(directory.nb_file).toLocaleString()
+      directory.size_clean = this.get_size_clean(directory.size)
+    }
     this.directories = directories
   }
   add_files(files){
+    for(const file of files){
+      file.size_clean = this.get_size_clean(file.size)
+      file.extension = '__nothing__'
+      file.extension_clean = ''
+      if(this.has_file_type(file.file_name)){
+        file.extension = file.file_name.split('.').pop()
+        file.extension_clean = file.extension
+        if(this.file_type_icons.includes(file.extension)){
+          file.is_icon = true
+        }
+      }
+    }
+    files.sort((a, b) => (a.last_modif < b.last_modif) ? 1 : -1)
     this.files = files
   }
-  append_to_body(){
-    $('body').append('<div id="filedir"></div>')
+  init(){
     this.init_path_param()
     this.init_file_type_param()
     this.update()
     this.actions()
   }
   init_path_param(){
-    this.param_path = url_params.get_param('path')
-    if(this.param_path !== undefined){
-      this.param_path = decodeURI(this.param_path)
+    let param_path = url_params.get_param('path')
+    if(param_path !== undefined){
+      param_path = decodeURI(param_path)
     }
-    if(this.param_path === undefined) this.param_path = this.folder_to_scan
-    this.path = this.param_path
+    if(param_path === undefined) param_path = this.folder_to_scan
+    this.path = this.clean_path(param_path).replace(/\/+$/, '')
   }
   init_file_type_param(){
-    this.file_type = url_params.get_param('file_type')
+    this.file_type = this.clean_path(url_params.get_param('file_type'))
   }
   clean_path(path){
+    if(!path || path === undefined) return path
     if(path.charAt(0) === '/')
       path = path.slice(1)
     return path
@@ -73,7 +91,9 @@ class Filedir{
   has_file_type(file){
     return file.split('.').length > 1 && file.split('.')[0] !== ''
   }
-  get_inner_path_parts(inner_path){
+  get_inner_path_parts(){
+    const current_dir = this.directories[this.path]
+    const inner_path = this.clean_path([current_dir.path, current_dir.directory].join('/'))
     const inner_path_parts = []
     let inner_path_part_value = ''
     for(const item of inner_path.split('/')){
@@ -86,55 +106,51 @@ class Filedir{
     return inner_path_parts
   }
   get_parent_directory(){
-    let parent_directory
-    if(this.file_type === '' || this.file_type === undefined){
-      parent_directory = this.directories[this.path]
-      parent_directory.nb_folder_clean = parent_directory.nb_folder.toLocaleString()
-      parent_directory.nb_file_clean = parent_directory.nb_file.toLocaleString()
+    const parent_directory = JSON.parse(JSON.stringify(this.directories[this.path]))
+    if(this.file_type){
+      const file_type_directory = this.directories[this.path].file_types[this.file_type]
+      parent_directory.nb_file = file_type_directory.nb_file
+      parent_directory.size = file_type_directory.size
+      parent_directory.nb_folder_clean = ''
+      parent_directory.nb_file_clean = parseInt(parent_directory.nb_file).toLocaleString()
       parent_directory.size_clean = this.get_size_clean(parent_directory.size)
-    } else {
-      parent_directory = this.directories[this.path].file_types[this.file_type]
-      parent_directory.nb_file_clean = parent_directory.nb_file.toLocaleString()
     }
     return parent_directory
   }
   get_current_directories(parent_directory){
     const current_directories = []
-    if(this.file_type === '' || this.file_type === undefined){
+    if(this.file_type){
       for(const [key, directory] of Object.entries(this.directories)){
-        if(directory.path === this.path){
+        if(directory.path === this.path && directory.file_types[this.file_type] !== undefined){
+          const nb_file = directory.file_types[this.file_type].nb_file
+          const size = directory.file_types[this.file_type].size
           directory.rows_info = [{
-            percent: Math.round(directory.nb_folder / parent_directory.nb_folder * 100),
-            nb_clean: parseInt(directory.nb_folder).toLocaleString(),
-            img_folder: true
-          }, {
-            percent: Math.round(directory.nb_file / parent_directory.nb_file * 100),
-            nb_clean: parseInt(directory.nb_file).toLocaleString(),
+            name: '',
+            percent: Math.round(nb_file / parent_directory.nb_file * 100),
+            nb_clean: parseInt(nb_file).toLocaleString(),
             img_file: true
           }, {
-            percent: Math.round(directory.size / Math.max(parent_directory.size, 1) * 100),
-            nb_clean: this.get_size_clean(directory.size)
+            name: '',
+            percent: Math.round(size / parent_directory.size * 100),
+            nb_clean: this.get_size_clean(size)
           }]
           current_directories.push(directory)
         }
       }
     } else {
       for(const [key, directory] of Object.entries(this.directories)){
-        if(directory.path === this.path && directory.file_types[this.file_type] !== undefined){
-          const nb_file = directory.file_types[this.file_type].nb_file
-          const nb_file_parent = parent_directory.nb_file
-          const size = directory.file_types[this.file_type].size
-          const size_clean = this.get_size_clean(directory.file_types[this.file_type].size)
-          const size_parent = parent_directory.size
+        if(directory.path === this.path){
           directory.rows_info = [{
-            name: '',
-            percent: Math.round(nb_file / nb_file_parent * 100),
-            nb_clean: parseInt(nb_file).toLocaleString(),
+            percent: Math.round(directory.nb_folder / parent_directory.nb_folder * 100),
+            nb_clean: directory.nb_folder_clean,
+            img_folder: true
+          }, {
+            percent: Math.round(directory.nb_file / parent_directory.nb_file * 100),
+            nb_clean: directory.nb_file_clean,
             img_file: true
           }, {
-            name: '',
-            percent: Math.round(size / size_parent * 100),
-            nb_clean: this.get_size_clean(size)
+            percent: Math.round(directory.size / Math.max(parent_directory.size, 1) * 100),
+            nb_clean: directory.size_clean
           }]
           current_directories.push(directory)
         }
@@ -145,45 +161,20 @@ class Filedir{
   }
   get_current_files(parent_directory){
     let current_files = []
-    for(const [key, file] of Object.entries(this.files)){
-      if(file.path === this.path){
-
-        // filter file type selected
-        if(this.file_type !== '' && this.file_type !== undefined){
-          // file is not file type selected nor file_type is blanck
-          if(!(
-            file.file_name.endsWith('.' + this.file_type) ||
-            this.file_type === '__nothing__' && !this.has_file_type(file.file_name)
-          )){
-            continue
-          }
-        }
-
-        file.file_type_short_name = ''
-        if(this.has_file_type(file.file_name)){
-          file.file_type_short_name = file.file_name.split('.').pop()
-          if(this.file_type_icons.includes(file.file_type_short_name)){
-            file.is_icon = true
-          }
-        }
-
-        file.rows_info = [
-          {
-            name: '',
-            percent: Math.round(file.size / Math.max(parent_directory.size, 1) * 100),
-            nb_clean: this.get_size_clean(file.size)
-          }
-        ]
-        
-        // if more than 3 days ago get date, else get time ago
-        if(Date.now() - file.last_modif * 1000 > 3 * 24 * 3600 * 1000){
-          file.last_modif_clean = get_datetime(file.last_modif)
-        } else {
-          file.last_modif_clean = get_time_ago(file.last_modif)
-        }
-
-        current_files.push(file)
+    for(const file of this.files){
+      if(file.path !== this.path) continue
+      if(this.file_type && this.file_type !== file.extension) continue
+      file.rows_info = [{
+          name: '',
+          percent: Math.round(file.size / Math.max(parent_directory.size, 1) * 100),
+          nb_clean: file.size_clean
+      }]
+      if(this.date_now - file.last_modif < this.time_ago_limit){
+        file.last_modif_clean = get_time_ago(file.last_modif)
+      } else {
+        file.last_modif_clean = get_datetime(file.last_modif)
       }
+      current_files.push(file)
     }
     current_files.sort((a, b) => (a.file_name > b.file_name) ? 1 : -1)
     current_files = this.put_hidden_at_the_end(current_files, 'file_name')
@@ -192,31 +183,7 @@ class Filedir{
   get_file_types(parent_directory){
     let file_types = []
 
-    if(this.file_type === '' || this.file_type === undefined){
-
-      if(parent_directory.file_types !== undefined){
-
-        for(const [file_type, data] of Object.entries(parent_directory.file_types)){
-          const file_type_data = {
-            file_type,
-            file_type_clean: file_type,
-            nb_file: data.nb_file,
-            size: data.size,
-            nb_file_clean: data.nb_file.toLocaleString(),
-            size_clean: this.get_size_clean(data.size),
-            is_icon: false
-          }
-         
-          if(this.file_type_icons.includes(file_type)){
-            file_type_data.is_icon = true
-          }
-
-          if(file_type_data.file_type === '__nothing__') file_type_data.file_type_clean = ''
-
-          file_types.push(file_type_data)
-        }
-      }
-    } else {
+    if(this.file_type){
       const file_type_data = {
         file_type: this.file_type, 
         file_type_clean: this.file_type,
@@ -234,19 +201,56 @@ class Filedir{
       if(file_type_data.file_type === '__nothing__') file_type_data.file_type_clean = ''
     
       file_types.push(file_type_data)
+      
+    } else if(parent_directory.file_types !== undefined){
+
+      for(const [file_type, data] of Object.entries(parent_directory.file_types)){
+        const file_type_data = {
+          file_type,
+          file_type_clean: file_type,
+          nb_file: data.nb_file,
+          size: data.size,
+          nb_file_clean: data.nb_file.toLocaleString(),
+          size_clean: this.get_size_clean(data.size),
+          is_icon: false
+        }
+       
+        if(this.file_type_icons.includes(file_type)){
+          file_type_data.is_icon = true
+        }
+
+        if(file_type_data.file_type === '__nothing__') file_type_data.file_type_clean = ''
+
+        file_types.push(file_type_data)
+      }
     }
 
     file_types.sort((a, b) => (a.size < b.size) ? 1 : -1)
     return file_types
   }
+  get_last_modified_files(parent_directory){
+    const path = this.clean_path(parent_directory.path + '/' + parent_directory.directory) + '/'
+    let last_modified_files = []
+    for(const file of this.files){
+      if(!file.path.startsWith(this.path)) continue
+      if(file.path.includes('/.')) continue
+      if(this.file_type && this.file_type !== file.extension) continue
+      last_modified_files.push(file)
+      if(last_modified_files.length === this.nb_file_last_modif_max) break
+    }
+    for(const file of last_modified_files){
+      file.path_from_current_directory = file.path.substring(path.length)
+      file.last_modif_ago_clean = get_time_ago(file.last_modif)
+    }
+    return last_modified_files
+  }
   update(){
-    const current_dir = this.directories[this.path]
-    const inner_path = this.clean_path([current_dir.path, current_dir.directory].join('/'))
-    const inner_path_parts = this.get_inner_path_parts(inner_path)
+    const inner_path_parts = this.get_inner_path_parts()
     const parent_directory = this.get_parent_directory()
     const current_directories = this.get_current_directories(parent_directory)
     const current_files = this.get_current_files(parent_directory)
     const file_types = this.get_file_types(parent_directory)
+    const last_modified_files = this.get_last_modified_files(parent_directory)    
 
     template.render('#filedir', 'filedir', {
       root_path: this.root_path,
@@ -255,15 +259,14 @@ class Filedir{
       file_types,
       current_directories,
       current_files,
+      last_modified_files,
       nb_file_types: file_types.length,
       nb_folder: current_directories.length,
       nb_file: current_files.length,
-      parent_directory_description: parent_directory.description,
-      scan_info: this.scan_info,
-      scan_duration: this.scan_duration
+      parent_directory_description: parent_directory.description
     })
 
-    if(this.file_type !== '' && this.file_type !== undefined){
+    if(this.file_type){
       $('.variable_box.click_filter_type.' + this.file_type).addClass('selected')
     }
 
@@ -299,7 +302,7 @@ class Filedir{
     $('body').on('click', '.click_filter_type', function() {
       const file_type = $(this).data('file_type').toString()
       if(file_type === that.file_type){
-        that.file_type = ''
+        that.file_type = false
         url_params.set_param('file_type', '')
         $(this).removeClass('selected')
       } else {
@@ -313,6 +316,14 @@ class Filedir{
       $(this).hide()
       const boxes = $(this).parent().find('.hidden_box').html()
       $(this).parent().append(boxes)
+    })
+
+    $('body').on('click', '.last_file_modif_row', function() { 
+      that.path = (that.path + '/' + $(this).data('path')).replace(/\/+$/, '')
+      let param_to_set = that.path
+      if(param_to_set === that.folder_to_scan) param_to_set = ''
+      url_params.set_param('path', param_to_set)
+      that.update()
     })
 
     window.onpopstate = () => {

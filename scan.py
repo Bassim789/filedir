@@ -144,7 +144,7 @@ if not os.path.exists(this_path + 'data'):
 
 data_exporter = Data_exporter(this_path + 'data/', output_encoding)
 data_exporter.export('directories_data.json.js', directories_dict, 'directories_data')
-data_exporter.export('files_data.json.js', files_dict, 'files_data')
+data_exporter.export('files_data.json.js', files_dict.values(), 'files_data')
 
 duration = round(time() - start_time, 1)
 
