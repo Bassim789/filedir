@@ -48,6 +48,8 @@ this_path = get_this_path()
 
 if len(sys.argv) >= 2:
   path = sys.argv[1]
+  if path == '~':
+    path = os.path.expanduser(path)
   if not path.endswith('/'): path += '/'
 else:
   path = this_path
