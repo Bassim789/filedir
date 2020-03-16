@@ -5,6 +5,12 @@ The data produced by the scan are portable and can be visualized in a browser.
 ## Scanning
 Download the repo and place it on your computer or a server you want to scan.
 It needs to be linux or mac and to have python 2 or 3 installed, most computer and server have it by default.
+
+### Automatic
+For the first time you run the app, right click on the scan.command file and select "open with" and "Terminal.app", then click ok to accept to run this app. For the next time you just have to double click on scan.command file.
+By default your home folder will be scanned, if it take too much time or you want to scan another folder, just edit the scan.command file and put the path you want after "python scan.py" insteed of the ~ symbol.
+
+### Manual
 Open a terminal and go to the repo.
 
 Then use the following command:
