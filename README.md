@@ -8,7 +8,7 @@ It needs to be linux or mac and to have python 2 or 3 installed, most computer a
 
 ### Automatic
 For the first time you run the app, right click on the scan.command file and select "open with" and "Terminal.app", then click ok to accept to run this app. For the next time you just have to double click on scan.command file.
-By default your home folder will be scanned, if it take too much time or you want to scan another folder, just edit the scan.command file and put the path you want after "python scan.py" insteed of the ~ symbol.
+By default your home folder will be scanned, if it takes too much time or you want to scan another folder, just edit the scan.command file and put the path you want after "python scan.py" insteed of the ~ symbol.
 
 ### Manual
 Open a terminal and go to the repo.
