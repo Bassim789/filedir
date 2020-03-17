@@ -2,12 +2,18 @@ class Last_modified_files{
   constructor(){
     this.nb_file_last_modif_max = 100
     this.search = this.get_search_param()
+    this.init_container()
     this.actions()
   }
   get_search_param(){
     const param_search = url_params.get_param('search')
     if(param_search === undefined) return ''
     return param_search
+  }
+  init_container(){
+    template.render('#last_modified_files', 'last_modified_files', {
+      search: this.search
+    })
   }
   prepare_data(parent_directory){
     this.parent_directory = parent_directory
@@ -29,14 +35,10 @@ class Last_modified_files{
     this.last_modified_files = last_modified_files
   }
   render(last_modified_files){
-    template.render('#last_modified_files', 'last_modified_files', {
+    template.render('#table_last_file_modif_container', 'last_modified_files_table', {
       is_file: this.last_modified_files.length > 0,
-      last_modified_files: this.last_modified_files,
-      search: this.search
+      last_modified_files: this.last_modified_files
     })
-    $('.search_bar').focus()
-    const search_length = $('.search_bar').val().length
-    $('.search_bar')[0].setSelectionRange(search_length, search_length)
   }
   actions(){
     const that = this

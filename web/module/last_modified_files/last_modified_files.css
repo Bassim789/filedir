@@ -1,3 +1,10 @@
+
+#table_last_file_modif_container{
+  max-height: 300px; 
+  max-width: 100%; 
+  overflow-y: auto;
+}
+
 .table_last_file_modif th, 
 .table_last_file_modif td{
   padding: 2px 5px;
