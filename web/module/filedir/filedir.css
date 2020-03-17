@@ -1,13 +1,4 @@
 
-#filedir{
-  display: inline-block;
-  width: 100%;
-  max-width: calc(100% - 20px);
-  margin: 10px;
-  margin-top: 0;
-  text-align: center;
-}
-
 .name,
 .variable_name{
   word-break: break-all;
@@ -67,15 +58,7 @@
   box-shadow: 0 0 10px #aaa;
 }
 
-.database_box{
-  display: inline-block;
-  width: 100%;
-  min-height: 100px;
-  margin: 5px auto;
-  padding-bottom: 35px;
-  text-align: left;
-}
-.database_box .database_name{
+.database_name{
   display: inline-block; 
   float: left;
   margin: 5px; 
@@ -417,100 +400,4 @@
   text-overflow: ellipsis; 
   white-space: nowrap; 
   word-break: break-all;
-}
-
-.table_last_file_modif th, 
-.table_last_file_modif td{
-  padding: 2px 5px;
-}
-.table_last_file_modif td{
-  border-bottom: 1px solid #999;
-  cursor: pointer;
-}
-.table_last_file_modif tr:hover td{
-  background: rgba(150,150,150, 0.3);
-}
-
-
-
-
-@media screen and (max-width: 600px) {
-  #catalog{
-    margin: 5px;
-    margin-top: 40px;
-    padding-bottom: 20px;
-    max-width: calc(100% - 10px);
-  }
-
-  .variables_listing_wrap{
-    margin: auto;
-  }
-  .table_wrap{
-    margin-left: 0;
-    max-width: calc(100% - 5px);
-    padding: 0;
-  }
-  .variable_box{
-    width: auto;
-    max-width: calc(100% - 10px);
-  }
-  .table_modalities .modality_frequence_box_td{
-    width: 120px;
-  }
-  .table_modalities .modality_value{
-    max-width: 120px;
-  }
-  .variable_table{
-    max-width: 100%;
-  }
-  .modality_frequence_box{
-    width: 170px;
-  }
-  .table_modalities .modality_value_wrap{
-    max-width: 110px;
-  }
-  .table_box{
-    padding-left: 0px;
-  }
-}
-
-@media screen and (max-width: 400px) {
-  #filedir{
-    margin: 0px;
-    margin-top: 40px;
-    max-width: 100%;
-  }
-  .database_box{
-    margin: 5px 1px;
-    padding: 0px;
-    max-width: calc(100% - 4px);
-    overflow: hidden;
-  }
-  .database_close_btn,
-  .table_close_btn{
-    margin-right: 10px;
-    margin-top: 5px;
-  }
-  .table_wrap{
-    margin: 5px 0px;
-    padding: 0px;
-    max-width: 100%
-  }
-  .table_box{
-    width: 100%;
-  }
-  .variable_box{
-    padding: 0px;
-    margin: 5px 0px;
-    padding-bottom: 10px;
-    width: 100%;
-    max-width: 100%;
-  }
-}
-
-@media screen and (max-width: 350px) {
-  .database_description_wrap,
-  .table_description_wrap{
-    max-width: 100%;
-  }
 }

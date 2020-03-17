@@ -4,6 +4,7 @@ console.log('data', data)
 const url_params = new Url_params()
 const dark_mode = new Dark_mode()
 const filedir = new Filedir()
+const last_modified_files = new Last_modified_files()
 const footer = new Footer()
 
 filedir.add_data(data.main_data)

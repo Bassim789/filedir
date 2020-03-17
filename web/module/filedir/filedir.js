@@ -1,7 +1,6 @@
 class Filedir{
   constructor(){
     this.file_type = false
-    this.nb_file_last_modif_max = 100
     this.time_ago_limit = 3 * 24 * 3600 // 3 days
     this.date_now = Date.now() / 1000
   }
@@ -119,42 +118,37 @@ class Filedir{
   }
   get_current_directories(parent_directory){
     let current_directories = []
-    if(this.file_type){
-      for(const [key, directory] of Object.entries(this.directories)){
-        if(directory.path === this.path && directory.file_types[this.file_type] !== undefined){
-          const nb_file = directory.file_types[this.file_type].nb_file
-          const size = directory.file_types[this.file_type].size
-          directory.rows_info = [{
-            name: '',
-            percent: Math.round(nb_file / parent_directory.nb_file * 100),
-            nb_clean: parseInt(nb_file).toLocaleString(),
-            img_file: true
-          }, {
-            name: '',
-            percent: Math.round(size / parent_directory.size * 100),
-            nb_clean: this.get_size_clean(size)
-          }]
-          current_directories.push(directory)
-        }
+    for(const [key, directory] of Object.entries(this.directories)){
+      if(directory.path !== this.path) continue
+      directory.rows_info = []
+      let nb_file, nb_file_clean, size, size_clean
+      if(this.file_type){
+        if(directory.file_types[this.file_type] === undefined) continue
+        nb_file = directory.file_types[this.file_type].nb_file
+        nb_file_clean = parseInt(nb_file).toLocaleString()
+        size = directory.file_types[this.file_type].size
+        size_clean = this.get_size_clean(size)
+      } else {
+        nb_file = directory.nb_file
+        nb_file_clean = directory.nb_file_clean
+        size = directory.size
+        size_clean = directory.size_clean
+        directory.rows_info.push({
+          percent: Math.round(directory.nb_folder / parent_directory.nb_folder * 100),
+          nb_clean: directory.nb_folder_clean,
+          img_folder: true
+        })
       }
-    } else {
-      for(const [key, directory] of Object.entries(this.directories)){
-        if(directory.path === this.path){
-          directory.rows_info = [{
-            percent: Math.round(directory.nb_folder / parent_directory.nb_folder * 100),
-            nb_clean: directory.nb_folder_clean,
-            img_folder: true
-          }, {
-            percent: Math.round(directory.nb_file / parent_directory.nb_file * 100),
-            nb_clean: directory.nb_file_clean,
-            img_file: true
-          }, {
-            percent: Math.round(directory.size / Math.max(parent_directory.size, 1) * 100),
-            nb_clean: directory.size_clean
-          }]
-          current_directories.push(directory)
-        }
-      }
+      directory.rows_info.push({
+        percent: Math.round(nb_file / Math.max(parent_directory.nb_file, 1) * 100),
+        nb_clean: nb_file_clean,
+        img_file: true
+      })
+      directory.rows_info.push({
+        percent: Math.round(size / Math.max(parent_directory.size, 1) * 100),
+        nb_clean: size_clean
+      })
+      current_directories.push(directory)
     }
     current_directories.sort((a, b) => (a.directory > b.directory) ? 1 : -1)
     current_directories = this.put_hidden_at_the_end(current_directories, 'directory')
@@ -229,30 +223,12 @@ class Filedir{
     file_types.sort((a, b) => (a.size < b.size) ? 1 : -1)
     return file_types
   }
-  get_last_modified_files(parent_directory){
-    const path = this.clean_path(parent_directory.path + '/' + parent_directory.directory) + '/'
-    let last_modified_files = []
-    for(const file of this.files){
-      if(!file.path.startsWith(this.path)) continue
-      if(file.path.includes('/.')) continue
-      if(this.file_type && this.file_type !== file.extension) continue
-      if(file.file_name.startsWith('.')) continue
-      last_modified_files.push(file)
-      if(last_modified_files.length === this.nb_file_last_modif_max) break
-    }
-    for(const file of last_modified_files){
-      file.path_from_current_directory = file.path.substring(path.length)
-      file.last_modif_ago_clean = get_time_ago(file.last_modif)
-    }
-    return last_modified_files
-  }
   update(){
     const inner_path_parts = this.get_inner_path_parts()
     const parent_directory = this.get_parent_directory()
     const current_directories = this.get_current_directories(parent_directory)
     const current_files = this.get_current_files(parent_directory)
     const file_types = this.get_file_types(parent_directory)
-    const last_modified_files = this.get_last_modified_files(parent_directory)    
 
     template.render('#filedir', 'filedir', {
       root_path: this.root_path,
@@ -261,12 +237,14 @@ class Filedir{
       file_types,
       current_directories,
       current_files,
-      last_modified_files,
       nb_file_types: file_types.length,
       nb_folder: current_directories.length,
       nb_file: current_files.length,
       parent_directory_description: parent_directory.description
     })
+
+    last_modified_files.prepare_data(parent_directory)
+    last_modified_files.render()
 
     if(this.file_type){
       $('.variable_box.click_filter_type.' + this.file_type).addClass('selected')
@@ -320,16 +298,9 @@ class Filedir{
       $(this).parent().append(boxes)
     })
 
-    $('body').on('click', '.last_file_modif_row', function() { 
-      that.path = (that.path + '/' + $(this).data('path')).replace(/\/+$/, '')
-      let param_to_set = that.path
-      if(param_to_set === that.folder_to_scan) param_to_set = ''
-      url_params.set_param('path', param_to_set)
-      that.update()
-    })
-
     window.onpopstate = () => {
       this.init_path_param()
+      this.init_file_type_param()
       this.update()
     }
   }

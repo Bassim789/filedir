@@ -1,0 +1,27 @@
+.table_last_file_modif th, 
+.table_last_file_modif td{
+  padding: 2px 5px;
+}
+.table_last_file_modif td{
+  border-bottom: 1px solid #999;
+  cursor: pointer;
+  word-break: break-all;
+}
+.table_last_file_modif tr:hover td{
+  background: rgba(150,150,150, 0.3);
+}
+
+#search_bar_container{
+  width: 100%;
+  text-align: center;
+}
+
+.search_bar{
+  padding: 5px 10px;
+  border: 0;
+  border-bottom: 1px solid #999;
+  background: transparent;
+  outline: none;
+  font-size: 16px;
+  color: inherit;
+}

@@ -16,7 +16,7 @@
       height: 100%;
     }
   </style>
-  <script src="web/module/load.js"></script>
+  <script src="web/module/Loader.js"></script>
   <script>
     const loader = new Loader({version: 1})
     loader.load('web/', ['main.css'])
@@ -29,12 +29,16 @@
     loader.load('web/module/', ['utils.js', 'Url_params.js'])
     loader.load('web/module/dark_mode/dark_mode', ['.css', '_slider.css', '.js', '.html.js'])
     loader.load('web/module/filedir/filedir', ['.html.js', '.js', '.css'])
+    loader.load('web/module/last_modified_files/last_modified_files', ['.html.js', '.js', '.css'])
     loader.load('web/module/footer/footer', ['.html.js', '.js', '.css'])
   </script>
 </head>
 <body>
   <div class="loading"></div>
-  <div id="filedir"></div>
+  <div class="main_container">
+    <div id="filedir"></div>
+    <div id="last_modified_files"></div>
+  </div>
   <div id="footer"></div>
 </body>
 <script>
