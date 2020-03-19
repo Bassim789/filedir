@@ -18,9 +18,9 @@ class Data_exporter():
   def export(self, file_name, data, var_name):
     with open(self.path + file_name, 'w') as file:
       if (sys.version_info > (3, 0)):
-        json.dump(data, file, default=str)
+        json.dump(data, file, default=str, indent=1)
       else:
-        json.dump(data, file, default=str, encoding=self.output_encoding)
+        json.dump(data, file, default=str, indent=1, encoding=self.output_encoding)
     self.prepend_line(self.path + file_name, 'const ' + var_name + ' = ')
 
 
