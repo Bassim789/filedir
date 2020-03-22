@@ -2,6 +2,8 @@
 Filedir is a simple tool that can scan files and folders inside a given path.
 The data produced by the scan are portable and can be visualized in a browser.
 
+Demo: [a link](http://www.filedir.ch/demo)
+
 ## Scanning
 Download the repo and place it on your computer or a server you want to scan.
 It needs to be linux or mac and to have python 2 or 3 installed, most computer and server have it by default.
