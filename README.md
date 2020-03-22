@@ -2,7 +2,7 @@
 Filedir is a simple tool that can scan files and folders inside a given path.
 The data produced by the scan are portable and can be visualized in a browser.
 
-Demo: [a link](http://www.filedir.ch/demo)
+Demo: [http://www.filedir.ch/demo](http://www.filedir.ch/demo)
 
 ## Scanning
 Download the repo and place it on your computer or a server you want to scan.
