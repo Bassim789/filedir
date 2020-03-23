@@ -64,6 +64,7 @@
   margin: 5px; 
   font-size: 20px; 
   font-weight: bold;
+  word-break: break-word;
 }
 .database_info{
   display: inline-block; 
