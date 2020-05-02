@@ -3,26 +3,14 @@ library(tools)
 
 scan <- function(path_to_scan){
   
-  get_path_end <- function(path, sep='/'){
-    path_parts <- strsplit(path, sep)
-    return(path_parts[[1]][length(path_parts[[1]])])
+  get_path_end <- function(path){
+    path_parts <- strsplit(path, '/')
+    path_parts[[1]][length(path_parts[[1]])]
   }
   get_path_start <- function(path){
-    return(substr(path, 1, nchar(path) - nchar(get_path_end(path))))
+    substr(path, 1, nchar(path) - nchar(get_path_end(path)))
   }
   
-  new_directory <- function(path, directory){
-    return(list(
-      path = path,
-      directory = directory,
-      nb_folder = 0,
-      nb_file = 0,
-      size = 0,
-      file_types = list()
-    ))
-  }
-  
-  # start script
   start <- as.numeric(Sys.time())
   
   if(substr(path_to_scan, nchar(path_to_scan), nchar(path_to_scan) + 1) == '/')
@@ -31,9 +19,10 @@ scan <- function(path_to_scan){
   root_path <- get_path_start(path_to_scan)
   folder_to_scan <- get_path_end(path_to_scan)
   
-  dirs_path <- list.dirs(path=path_to_scan, full.names=TRUE, recursive=TRUE)
-  directories <- vector("list", length(dirs_path))
-  for(dir_path in dirs_path){
+  directories <- list()
+  files <- list()
+  
+  for(dir_path in list.dirs(path=path_to_scan, full.names=TRUE, recursive=TRUE)){
     
     directory <- get_path_end(dir_path)
     
@@ -48,7 +37,14 @@ scan <- function(path_to_scan){
       nchar(dir_path)
     )
     
-    directories[[key]] <- new_directory(root, directory)
+    directories[[key]] <- list(
+      path = root,
+      directory = directory,
+      nb_folder = 0,
+      nb_file = 0,
+      size = 0,
+      file_types = list()
+    )
     
     key <- ''
     for(directory_path in strsplit(root, '/')[[1]]){
@@ -57,14 +53,12 @@ scan <- function(path_to_scan){
       } else {
         key <- paste(key, '/', directory_path, sep='')
       }
-      directories[[key]]['nb_folder'][[1]] <- directories[[key]]['nb_folder'][[1]] + 1
+      directories[[key]]$nb_folder <- directories[[key]]$nb_folder + 1
     }
   }
   
   i <- 0
-  files_path <- list.files(path=path_to_scan, full.names=TRUE, recursive=TRUE)
-  files <- vector("list", length(files_path))
-  for(file_path in files_path){
+  for(file_path in list.files(path=path_to_scan, full.names=TRUE, recursive=TRUE)){
     i <- i + 1
     
     file_metadata <- file.info(file_path)
@@ -81,20 +75,18 @@ scan <- function(path_to_scan){
       file_path, 
       nchar(path_to_scan) - nchar(folder_to_scan) + 1, 
       nchar(file_path)
-    ) 
+    )
     
-    file_info <- list(
+    files[[i]] <- list(
       path = root,
       file_name = file_name,
       size = size,
       last_modif = last_modif
     )
     
-    files[[i]] <- file_info
-    
     file_type <- file_ext(file_name)
     if(file_type == '') file_type <- '__nothing__'
-    
+
     key <- ''
     for(directory_path in strsplit(root, '/')[[1]]){
       if(key == ''){
@@ -102,22 +94,22 @@ scan <- function(path_to_scan){
       } else {
         key <- paste(key, '/', directory_path, sep='')
       }
-      
-      directories[[key]]['nb_file'][[1]] <- directories[[key]]['nb_file'][[1]] + 1
-      directories[[key]]['size'][[1]] <- directories[[key]]['size'][[1]] + size
-      
-      if(is.null(directories[[key]][['file_types']][[file_type]])){
-        directories[[key]][['file_types']][[file_type]] <- list(
+
+      directories[[key]]$nb_file <- directories[[key]]$nb_file + 1
+      directories[[key]]$size <- directories[[key]]$size + size
+
+      if(is.null(directories[[key]]$file_types[[file_type]])){
+        directories[[key]]$file_types[[file_type]] <- list(
           nb_file = 0,
           size = 0
         )
       }
-      
-      directories[[key]][['file_types']][[file_type]]['nb_file'][[1]] = 
-        directories[[key]][['file_types']][[file_type]]['nb_file'][[1]] + 1
-      
-      directories[[key]][['file_types']][[file_type]]['size'][[1]] = 
-        directories[[key]][['file_types']][[file_type]]['size'][[1]] + size
+
+      directories[[key]]$file_types[[file_type]]$nb_file =
+        directories[[key]]$file_types[[file_type]]$nb_file + 1
+
+      directories[[key]]$file_types[[file_type]]$size =
+        directories[[key]]$file_types[[file_type]]$size + size
     }
   }
   
