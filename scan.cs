@@ -18,11 +18,14 @@ class Scan {
     DateTime unix_start_time = new DateTime(1970, 1, 1,2,0,0, DateTimeKind.Utc);
     
     string this_path = System.IO.Path.GetDirectoryName(Application.ExecutablePath);
-    string path_to_scan = File.ReadLines(this_path + "/path_to_scan.txt").First();
-    
-    if(path_to_scan.Trim() == ""){
-      path_to_scan = this_path;
-    }
+		string path_to_scan = this_path;
+		
+		if(new FileInfo(this_path + "/path_to_scan.txt").Length > 0){
+			string path_to_scan_from_file = File.ReadLines(this_path + "/path_to_scan.txt").First();
+			if(path_to_scan_from_file.Trim() != ""){
+				path_to_scan = path_to_scan_from_file;
+			}
+		}
     if(path_to_scan.EndsWith("\\")){
       path_to_scan = path_to_scan.Substring(0, path_to_scan.Length - 1);
     }
