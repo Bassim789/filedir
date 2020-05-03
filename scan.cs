@@ -1,10 +1,10 @@
 using System;
 using System.IO;
-using System.Collections.Generic;
-using System.Web.Script.Serialization;
-using System.Windows.Forms;
 using System.Linq;
 using System.Diagnostics;
+using System.Windows.Forms;
+using System.Collections.Generic;
+using System.Web.Script.Serialization;
 
 class Scan {
   
@@ -17,9 +17,12 @@ class Scan {
     watch.Start();
     DateTime unix_start_time = new DateTime(1970, 1, 1,2,0,0, DateTimeKind.Utc);
     
-    var this_path = System.IO.Path.GetDirectoryName(Application.ExecutablePath);
+    string this_path = System.IO.Path.GetDirectoryName(Application.ExecutablePath);
     string path_to_scan = File.ReadLines(this_path + "/path_to_scan.txt").First();
     
+    if(path_to_scan.Trim() == ""){
+      path_to_scan = this_path;
+    }
     if(path_to_scan.EndsWith("\\")){
       path_to_scan = path_to_scan.Substring(0, path_to_scan.Length - 1);
     }
