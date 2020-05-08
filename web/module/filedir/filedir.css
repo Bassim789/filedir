@@ -137,9 +137,8 @@
 }
 
 .variables_listing_wrap{
-  margin: 0;
-  float: left;
-  display: inline-block;
+  margin: auto;
+  display: block;
   width: 100%;
   max-width: 100%;
 }
@@ -164,6 +163,7 @@
   background: #fff;
   border-radius: 20px;
   text-align: center;
+  max-width: 50vw;
 }
 
 .variable_name{
