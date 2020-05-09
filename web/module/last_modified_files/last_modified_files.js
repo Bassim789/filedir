@@ -17,10 +17,11 @@ class Last_modified_files{
   }
   prepare_data(parent_directory){
     this.parent_directory = parent_directory
-    const path = filedir.clean_path(parent_directory.path + '/' + parent_directory.directory) + '/'
+    let path = filedir.clean_path(parent_directory.path + '/' + parent_directory.directory) + '/'
+    if(path === filedir.folder_to_scan + '/') path = ''
     let last_modified_files = []
     for(const file of filedir.files){
-      if(!file.path.startsWith(filedir.path)) continue
+      if(!file.path.startsWith(filedir.path.replace('__root__', ''))) continue
       if(file.path.includes('/.')) continue
       if(filedir.file_type && filedir.file_type !== file.extension) continue
       if(file.file_name.startsWith('.')) continue
@@ -52,7 +53,6 @@ class Last_modified_files{
     $('body').on('click', '.file_name', function() { 
       const path = $(this).parent().data('path').replace(/\/+$/, '')
       const file = (path + '/' + $(this).data('file_name')).replace(/\/+$/, '')
-      console.log(file)
       filedir.open_file(file)
     })
     $('body').on('keyup', '.search_bar', function() {

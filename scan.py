@@ -66,24 +66,22 @@ files_data = []
 
 for iter_path, dirs, files in os.walk(path_to_scan):
 
-  #root = iter_path[len(root_path):].strip('/')
   root = iter_path[len(root_path + folder_to_scan):].strip('/')
 
   if exclude_folders != '' and exclude_folders in root.split('/'): 
     continue
 
   for directory in dirs:
+    directories_dict['__root__']['nb_folder'] += 1
     key = get_clean_path(root + '/' + directory)
     directories_dict[key] = new_directory(root, directory)
     key = ''
     for directory_path in root.split('/'):
       key = get_clean_path(key + '/' + directory_path)
-      directories_dict['__root__']['nb_folder'] += 1
       if key != '':
         directories_dict[key]['nb_folder'] += 1
     
   for filename in files:
-    print(root_path + folder_to_scan + '/' + root + '/' + filename)
     try:
       size = os.path.getsize(root_path + folder_to_scan + '/' + root + '/' + filename)
       last_modif = os.path.getmtime(root_path + folder_to_scan + '/' + root + '/' + filename)
@@ -102,18 +100,17 @@ for iter_path, dirs, files in os.walk(path_to_scan):
     if len(filename.split('.')) > 1 and filename.split('.')[0] != '':
       file_type = filename.split('.').pop()
 
+    directories_dict['__root__']['nb_file'] += 1
+    directories_dict['__root__']['size'] += size
+    if not file_type in directories_dict['__root__']['file_types']:
+      directories_dict['__root__']['file_types'][file_type] = {'nb_file': 0, 'size': 0}
+    directories_dict['__root__']['file_types'][file_type]['nb_file'] += 1
+    directories_dict['__root__']['file_types'][file_type]['size'] += size
+
     key = ''
     for directory in root.split('/'):
       if directory == '': continue
       key = get_clean_path(key + '/' + directory)
-
-      directories_dict['__root__']['nb_file'] += 1
-      directories_dict['__root__']['size'] += size
-      if not file_type in directories_dict['__root__']['file_types']:
-        directories_dict['__root__']['file_types'][file_type] = {'nb_file': 0, 'size': 0}
-      directories_dict['__root__']['file_types'][file_type]['nb_file'] += 1
-      directories_dict['__root__']['file_types'][file_type]['size'] += size
-
       if key != '':
         directories_dict[key]['nb_file'] += 1
         directories_dict[key]['size'] += size
@@ -123,8 +120,11 @@ for iter_path, dirs, files in os.walk(path_to_scan):
         directories_dict[key]['file_types'][file_type]['size'] += size
 
     if filename == '_info.txt':
-      with open (root_path + root + '/' + filename, 'r') as file:
-        directories_dict[root]['description'] = file.read()
+      with open (root_path + folder_to_scan + '/' + root + '/' + filename, 'r') as file:
+        if root == '':
+          directories_dict['__root__']['description'] = file.read()
+        else:
+          directories_dict[root]['description'] = file.read()
 
 file_type_icons = []
 for file in os.listdir(this_path + 'web/media/img/file_icon'):
