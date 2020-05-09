@@ -6,7 +6,7 @@ template.filedir = `
      <div style="display: inline-block;">
       <div class="database_name">
         <div id="path_parts">
-        {{root_path}}{{#inner_path_parts}}<span class="inner_path_part" data-value="{{inner_path_part_value}}">{{inner_path_part}}/</span>{{/inner_path_parts}}
+        <span class="alias">{{alias}}</span>{{#inner_path_parts}}<span class="inner_path_part" data-value="{{inner_path_part_value}}">{{inner_path_part}}/</span>{{/inner_path_parts}}
         </div>
         <div id="select_path_wrap"><select></select></div>
       </div>

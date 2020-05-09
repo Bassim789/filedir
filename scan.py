@@ -22,13 +22,32 @@ start_time = time()
 this_path_and_file = os.path.realpath(__file__)
 this_path = this_path_and_file.split(os.path.basename(this_path_and_file))[0]
 
-with open(this_path + 'path_to_scan.txt') as file:
-  path_to_scan = file.readline()
-if path_to_scan.strip() == '':
-  path_to_scan = this_path
-if path_to_scan.endswith('/'): 
-  path_to_scan = path_to_scan[:-1]
+# with open(this_path + 'path_to_scan.txt') as file:
+#   path_to_scan = file.readline()
+# if path_to_scan.strip() == '':
+#   path_to_scan = this_path
+# if path_to_scan.endswith('/'): 
+#   path_to_scan = path_to_scan[:-1]
 
+alias = ''
+exclude_folders = ''
+use_alias_on_file = 'false'
+
+with open(this_path + 'config.txt') as file:
+  for line in file.readlines():
+    if line.startswith('path:'):
+      path_to_scan = line.split('path:')[1].strip()
+      if path_to_scan == '':
+        path_to_scan = this_path
+      if path_to_scan.endswith('/'): 
+        path_to_scan = path_to_scan[:-1]
+    elif line.startswith('alias:'):
+      alias = line.split('alias:')[1].strip()
+    elif line.startswith('exclude_folders:'):
+      exclude_folders = line.split('exclude_folders:')[1].strip()
+    elif line.startswith('use_alias_on_file:'):
+      use_alias_on_file = line.split('use_alias_on_file:')[1].strip()
+      
 folder_to_scan = path_to_scan.split('/')[-1]
 root_path = '/'.join(path_to_scan.split('/')[0:-1]) + '/'
 
@@ -42,28 +61,32 @@ if not os.path.exists(path_to_scan):
 
 print('scan ' + path_to_scan)
 
-directories_dict = {folder_to_scan: new_directory('', folder_to_scan)}
+directories_dict = {'__root__': new_directory('', folder_to_scan)}
 files_data = []
 
 for iter_path, dirs, files in os.walk(path_to_scan):
 
-  root = iter_path[len(root_path):].strip('/')
+  #root = iter_path[len(root_path):].strip('/')
+  root = iter_path[len(root_path + folder_to_scan):].strip('/')
+
+  if exclude_folders != '' and exclude_folders in root.split('/'): 
+    continue
 
   for directory in dirs:
     key = get_clean_path(root + '/' + directory)
     directories_dict[key] = new_directory(root, directory)
-
     key = ''
     for directory_path in root.split('/'):
       key = get_clean_path(key + '/' + directory_path)
-      if key == '': continue
-      directories_dict[key]['nb_folder'] += 1
+      directories_dict['__root__']['nb_folder'] += 1
+      if key != '':
+        directories_dict[key]['nb_folder'] += 1
     
   for filename in files:
-
+    print(root_path + folder_to_scan + '/' + root + '/' + filename)
     try:
-      size = os.path.getsize(root_path + root + '/' + filename)
-      last_modif = os.path.getmtime(root_path + root + '/' + filename)
+      size = os.path.getsize(root_path + folder_to_scan + '/' + root + '/' + filename)
+      last_modif = os.path.getmtime(root_path + folder_to_scan + '/' + root + '/' + filename)
     except:
       size = 0
       last_modif = 0
@@ -83,17 +106,21 @@ for iter_path, dirs, files in os.walk(path_to_scan):
     for directory in root.split('/'):
       if directory == '': continue
       key = get_clean_path(key + '/' + directory)
-      directories_dict[key]['nb_file'] += 1
-      directories_dict[key]['size'] += size
 
-      if not file_type in directories_dict[key]['file_types']:
-        directories_dict[key]['file_types'][file_type] = {
-          'nb_file': 0,
-          'size': 0
-        }
+      directories_dict['__root__']['nb_file'] += 1
+      directories_dict['__root__']['size'] += size
+      if not file_type in directories_dict['__root__']['file_types']:
+        directories_dict['__root__']['file_types'][file_type] = {'nb_file': 0, 'size': 0}
+      directories_dict['__root__']['file_types'][file_type]['nb_file'] += 1
+      directories_dict['__root__']['file_types'][file_type]['size'] += size
 
-      directories_dict[key]['file_types'][file_type]['nb_file'] += 1
-      directories_dict[key]['file_types'][file_type]['size'] += size
+      if key != '':
+        directories_dict[key]['nb_file'] += 1
+        directories_dict[key]['size'] += size
+        if not file_type in directories_dict[key]['file_types']:
+          directories_dict[key]['file_types'][file_type] = {'nb_file': 0, 'size': 0}
+        directories_dict[key]['file_types'][file_type]['nb_file'] += 1
+        directories_dict[key]['file_types'][file_type]['size'] += size
 
     if filename == '_info.txt':
       with open (root_path + root + '/' + filename, 'r') as file:
@@ -107,15 +134,17 @@ for file in os.listdir(this_path + 'web/media/img/file_icon'):
 duration = round(time() - start_time, 1)
 
 data = {
-  'directories_data': directories_dict,
-  'files_data': files_data,
   'main_data': {
-    'root_path': root_path,
+    'alias': alias,
+    'use_alias_on_file': use_alias_on_file,
+    'root_path': root_path if use_alias_on_file == 'false' else '',
     'folder_to_scan': folder_to_scan,
     'file_type_icons': file_type_icons,
     'scan_timestamp': round(time()),
     'scan_duration': duration
-  }
+  },
+  'directories_data': directories_dict,
+  'files_data': files_data
 }
 
 with open(this_path + 'data.json.js', 'w') as file:

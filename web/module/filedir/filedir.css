@@ -461,3 +461,8 @@
     font-weight: bold;
 }
 
+.alias:hover{
+  text-decoration: underline;
+  cursor: pointer;
+}
+
