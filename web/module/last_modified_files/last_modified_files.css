@@ -11,11 +11,13 @@
 }
 .table_last_file_modif td{
   border-bottom: 1px solid #999;
-  cursor: pointer;
   word-break: break-all;
 }
-.table_last_file_modif tr:hover td{
+
+.table_last_file_modif td.file_name:hover,
+.table_last_file_modif td.last_file_modif_td_path:hover{
   background: rgba(150,150,150, 0.3);
+  cursor: pointer;
 }
 
 #search_bar_container{

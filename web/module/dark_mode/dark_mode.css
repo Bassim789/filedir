@@ -42,10 +42,15 @@ html.dark .chosen-container .chosen-results,
 html.dark .chosen-container .no-results,
 html.dark .chosen-container input,
 html.dark #search_bar_input,
-html.dark .variables_simple_listing table tr:nth-child(even)
+html.dark .variables_simple_listing table tr:nth-child(even),
+html.dark .selectize-dropdown
 {
   color: #ccc;
   background: #333;
+}
+
+html.dark #select_path_wrap .selectize-input input{
+  color: #ddd;
 }
 
 html.dark .percent_bar{
@@ -59,3 +64,11 @@ html.dark .percent_bar.percent_error_bar{
 html.dark .close:before, html.dark .close:after{
   background: #ccc;
 }
+
+html.dark  .selectize-control.single .selectize-input:after{
+  border-color: #ddd transparent transparent transparent;
+}
+html.dark  .selectize-control.single .selectize-input.dropdown-active:after{
+  border-color: transparent transparent #ddd;
+}
+

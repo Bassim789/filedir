@@ -21,11 +21,12 @@
     const loader = new Loader({version: 1})
     loader.load('web/', ['main.css'])
     loader.load('web/lib/', [
-      'jquery.min.js',
       'mustache.min.js',
       'readmore/readmore.min.js',
       'timer/Timer.js'
     ])
+    loader.load('web/lib/jquery/jquery', ['.min.js', '-ui.min.js', '-ui.min.css'])
+    loader.load('web/lib/selectize/selectize', ['.min.js', '.css', '.default.css', '.bootstrap3.css'])
     loader.load('web/module/', ['utils.js', 'Url_params.js'])
     loader.load('web/module/dark_mode/dark_mode', ['.css', '_slider.css', '.js', '.html.js'])
     loader.load('web/module/filedir/filedir', ['.html.js', '.js', '.css'])

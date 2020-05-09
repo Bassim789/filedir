@@ -22,8 +22,10 @@ template.last_modified_files_table = `
   </tr>
   <!-- {{#last_modified_files}} -->
   <tr class="last_file_modif_row" data-path="{{path_from_current_directory}}">
-    <td class="last_file_modif_td_path">{{path_from_current_directory}}</td>
-    <td>{{file_name}}</td>
+    <td class="last_file_modif_td_path">
+      {{path_from_current_directory}}
+    </td>
+    <td class="file_name" data-file_name="{{file_name}}">{{file_name}}</td>
     <!-- {{#is_icon}} -->
     <td><img src="web/media/img/file_icon/{{extension}}.png" class="little_icon"></td>
     <!-- {{/is_icon}} -->

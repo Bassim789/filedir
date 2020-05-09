@@ -42,12 +42,18 @@ class Last_modified_files{
   }
   actions(){
     const that = this
-    $('body').on('click', '.last_file_modif_row', function() { 
-      filedir.path = (filedir.path + '/' + $(this).data('path')).replace(/\/+$/, '')
+    $('body').on('click', '.last_file_modif_td_path', function() { 
+      filedir.path = (filedir.path + '/' + $(this).parent().data('path')).replace(/\/+$/, '')
       let param_to_set = filedir.path
       if(param_to_set === filedir.folder_to_scan) param_to_set = ''
       url_params.set_param('path', param_to_set)
       filedir.update()
+    })
+    $('body').on('click', '.file_name', function() { 
+      const path = $(this).parent().data('path').replace(/\/+$/, '')
+      const file = (path + '/' + $(this).data('file_name')).replace(/\/+$/, '')
+      console.log(file)
+      filedir.open_file(file)
     })
     $('body').on('keyup', '.search_bar', function() {
       if(that.search === $(this).val()) return false

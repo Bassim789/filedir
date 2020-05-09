@@ -5,10 +5,10 @@ template.filedir = `
 
      <div style="display: inline-block;">
       <div class="database_name">
-        {{root_path}}
-        <br>
-        {{#inner_path_parts}}<span class="inner_path_part" data-value="{{inner_path_part_value}}">{{inner_path_part}}/</span>{{/inner_path_parts}}
-        <vr>
+        <div id="path_parts">
+        {{root_path}}{{#inner_path_parts}}<span class="inner_path_part" data-value="{{inner_path_part_value}}">{{inner_path_part}}/</span>{{/inner_path_parts}}
+        </div>
+        <div id="select_path_wrap"><select></select></div>
       </div>
 
       {{#parent_directory_description}}
@@ -155,7 +155,7 @@ template.filedir = `
         <div class="btn_show_hidden"><p>Show hidden</p></div>
         <div class="hidden_box" data-type="file" style="display: none;">
         {{/first_hidden}}
-        <div class="variable_box">
+        <div class="variable_box click_file" data-file="{{file_name}}">
           <div class="variable_order_num">#{{order_num}}</div>
           <div>
             <div class="variable_name">{{file_name}}</div>

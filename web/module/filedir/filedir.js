@@ -230,6 +230,8 @@ class Filedir{
     const current_files = this.get_current_files(parent_directory)
     const file_types = this.get_file_types(parent_directory)
 
+    this.current_files = current_files
+
     template.render('#filedir', 'filedir', {
       root_path: this.root_path,
       inner_path_parts,
@@ -256,6 +258,99 @@ class Filedir{
       moreLink: '<a href="#" class="readmore_btn">More...</a>',
       lessLink: '<a href="#" class="readless_btn">Less...</a>'
     })
+
+
+    
+    $('#select_path_wrap').html('')
+    const template_select_path = `
+      <select>
+        <option selected="selected" value=""></option>
+        {{#folders}}
+          <option value="{{directory}}">
+          {{directory}}
+          </option>
+        {{/folders}}
+        {{#files}}
+          <option value="{{file_name}}">
+          {{file_name}}
+          </option>
+        {{/files}}
+      </select>
+    `;
+    $('#select_path_wrap').html(Mustache.to_html(template_select_path, {
+      folders: current_directories,
+      files: current_files
+    }))
+    
+    const selectize = $('#select_path_wrap select').selectize({
+      // sortField: 'text',
+      options: [...current_directories, ...current_files],
+      render: {
+        option: function(item, escape) {
+          let select, name
+          let img = false
+          if(item.file_name === undefined){
+            name = item.directory
+            img = "web/media/img/folder_icon.png"
+          } else {
+            name = item.file_name
+            if(item.is_icon){
+              img = 'web/media/img/file_icon/' + item.extension + '.png'
+            }
+          }
+          select = `
+            <div class="option">
+              <div class="text">
+                <span class="name">${name}</span>
+              </div>
+          `;
+          if(img){
+            select += `
+              <div class="image">
+                <img class="avatar" src="${img}">
+              </div>
+            `
+          }
+          return select + '</div>'
+        }
+      },
+    })
+    $('#select_path_wrap select')[0].selectize.focus()
+  }
+
+  is_filename(name){
+    for(const current_file of this.current_files){
+      if(current_file.file_name === name){
+        return true
+      }
+    }
+    return false
+  }
+  open_file(filename){
+    const win = window.open(this.root_path + this.path + '/' + filename, '_blank')
+    win.focus()
+  }
+  go_to_folder(folder){
+    if(folder === ''){ return false}
+    if(this.is_filename(folder)){
+      $('#select_path_wrap select')[0].selectize.clear()
+      this.open_file(folder)
+      $('#select_path_wrap select')[0].selectize.focus()
+      return false
+    }
+    this.path += '/' + folder
+    let param_to_set = this.path
+    if(param_to_set === this.folder_to_scan) param_to_set = ''
+    url_params.set_param('path', param_to_set)
+    this.update()
+  }
+  go_to_folder_parent(){
+    if(this.path.lastIndexOf('/') === -1) return false
+    this.path = this.path.substring(0, this.path.lastIndexOf('/'))
+    let param_to_set = this.path
+    if(param_to_set === this.folder_to_scan) param_to_set = ''
+    url_params.set_param('path', param_to_set)
+    this.update()
   }
 
   actions(){
@@ -263,11 +358,12 @@ class Filedir{
 
     $('body').on('click', '.click_folder', function() {
       const dir_name = $(this).data('directory').toString().trim()
-      that.path += '/' + dir_name
-      let param_to_set = that.path
-      if(param_to_set === that.folder_to_scan) param_to_set = ''
-      url_params.set_param('path', param_to_set)
-      that.update()
+      that.go_to_folder(dir_name)
+    })
+
+    $('body').on('click', '.click_file', function() {
+      const filename = $(this).data('file').toString().trim()
+      that.open_file(filename)
     })
 
     $('body').on('click', '.inner_path_part', function() {
@@ -296,6 +392,16 @@ class Filedir{
       $(this).hide()
       const boxes = $(this).parent().find('.hidden_box').html()
       $(this).parent().append(boxes)
+    })
+
+    $('body').on('change', '#select_path_wrap select', function() {
+      that.go_to_folder($(this).val())
+    })
+
+    $('body').on('keydown', '.selectize-input input', function(event) {
+      if(event.keyCode === 8 && $(this).val() === ''){
+        that.go_to_folder_parent()
+      }
     })
 
     window.onpopstate = () => {
