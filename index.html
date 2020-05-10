@@ -29,6 +29,7 @@
     loader.load('web/lib/selectize/selectize', ['.min.js', '.css', '.default.css', '.bootstrap3.css'])
     loader.load('web/module/', ['utils.js', 'Url_params.js'])
     loader.load('web/module/dark_mode/dark_mode', ['.css', '_slider.css', '.js', '.html.js'])
+    loader.load('web/module/metacat/metacat', ['.html.js', '.js', '.css'])
     loader.load('web/module/filedir/filedir', ['.html.js', '.js', '.css'])
     loader.load('web/module/last_modified_files/last_modified_files', ['.html.js', '.js', '.css'])
     loader.load('web/module/footer/footer', ['.html.js', '.js', '.css'])
@@ -39,11 +40,12 @@
   <div class="main_container">
     <div id="filedir"></div>
     <div id="last_modified_files"></div>
+    <div id="metacat"></div>
   </div>
   <div id="footer"></div>
 </body>
 <script>
-  loader.load('', ['data.json.js'])
+  loader.load('', ['catalog_names.json.js'])
   loader.load('web/', ['app.js'])
 </script>
 <script>

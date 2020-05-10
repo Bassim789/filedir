@@ -3,10 +3,13 @@ template.filedir = `
 <div class="tables_listing">
   <div class="table_wrap" style="width: 100%; background: none;">
 
-     <div style="display: inline-block;">
+     <div style="display: inline-block; max-width: 100%;">
       <div class="database_name">
         <div id="path_parts">
-        <span class="alias">{{alias}}</span>{{#inner_path_parts}}<span class="inner_path_part" data-value="{{inner_path_part_value}}">{{inner_path_part}}/</span>{{/inner_path_parts}}
+          <span>
+            <img src="web/media/img/home_icon.png" class="home_icon">
+          </span>
+          <span class="alias">{{alias}}</span>{{#inner_path_parts}}<span class="inner_path_part" data-value="{{inner_path_part_value}}">{{inner_path_part}}/</span>{{/inner_path_parts}}
         </div>
         <div id="select_path_wrap"><select></select></div>
       </div>

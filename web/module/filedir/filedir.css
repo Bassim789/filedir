@@ -12,6 +12,12 @@
   text-decoration: underline;
 }
 
+.home_icon{
+  height: 30px;
+  margin-bottom: -7px;
+  cursor: pointer;
+}
+
 .file_icon{
   width: 50px;
 }
@@ -34,7 +40,7 @@
 
 .separation{
   width: 100%;
-  display: inline-block;
+  display: block;
 }
 
 .btn_show_hidden{
@@ -67,6 +73,7 @@
   font-size: 20px; 
   font-weight: bold;
   word-break: break-word;
+  max-width: calc(100% - 10px);
 }
 .database_info{
   display: inline-block; 
@@ -412,6 +419,7 @@
 #select_path_wrap{
   float: left;
   width: 300px;
+  max-width: 100%;
   color: inherit;
   font-weight: bold;
   outline: none;

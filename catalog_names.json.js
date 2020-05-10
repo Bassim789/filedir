@@ -1,0 +1,1 @@
+const catalog_names = ['filedir']

@@ -2,7 +2,6 @@ class Last_modified_files{
   constructor(){
     this.nb_file_last_modif_max = 100
     this.search = this.get_search_param()
-    this.init_container()
     this.actions()
   }
   get_search_param(){

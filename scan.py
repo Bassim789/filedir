@@ -18,22 +18,14 @@ def new_directory(path, directory):
   }
 
 start_time = time()
-
 this_path_and_file = os.path.realpath(__file__)
 this_path = this_path_and_file.split(os.path.basename(this_path_and_file))[0]
-
-# with open(this_path + 'path_to_scan.txt') as file:
-#   path_to_scan = file.readline()
-# if path_to_scan.strip() == '':
-#   path_to_scan = this_path
-# if path_to_scan.endswith('/'): 
-#   path_to_scan = path_to_scan[:-1]
 
 alias = ''
 exclude_folders = ''
 use_alias_on_file = 'false'
-
-with open(this_path + 'config.txt') as file:
+data_name = 'default'
+with open(this_path + 'config/' + sys.argv[1]) as file:
   for line in file.readlines():
     if line.startswith('path:'):
       path_to_scan = line.split('path:')[1].strip()
@@ -47,6 +39,8 @@ with open(this_path + 'config.txt') as file:
       exclude_folders = line.split('exclude_folders:')[1].strip()
     elif line.startswith('use_alias_on_file:'):
       use_alias_on_file = line.split('use_alias_on_file:')[1].strip()
+    elif line.startswith('data:'):
+      data_name = line.split('data:')[1].strip()
       
 folder_to_scan = path_to_scan.split('/')[-1]
 root_path = '/'.join(path_to_scan.split('/')[0:-1]) + '/'
@@ -133,6 +127,9 @@ for file in os.listdir(this_path + 'web/media/img/file_icon'):
 
 duration = round(time() - start_time, 1)
 
+if not os.path.exists(this_path + 'data/' + data_name):
+    os.makedirs(this_path + 'data/' + data_name)
+
 data = {
   'main_data': {
     'alias': alias,
@@ -147,15 +144,24 @@ data = {
   'files_data': files_data
 }
 
-with open(this_path + 'data.json.js', 'w') as file:
-  if (sys.version_info > (3, 0)):
-    json.dump(data, file, default=str, indent=1)
-  else:
-    output_encoding = 'latin1' if 'latin1' in sys.argv else 'utf8'
-    json.dump(data, file, default=str, indent=1, encoding=output_encoding)
-with open(this_path + 'data.json.js', 'r+') as file:
-  content = file.read()
-  file.seek(0, 0)
-  file.write('const data = ' + '\n' + content)
+indent = 1
+if (sys.version_info > (3, 0)):
+  json_data = json.dumps(data, default=str, indent=indent)
+else:
+  output_encoding = 'latin1' if 'latin1' in sys.argv else 'utf8'
+  json_data = json.dumps(data, default=str, indent=indent, encoding=output_encoding)
+with open(this_path + 'data/' + data_name + '/data.json.js', 'w') as file:
+  file.write('data = ' + '\n' + json_data)
+
+basic_data = {
+  'scan_timestamp': round(time()),
+  'alias': alias,
+  'nb_file': directories_dict['__root__']['nb_file'],
+  'nb_folder': directories_dict['__root__']['nb_folder'],
+  'size': directories_dict['__root__']['size']
+}
+json_basic_data = json.dumps(basic_data, default=str, indent=indent)
+with open(this_path + 'data/' + data_name + '/basic_data.json.js', 'w') as file:
+  file.write('basic_data = ' + '\n' + json_basic_data)
 
 print('done in ' + str(duration) + ' seconds')

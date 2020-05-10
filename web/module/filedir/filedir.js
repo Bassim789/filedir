@@ -38,6 +38,7 @@ class Filedir{
     this.files = files
   }
   init(){
+    last_modified_files.init_container()
     this.init_path_param()
     this.init_file_type_param()
     this.update()
@@ -302,8 +303,10 @@ class Filedir{
     }))
     
     const selectize = $('#select_path_wrap select').selectize({
-      // sortField: 'text',
       options: [...current_directories, ...current_files],
+      onDropdownClose: () => window.localStorage.setItem('selectize_dropdown_open', 'false'),
+      onDropdownOpen: () => window.localStorage.setItem('selectize_dropdown_open', 'true'),
+      onItemAdd: () => window.localStorage.setItem('selectize_dropdown_open', 'true'),
       render: {
         option: function(item, escape) {
           let select, name
@@ -334,7 +337,10 @@ class Filedir{
         }
       },
     })
-    $('#select_path_wrap select')[0].selectize.focus()
+
+    if(window.localStorage.getItem('selectize_dropdown_open') === 'true'){
+      $('#select_path_wrap select')[0].selectize.focus()
+    }
   }
 
   is_filename(name){
@@ -346,10 +352,8 @@ class Filedir{
     return false
   }
   open_file(filename){
-    console.log(this.path)
     const path_clean = this.path.replace('__root__', '')
     let path = ''
-    console.log(this.use_alias_on_file)
     if(this.use_alias_on_file === 'true'){
       path += 'https://'
       path += this.alias
@@ -360,7 +364,6 @@ class Filedir{
     } else {
       path = this.root_path + this.folder_to_scan + '/' + path_clean + '/' + filename
     }
-    console.log(path)
     const win = window.open(path, '_blank')
     win.focus()
   }
@@ -380,7 +383,11 @@ class Filedir{
     this.update()
   }
   go_to_folder_parent(){
-    if(this.path === '__root__') return false
+    if(this.path === '__root__'){
+      url_params.set_param('catalog', '')
+      location.reload()
+      return false
+    }
     this.path = this.path.substring(0, this.path.lastIndexOf('/'))
     let param_to_set = this.path
     if(param_to_set === this.folder_to_scan) param_to_set = ''
@@ -403,7 +410,6 @@ class Filedir{
 
     $('body').on('click', '.inner_path_part', function() {
       const inner_path_part_value = $(this).data('value').toString()
-      console.log(inner_path_part_value)
       that.path = inner_path_part_value
       let param_to_set = inner_path_part_value
       if(param_to_set === that.folder_to_scan) param_to_set = ''
@@ -448,7 +454,16 @@ class Filedir{
       }
     })
 
+    $('body').on('click', '.home_icon', function() {
+      url_params.set_params({catalog: '', path: ''})
+      location.reload()
+    })
+
     window.onpopstate = () => {
+      if(!url_params.get_param('catalog')){
+        location.reload()
+        return false
+      }
       this.init_path_param()
       this.init_file_type_param()
       this.update()

@@ -1,0 +1,5 @@
+path:
+data: filedir
+alias: filedir
+use_alias_on_file: false
+exclude_folders: .git

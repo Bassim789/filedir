@@ -5,7 +5,7 @@ class Loader{
       this.version = options.version
     }
   }
-  load(path, files){
+  load(path, files, callback=()=>{}){
     const head = document.getElementsByTagName('head')[0]
     for (const file of files){
       const path_file = path + file + '?v=' + this.version
@@ -21,7 +21,7 @@ class Loader{
         tag.href = path_file
       }
       tag.async = false
-      tag.onload = () => {}
+      tag.onload = callback
       head.appendChild(tag)
     }
   }
