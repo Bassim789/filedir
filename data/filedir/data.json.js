@@ -9,7 +9,7 @@ data =
   }, 
   {
    "path": "", 
-   "last_modif": 1589122962.0, 
+   "last_modif": 1589126232.0, 
    "size": 10244, 
    "file_name": ".DS_Store"
   }, 
@@ -21,26 +21,26 @@ data =
   }, 
   {
    "path": "", 
-   "last_modif": 1589124142.0, 
+   "last_modif": 1589128599.0, 
    "size": 33, 
    "file_name": "catalog_names.json.js"
   }, 
   {
    "path": "", 
-   "last_modif": 1588512751.0, 
-   "size": 2126, 
+   "last_modif": 1589128397.0, 
+   "size": 2165, 
    "file_name": "README.md"
   }, 
   {
    "path": "", 
-   "last_modif": 1589124272.0, 
+   "last_modif": 1589128589.0, 
    "size": 87, 
    "file_name": "scan.command"
   }, 
   {
    "path": "", 
-   "last_modif": 1589029449.0, 
-   "size": 44, 
+   "last_modif": 1589124603.0, 
+   "size": 20, 
    "file_name": ".gitignore"
   }, 
   {
@@ -69,7 +69,13 @@ data =
   }, 
   {
    "path": "config", 
-   "last_modif": 1589124306.0, 
+   "last_modif": 1589125429.0, 
+   "size": 6148, 
+   "file_name": ".DS_Store"
+  }, 
+  {
+   "path": "config", 
+   "last_modif": 1589128657.0, 
    "size": 81, 
    "file_name": "filedir.txt"
   }, 
@@ -519,25 +525,25 @@ data =
   }, 
   {
    "path": "data", 
-   "last_modif": 1589123941.0, 
+   "last_modif": 1589128631.0, 
    "size": 6148, 
    "file_name": ".DS_Store"
   }, 
   {
    "path": "data/filedir", 
-   "last_modif": 1589124276.0, 
+   "last_modif": 1589128672.0, 
    "size": 126, 
    "file_name": "basic_data.json.js"
   }, 
   {
    "path": "data/filedir", 
-   "last_modif": 1589124276.0, 
-   "size": 17926, 
+   "last_modif": 1589128672.0, 
+   "size": 17620, 
    "file_name": "data.json.js"
   }
  ], 
  "main_data": {
-  "scan_timestamp": 1589124310.0, 
+  "scan_timestamp": 1589128683.0, 
   "root_path": "/Users/bassim/Documents/code/", 
   "use_alias_on_file": "false", 
   "alias": "filedir", 
@@ -580,13 +586,13 @@ data =
  "directories_data": {
   "__root__": {
    "nb_folder": 20, 
-   "nb_file": 89, 
+   "nb_file": 90, 
    "directory": "filedir", 
    "path": "", 
    "file_types": {
     "md": {
      "nb_file": 1, 
-     "size": 2126
+     "size": 2165
     }, 
     "py": {
      "nb_file": 1, 
@@ -594,7 +600,7 @@ data =
     }, 
     "js": {
      "nb_file": 24, 
-     "size": 479800
+     "size": 479494
     }, 
     "gif": {
      "nb_file": 1, 
@@ -605,8 +611,8 @@ data =
      "size": 2150
     }, 
     "__nothing__": {
-     "nb_file": 9, 
-     "size": 84415
+     "nb_file": 10, 
+     "size": 90539
     }, 
     "png": {
      "nb_file": 37, 
@@ -633,7 +639,7 @@ data =
      "size": 74995
     }
    }, 
-   "size": 1755374
+   "size": 1761231
   }, 
   "web": {
    "nb_folder": 15, 
@@ -748,10 +754,10 @@ data =
     }, 
     "js": {
      "nb_file": 2, 
-     "size": 18052
+     "size": 17746
     }
    }, 
-   "size": 24200
+   "size": 23894
   }, 
   "web/media/img": {
    "nb_folder": 1, 
@@ -943,23 +949,27 @@ data =
    "file_types": {
     "js": {
      "nb_file": 2, 
-     "size": 18052
+     "size": 17746
     }
    }, 
-   "size": 18052
+   "size": 17746
   }, 
   "config": {
    "nb_folder": 0, 
-   "nb_file": 1, 
+   "nb_file": 2, 
    "directory": "config", 
    "path": "", 
    "file_types": {
     "txt": {
      "nb_file": 1, 
      "size": 81
+    }, 
+    "__nothing__": {
+     "nb_file": 1, 
+     "size": 6148
     }
    }, 
-   "size": 81
+   "size": 6229
   }, 
   "web/lib/readmore": {
    "nb_folder": 0, 

@@ -7,20 +7,20 @@ Demo: [https://filedir.ch/demo](https://filedir.ch/demo)
 ## Scanning
 Download the repo and place it on your computer or a server you want to scan. 
 Python, R or C# has to be installed.
-Put the path you want to scan inside the path_to_scan.txt file.
+Put the path you want to scan inside the config/filedir.txt file.
 If empty, the repo folder will be scanned.
-After the scan, the file data.json.js is created inside the repo, it contains the result of the scan.
+After the scan, the file data/filedir/data.json.js is created inside the repo, it contains the result of the scan.
 
 ### Using Python with command line
 Open a terminal and go to the repo.
 
 Then use the following command:
 ```
-python scan.py
+python scan.py filedir.txt
 ```
 If an error with encoding appear, you can try:
 ```
-python scan.py latin1
+python scan.py filedir.txt latin1
 ```
 
 ### Using Python without command line
