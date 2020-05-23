@@ -25,4 +25,19 @@ class Loader{
       head.appendChild(tag)
     }
   }
+  load_js_data(src) {
+    return new Promise(resolve => {
+      const head = document.getElementsByTagName('head')[0]
+      const tag = document.createElement('script')
+      src += '?v=' + Math.random()
+      tag.type = 'text/javascript'
+      tag.src = src
+      tag.async = false
+      tag.onload = () => {
+        resolve(data)
+        document.querySelectorAll('script[src="' + src + '"]')[0].remove()
+      }
+      head.appendChild(tag)
+    })
+  }
 }

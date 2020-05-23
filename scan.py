@@ -24,24 +24,24 @@ this_path = this_path_and_file.split(os.path.basename(this_path_and_file))[0]
 alias = ''
 exclude_folders = ''
 use_alias_on_file = 'false'
-data_name = 'default'
+name = 'default'
 with open(this_path + 'config/' + sys.argv[1]) as file:
-  for line in file.readlines():
-    if line.startswith('path:'):
-      path_to_scan = line.split('path:')[1].strip()
-      if path_to_scan == '':
-        path_to_scan = this_path
-      if path_to_scan.endswith('/'): 
-        path_to_scan = path_to_scan[:-1]
-    elif line.startswith('alias:'):
-      alias = line.split('alias:')[1].strip()
-    elif line.startswith('exclude_folders:'):
-      exclude_folders = line.split('exclude_folders:')[1].strip()
-    elif line.startswith('use_alias_on_file:'):
-      use_alias_on_file = line.split('use_alias_on_file:')[1].strip()
-    elif line.startswith('data:'):
-      data_name = line.split('data:')[1].strip()
-      
+  file_str = file.read()
+  config = json.loads(file_str.split('\n', 1)[1])
+  path_to_scan = config['path_to_scan']
+  if path_to_scan == '':
+    path_to_scan = this_path
+  if path_to_scan.endswith('/'): 
+    path_to_scan = path_to_scan[:-1]
+  if 'alias' in config:
+    alias = config['alias']
+  if 'exclude_folders' in config:
+    exclude_folders = config['exclude_folders']
+  if 'use_alias_on_file' in config:
+    use_alias_on_file = config['use_alias_on_file']
+  if 'name' in config:
+    name = config['name']
+
 folder_to_scan = path_to_scan.split('/')[-1]
 root_path = '/'.join(path_to_scan.split('/')[0:-1]) + '/'
 
@@ -127,8 +127,8 @@ for file in os.listdir(this_path + 'web/media/img/file_icon'):
 
 duration = round(time() - start_time, 1)
 
-if not os.path.exists(this_path + 'data/' + data_name):
-    os.makedirs(this_path + 'data/' + data_name)
+if not os.path.exists(this_path + 'data/' + name):
+    os.makedirs(this_path + 'data/' + name)
 
 data = {
   'main_data': {
@@ -150,7 +150,7 @@ if (sys.version_info > (3, 0)):
 else:
   output_encoding = 'latin1' if 'latin1' in sys.argv else 'utf8'
   json_data = json.dumps(data, default=str, indent=indent, encoding=output_encoding)
-with open(this_path + 'data/' + data_name + '/data.json.js', 'w') as file:
+with open(this_path + 'data/' + name + '/data.json.js', 'w') as file:
   file.write('data = ' + '\n' + json_data)
 
 basic_data = {
@@ -161,7 +161,7 @@ basic_data = {
   'size': directories_dict['__root__']['size']
 }
 json_basic_data = json.dumps(basic_data, default=str, indent=indent)
-with open(this_path + 'data/' + data_name + '/basic_data.json.js', 'w') as file:
-  file.write('basic_data = ' + '\n' + json_basic_data)
+with open(this_path + 'data/' + name + '/basic_data.json.js', 'w') as file:
+  file.write('data = ' + '\n' + json_basic_data)
 
 print('done in ' + str(duration) + ' seconds')

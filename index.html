@@ -16,7 +16,7 @@
       height: 100%;
     }
   </style>
-  <script src="web/module/Loader.js"></script>
+  <script src="web/module/Loader.js?v=2"></script>
   <script>
     const loader = new Loader({version: 1})
     loader.load('web/', ['main.css'])
@@ -45,7 +45,6 @@
   <div id="footer"></div>
 </body>
 <script>
-  loader.load('', ['catalog_names.json.js'])
   loader.load('web/', ['app.js'])
 </script>
 <script>

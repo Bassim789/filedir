@@ -354,13 +354,23 @@ class Filedir{
   open_file(filename){
     const path_clean = this.path.replace('__root__', '')
     let path = ''
-    if(this.use_alias_on_file === 'true'){
-      path += 'https://'
-      path += this.alias
-      if(!path.endsWith('/')) path += '/' 
-      path += path_clean
-      if(!path.endsWith('/')) path += '/' 
-      path += filename
+    if(this.use_alias_on_file){
+      console.log(this.alias)
+      if(this.alias === '/'){
+        let src = window.location.href.split('?')[0]
+        path += src.substring(0, src.lastIndexOf('/'))
+        if(!path.endsWith('/')) path += '/' 
+        path += path_clean
+        if(path != '' && !path.endsWith('/')) path += '/' 
+        path += filename
+        console.log(path)
+      } else {
+        path += this.alias
+        if(path != '' && !path.endsWith('/')) path += '/' 
+        path += path_clean
+        if(path != '' && !path.endsWith('/')) path += '/' 
+        path += filename
+      }
     } else {
       path = this.root_path + this.folder_to_scan + '/' + path_clean + '/' + filename
     }
