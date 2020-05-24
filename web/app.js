@@ -4,6 +4,14 @@ const filedir = new Filedir()
 const last_modified_files = new Last_modified_files()
 const footer = new Footer()
 const metacat = new Metacat()
+const edition_mode = new Edition_mode()
+
+apiclip.on('start_loading', () => {
+  $('.loading').show()
+})
+apiclip.on('stop_loading', () => {
+  $('.loading').hide()
+})
 
 ;(async () => {
 
@@ -32,17 +40,25 @@ const metacat = new Metacat()
 
   const load_dashboard = async () => {
     const catalogs = []
-    let catalog_loaded = 0
-    for(const catalog of config.catalog_names){
-      loader.load_js_data('data/' + catalog + '/basic_data.json.js').then(basic_data => {
-        catalogs.push({...basic_data, catalog})
-        catalog_loaded += 1
-        if(config.catalog_names.length !== catalog_loaded) return false
+    let nb_catalog_loaded = 0
+    let nb_catalog_to_load = 0
+    for(const [catalog_name, catalog] of Object.entries(config.catalog_names)){
+      if(!catalog.has_been_scanned){
+        catalogs.push({catalog_name})
+        continue
+      }
+      nb_catalog_to_load += 1
+      loader.load_js_data('data/' + catalog_name + '/basic_data.json.js').then(basic_data => {
+        catalogs.push({...basic_data, catalog_name})
+        nb_catalog_loaded += 1
+        if(nb_catalog_to_load !== nb_catalog_loaded) return false
         metacat.init()
         metacat.add_data(catalogs)
         metacat.render()
         dark_mode.append_to_body()
         dark_mode.init_actions()
+        edition_mode.append_to_body()
+        edition_mode.init_actions()
         $('.loading').hide()
       })
     }

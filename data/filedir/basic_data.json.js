@@ -1,8 +1,8 @@
 data = 
 {
- "scan_timestamp": 1590272729.0, 
- "alias": "", 
- "nb_folder": 20, 
- "nb_file": 90, 
- "size": 1762703
+ "scan_timestamp": 1590359325,
+ "alias": "",
+ "nb_file": 119,
+ "nb_folder": 25,
+ "size": 1859626
 }

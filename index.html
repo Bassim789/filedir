@@ -7,36 +7,50 @@
   <meta name="theme-color" content="#ffffff" id="meta_theme_color">
   <link rel="icon" href="web/media/img/filedir_icon.png">
   <style>
-    .loading{
+    .loading_container{
       position: absolute;
       top: 0;
       left: 0;
-      background: #ddd url(web/media/img/loading.gif) no-repeat 50% 50%;
       width: 100%;
       height: 100%;
+      pointer-events: none;
+    }
+    .loading{
+      position: absolute;
+      left: calc(50% - 50px);
+      top: calc(50% - 50px);
+      width: 100px;
+      height: 100px;
+      background: url(web/media/img/loading.gif) no-repeat 50% 50%;
+      z-index: 999;
     }
   </style>
   <script src="web/module/Loader.js?v=2"></script>
   <script>
-    const loader = new Loader({version: 1})
+    const loader = new Loader({version: 2})
     loader.load('web/', ['main.css'])
+    loader.load('web/lib/jquery/jquery', ['.min.js', '-ui.min.js', '-ui.min.css'])
     loader.load('web/lib/', [
       'mustache.min.js',
       'readmore/readmore.min.js',
-      'timer/Timer.js'
+      'timer/Timer.js',
+      'notify.min.js'
     ])
-    loader.load('web/lib/jquery/jquery', ['.min.js', '-ui.min.js', '-ui.min.css'])
     loader.load('web/lib/selectize/selectize', ['.min.js', '.css', '.default.css', '.bootstrap3.css'])
     loader.load('web/module/', ['utils.js', 'Url_params.js'])
     loader.load('web/module/dark_mode/dark_mode', ['.css', '_slider.css', '.js', '.html.js'])
     loader.load('web/module/metacat/metacat', ['.html.js', '.js', '.css'])
     loader.load('web/module/filedir/filedir', ['.html.js', '.js', '.css'])
     loader.load('web/module/last_modified_files/last_modified_files', ['.html.js', '.js', '.css'])
+    loader.load('web/module/edition_mode/edition_mode', ['.html.js', '.js', '.css'])
     loader.load('web/module/footer/footer', ['.html.js', '.js', '.css'])
   </script>
+  <script apiclip src="apiclip/apiclip.js"></script>
 </head>
 <body>
-  <div class="loading"></div>
+  <div class="loading_container">
+    <div class="loading"></div>
+  </div>
   <div class="main_container">
     <div id="filedir"></div>
     <div id="last_modified_files"></div>
