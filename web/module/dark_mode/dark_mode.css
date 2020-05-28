@@ -43,7 +43,8 @@ html.dark .chosen-container .no-results,
 html.dark .chosen-container input,
 html.dark #search_bar_input,
 html.dark .variables_simple_listing table tr:nth-child(even),
-html.dark .selectize-dropdown
+html.dark .selectize-dropdown,
+html.dark button
 {
   color: #ccc;
   background: #333;

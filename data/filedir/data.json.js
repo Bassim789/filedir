@@ -38,24 +38,24 @@ data =
    "csv",
    "jpeg"
   ],
-  "scan_timestamp": 1590359325,
+  "scan_timestamp": 1590411985,
   "scan_duration": 0.0
  },
  "directories_data": {
   "__root__": {
    "path": "",
    "directory": "filedir",
-   "nb_folder": 25,
-   "nb_file": 119,
-   "size": 1859626,
+   "nb_folder": 29,
+   "nb_file": 128,
+   "size": 38680850,
    "file_types": {
     "html": {
      "nb_file": 1,
-     "size": 2514
+     "size": 2620
     },
     "__nothing__": {
      "nb_file": 14,
-     "size": 110780
+     "size": 106684
     },
     "md": {
      "nb_file": 1,
@@ -67,23 +67,23 @@ data =
     },
     "py": {
      "nb_file": 3,
-     "size": 10331
+     "size": 10692
     },
     "R": {
      "nb_file": 1,
      "size": 3782
     },
     "js": {
-     "nb_file": 32,
-     "size": 509951
+     "nb_file": 40,
+     "size": 37333494
     },
     "cs": {
      "nb_file": 1,
      "size": 6278
     },
     "css": {
-     "nb_file": 12,
-     "size": 77841
+     "nb_file": 13,
+     "size": 79106
     },
     "png": {
      "nb_file": 49,
@@ -95,7 +95,7 @@ data =
     },
     "pyc": {
      "nb_file": 2,
-     "size": 7315
+     "size": 7360
     }
    }
   },
@@ -103,37 +103,37 @@ data =
    "path": "",
    "directory": "config",
    "nb_folder": 0,
-   "nb_file": 3,
-   "size": 6399,
+   "nb_file": 4,
+   "size": 6588,
    "file_types": {
     "__nothing__": {
      "nb_file": 1,
      "size": 6148
     },
     "js": {
-     "nb_file": 2,
-     "size": 251
+     "nb_file": 3,
+     "size": 440
     }
    }
   },
   "web": {
    "path": "",
    "directory": "web",
-   "nb_folder": 16,
-   "nb_file": 91,
-   "size": 1733316,
+   "nb_folder": 17,
+   "nb_file": 93,
+   "size": 1732980,
    "file_types": {
     "__nothing__": {
      "nb_file": 5,
-     "size": 45076
+     "size": 40980
     },
     "css": {
-     "nb_file": 12,
-     "size": 77841
+     "nb_file": 13,
+     "size": 79106
     },
     "js": {
-     "nb_file": 24,
-     "size": 481907
+     "nb_file": 25,
+     "size": 484402
     },
     "png": {
      "nb_file": 49,
@@ -150,11 +150,11 @@ data =
    "directory": "__pycache__",
    "nb_folder": 0,
    "nb_file": 1,
-   "size": 3796,
+   "size": 3804,
    "file_types": {
     "pyc": {
      "nb_file": 1,
-     "size": 3796
+     "size": 3804
     }
    }
   },
@@ -171,7 +171,7 @@ data =
    "directory": "apiclip",
    "nb_folder": 2,
    "nb_file": 9,
-   "size": 21304,
+   "size": 21638,
    "file_types": {
     "__nothing__": {
      "nb_file": 3,
@@ -183,49 +183,49 @@ data =
     },
     "py": {
      "nb_file": 2,
-     "size": 4476
+     "size": 4773
     },
     "pyc": {
      "nb_file": 1,
-     "size": 3519
+     "size": 3556
     }
    }
   },
   "data": {
    "path": "",
    "directory": "data",
-   "nb_folder": 1,
-   "nb_file": 3,
-   "size": 28452,
+   "nb_folder": 4,
+   "nb_file": 9,
+   "size": 36849268,
    "file_types": {
     "__nothing__": {
      "nb_file": 1,
      "size": 6148
     },
     "js": {
-     "nb_file": 2,
-     "size": 22304
+     "nb_file": 8,
+     "size": 36843120
     }
    }
   },
   "web/module": {
    "path": "web",
    "directory": "module",
-   "nb_folder": 6,
-   "nb_file": 23,
-   "size": 66380,
+   "nb_folder": 7,
+   "nb_file": 25,
+   "size": 69883,
    "file_types": {
     "__nothing__": {
      "nb_file": 1,
      "size": 8196
     },
     "js": {
-     "nb_file": 15,
-     "size": 44079
+     "nb_file": 16,
+     "size": 46317
     },
     "css": {
-     "nb_file": 7,
-     "size": 14105
+     "nb_file": 8,
+     "size": 15370
     }
    }
   },
@@ -234,7 +234,7 @@ data =
    "directory": "lib",
    "nb_folder": 5,
    "nb_file": 27,
-   "size": 549915,
+   "size": 545819,
    "file_types": {
     "js": {
      "nb_file": 8,
@@ -242,7 +242,7 @@ data =
     },
     "__nothing__": {
      "nb_file": 2,
-     "size": 18440
+     "size": 14344
     },
     "css": {
      "nb_file": 4,
@@ -326,20 +326,37 @@ data =
     }
    }
   },
+  "web/module/form_modal": {
+   "path": "web/module",
+   "directory": "form_modal",
+   "nb_folder": 0,
+   "nb_file": 2,
+   "size": 3456,
+   "file_types": {
+    "js": {
+     "nb_file": 1,
+     "size": 1238
+    },
+    "css": {
+     "nb_file": 1,
+     "size": 2218
+    }
+   }
+  },
   "web/module/metacat": {
    "path": "web/module",
    "directory": "metacat",
    "nb_folder": 0,
    "nb_file": 3,
-   "size": 10961,
+   "size": 11008,
    "file_types": {
     "css": {
      "nb_file": 1,
-     "size": 1267
+     "size": 314
     },
     "js": {
      "nb_file": 2,
-     "size": 9694
+     "size": 10694
     }
    }
   },
@@ -493,11 +510,11 @@ data =
    "directory": "__pycache__",
    "nb_folder": 0,
    "nb_file": 1,
-   "size": 3519,
+   "size": 3556,
    "file_types": {
     "pyc": {
      "nb_file": 1,
-     "size": 3519
+     "size": 3556
     }
    }
   },
@@ -509,16 +526,55 @@ data =
    "size": 0,
    "file_types": {}
   },
+  "data/baba": {
+   "path": "data",
+   "directory": "baba",
+   "nb_folder": 0,
+   "nb_file": 2,
+   "size": 19555273,
+   "file_types": {
+    "js": {
+     "nb_file": 2,
+     "size": 19555273
+    }
+   }
+  },
   "data/filedir": {
    "path": "data",
    "directory": "filedir",
    "nb_folder": 0,
    "nb_file": 2,
-   "size": 22304,
+   "size": 24249,
    "file_types": {
     "js": {
      "nb_file": 2,
-     "size": 22304
+     "size": 24249
+    }
+   }
+  },
+  "data/test1": {
+   "path": "data",
+   "directory": "test1",
+   "nb_folder": 0,
+   "nb_file": 2,
+   "size": 16908053,
+   "file_types": {
+    "js": {
+     "nb_file": 2,
+     "size": 16908053
+    }
+   }
+  },
+  "data/bass": {
+   "path": "data",
+   "directory": "bass",
+   "nb_folder": 0,
+   "nb_file": 2,
+   "size": 355545,
+   "file_types": {
+    "js": {
+     "nb_file": 2,
+     "size": 355545
     }
    }
   }
@@ -527,14 +583,14 @@ data =
   {
    "path": "",
    "file_name": "index.html",
-   "size": 2514,
-   "last_modif": 1590333839
+   "size": 2620,
+   "last_modif": 1590408969
   },
   {
    "path": "",
    "file_name": ".DS_Store",
    "size": 10244,
-   "last_modif": 1590338750
+   "last_modif": 1590362872
   },
   {
    "path": "",
@@ -569,8 +625,8 @@ data =
   {
    "path": "",
    "file_name": "scan.py",
-   "size": 5855,
-   "last_modif": 1590321982
+   "size": 5919,
+   "last_modif": 1590362521
   },
   {
    "path": "",
@@ -587,8 +643,8 @@ data =
   {
    "path": "",
    "file_name": "config.json.js",
-   "size": 129,
-   "last_modif": 1590358771
+   "size": 172,
+   "last_modif": 1590411983
   },
   {
    "path": "",
@@ -605,14 +661,20 @@ data =
   {
    "path": "config",
    "file_name": "bass.json.js",
-   "size": 125,
-   "last_modif": 1590358085
+   "size": 153,
+   "last_modif": 1590411365
+  },
+  {
+   "path": "config",
+   "file_name": "test1.json.js",
+   "size": 153,
+   "last_modif": 1590411407
   },
   {
    "path": "config",
    "file_name": "filedir.json.js",
-   "size": 126,
-   "last_modif": 1590271025
+   "size": 134,
+   "last_modif": 1590362404
   },
   {
    "path": "web",
@@ -629,8 +691,8 @@ data =
   {
    "path": "web",
    "file_name": "app.js",
-   "size": 1943,
-   "last_modif": 1590359094
+   "size": 2200,
+   "last_modif": 1590408829
   },
   {
    "path": "web/module",
@@ -717,22 +779,34 @@ data =
    "last_modif": 1590273480
   },
   {
+   "path": "web/module/form_modal",
+   "file_name": "form_modal.html.js",
+   "size": 1238,
+   "last_modif": 1590408855
+  },
+  {
+   "path": "web/module/form_modal",
+   "file_name": "form_modal.css",
+   "size": 2218,
+   "last_modif": 1590411914
+  },
+  {
    "path": "web/module/metacat",
    "file_name": "metacat.css",
-   "size": 1267,
-   "last_modif": 1590348996
+   "size": 314,
+   "last_modif": 1590408974
   },
   {
    "path": "web/module/metacat",
    "file_name": "metacat.js",
-   "size": 4937,
-   "last_modif": 1590359316
+   "size": 6923,
+   "last_modif": 1590411808
   },
   {
    "path": "web/module/metacat",
    "file_name": "metacat.html.js",
-   "size": 4757,
-   "last_modif": 1590359138
+   "size": 3771,
+   "last_modif": 1590408701
   },
   {
    "path": "web/module/last_modified_files",
@@ -779,8 +853,8 @@ data =
   {
    "path": "web/lib",
    "file_name": ".DS_Store",
-   "size": 10244,
-   "last_modif": 1590332090
+   "size": 6148,
+   "last_modif": 1590359969
   },
   {
    "path": "web/lib",
@@ -1163,8 +1237,8 @@ data =
   {
    "path": "__pycache__",
    "file_name": "scan.cpython-38.pyc",
-   "size": 3796,
-   "last_modif": 1590322131
+   "size": 3804,
+   "last_modif": 1590362530
   },
   {
    "path": "apiclip",
@@ -1176,13 +1250,13 @@ data =
    "path": "apiclip",
    "file_name": "response.json.js",
    "size": 127,
-   "last_modif": 1590359323
+   "last_modif": 1590411983
   },
   {
    "path": "apiclip",
    "file_name": "api.py",
-   "size": 1275,
-   "last_modif": 1590358040
+   "size": 1468,
+   "last_modif": 1590408344
   },
   {
    "path": "apiclip",
@@ -1205,38 +1279,74 @@ data =
   {
    "path": "apiclip",
    "file_name": "apiclip.py",
-   "size": 3201,
-   "last_modif": 1590340122
+   "size": 3305,
+   "last_modif": 1590410061
   },
   {
    "path": "apiclip",
    "file_name": "config.json.js",
    "size": 106,
-   "last_modif": 1590358072
+   "last_modif": 1590410069
   },
   {
    "path": "apiclip/__pycache__",
    "file_name": "apiclip.cpython-38.pyc",
-   "size": 3519,
-   "last_modif": 1590340129
+   "size": 3556,
+   "last_modif": 1590410069
   },
   {
    "path": "data",
    "file_name": ".DS_Store",
    "size": 6148,
-   "last_modif": 1590273144
+   "last_modif": 1590401586
+  },
+  {
+   "path": "data/baba",
+   "file_name": "basic_data.json.js",
+   "size": 117,
+   "last_modif": 1590410101
+  },
+  {
+   "path": "data/baba",
+   "file_name": "data.json.js",
+   "size": 19555156,
+   "last_modif": 1590410101
   },
   {
    "path": "data/filedir",
    "file_name": "basic_data.json.js",
-   "size": 108,
-   "last_modif": 1590359323
+   "size": 109,
+   "last_modif": 1590411421
   },
   {
    "path": "data/filedir",
    "file_name": "data.json.js",
-   "size": 22196,
-   "last_modif": 1590359323
+   "size": 24140,
+   "last_modif": 1590411421
+  },
+  {
+   "path": "data/test1",
+   "file_name": "basic_data.json.js",
+   "size": 116,
+   "last_modif": 1590411862
+  },
+  {
+   "path": "data/test1",
+   "file_name": "data.json.js",
+   "size": 16907937,
+   "last_modif": 1590411862
+  },
+  {
+   "path": "data/bass",
+   "file_name": "basic_data.json.js",
+   "size": 113,
+   "last_modif": 1590411983
+  },
+  {
+   "path": "data/bass",
+   "file_name": "data.json.js",
+   "size": 355432,
+   "last_modif": 1590411983
   }
  ]
 }

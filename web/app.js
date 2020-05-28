@@ -39,17 +39,24 @@ apiclip.on('stop_loading', () => {
   }
 
   const load_dashboard = async () => {
-    const catalogs = []
+    const catalogs = {}
     let nb_catalog_loaded = 0
     let nb_catalog_to_load = 0
     for(const [catalog_name, catalog] of Object.entries(config.catalog_names)){
-      if(!catalog.has_been_scanned){
-        catalogs.push({catalog_name})
-        continue
+
+      catalogs[catalog_name] = {
+        catalog_name,
+        has_been_scanned: catalog.has_been_scanned
       }
+
+      loader.load_js_data('config/' + catalog_name + '.json.js').then(config => {
+        catalogs[catalog_name].config = config
+      })
+      if(!catalog.has_been_scanned) continue
+
       nb_catalog_to_load += 1
       loader.load_js_data('data/' + catalog_name + '/basic_data.json.js').then(basic_data => {
-        catalogs.push({...basic_data, catalog_name})
+        catalogs[catalog_name].basic_data = basic_data
         nb_catalog_loaded += 1
         if(nb_catalog_to_load !== nb_catalog_loaded) return false
         metacat.init()
@@ -59,6 +66,9 @@ apiclip.on('stop_loading', () => {
         dark_mode.init_actions()
         edition_mode.append_to_body()
         edition_mode.init_actions()
+
+        template.render('#form_modal', 'form_modal')
+
         $('.loading').hide()
       })
     }

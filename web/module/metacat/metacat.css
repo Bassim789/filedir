@@ -1,79 +1,21 @@
 
+:root{
+  --color1: #34A7C1;
+}
+
 .click_catalog{
   cursor: pointer;
 }
 
-html.edition_mode_off .btn_scan_catalog{
+html.edition_mode_off .btn_scan_catalog,
+html.edition_mode_off .btn_add_new_catalog,
+html.edition_mode_off .btn_delete_catalog{
   display: none;
 }
 
-html.edition_mode_off .btn_add_new_catalog{
-  display: none;
-}
 .btn_add_new_catalog_container{
   text-align: center;
 }
 .btn_add_new_catalog{
   margin: auto;
 }
-
-
-.ui-dialog,
-.ui-dialog-buttonpane{
-  background: #fff;
-}
-
-
-#form_add_new_catalog{
-  background-color: #fff;
-  color: #666;
-}
-
-#form_add_new_catalog div.wrap {
-  width: calc(100% - 20px);
-}
-
-#form_add_new_catalog div.wrap div {
-  position: relative;
-  margin: 20px 0;
-}
-
-
-#form_add_new_catalog label {
-  position: absolute;
-  top: 0;
-  font-size: 20px;
-  margin: 20px;
-  padding: 0 10px;
-  background-color: #fff;
-  -webkit-transition: top .2s ease-in-out,  font-size .2s ease-in-out;
-  transition: top .2s ease-in-out,  font-size .2s ease-in-out;
-}
-
-#form_add_new_catalog .active {
-  top: -30px;
-  font-size: 14px;
-}
-
-#form_add_new_catalog input[type=text] {
-  width: 100%;
-  padding: 20px;
-  border: 1px solid #666;
-  font-size: 20px;
-  background-color: #fff;
-  color: #666;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
-#form_add_new_catalog input[type=text]:focus {
-  outline: none;
-}
-
-.ui-dialog-titlebar{
-  background: transparent;
-  border: none;
-}
-
-
